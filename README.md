@@ -3,84 +3,144 @@
         <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
     </a>
 </p>
+<h1 align="center">Clerk.io Plugin</h1>
 
-<h1 align="center">Plugin Skeleton</h1>
-
-<p align="center">Skeleton for starting Sylius plugins.</p>
+<p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>.</p>
 
 ## Installation
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
+1. Run `composer require webgriffe/sylius-clerk-plugin`.
 
-2. From the plugin skeleton root directory, run the following commands:
+2. Add the plugin to the `config/bundles.php` file:
 
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn build)
-    $ (cd tests/Application && bin/console assets:install public -e test)
-    
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
-    ```
+   ```php
+   Webgriffe\SyliusTableRateShippingPlugin\WebgriffeSyliusClerkPlugin::class => ['all' => true],
+   ```
 
-## Usage
+3. Add the plugin's config to by creating the file `config/packages/webgriffe_sylius_clerk_plugin.yaml` with the following content:
 
-### Running plugin tests
+   ```yaml
+   imports:
+       - { resource: "@WebgriffeSyliusClerkPlugin/Resources/config/config.yml" }
+   ```
 
-  - PHPUnit
+4. Add the plugin's routing by creating the file `config/routes/webgriffe_sylius_clerk_plugin.yaml` with the following content:
 
-    ```bash
-    $ vendor/bin/phpunit
-    ```
+   ```yaml
+   webgriffe_sylius_clerk_plugin_shop:
+     resource: "@WebgriffeSyliusClerkPlugin/Resources/config/shop_routing.yml"
+     prefix: /{_locale}
+     requirements:
+       _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+   
+   webgriffe_sylius_clerk_plugin_admina:
+     resource: "@WebgriffeSyliusClerkPlugin/Resources/config/admin_routing.yml"
+     prefix: /admin
+   
+   ```
 
-  - PHPSpec
+5. Finish the installation by updating the database schema and installing assets:
 
-    ```bash
-    $ vendor/bin/phpspec run
-    ```
+   ```bash
+   bin/console doctrine:migrations:diff
+   bin/console doctrine:migrations:migrate
+   bin/console assets:install
+   bin/console sylius:theme:assets:install
+   ```
 
-  - Behat (non-JS scenarios)
+## Contributing
 
-    ```bash
-    $ vendor/bin/behat --tags="~@javascript"
-    ```
+To contribute you need to:
 
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Download [Selenium Standalone Server](https://www.seleniumhq.org/download/).
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone.jar
-        ```
-        
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run localhost:8080 -d public -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ vendor/bin/behat --tags="@javascript"
-        ```
+1. Clone this repository into your development environment
 
-### Opening Sylius with your plugin
+2. Copy the `.env.test.dist` file inside the test application directory to the `.env` file:
 
-- Using `test` environment:
+   ```bash
+   cp tests/Application/.env.test.dist tests/Application/.env
+   ```
 
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e test)
-    $ (cd tests/Application && bin/console server:run -d public -e test)
-    ```
-    
-- Using `dev` environment:
+3. Edit the `tests/Application/.env` file by setting configuration specific for your development environment. For example, if you want to use SQLite as database driver during testing you can set the `DATABASE_URL` environment variable as follows:
 
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
-    $ (cd tests/Application && bin/console server:run -d public -e dev)
-    ```
+   ```bash
+   DATABASE_URL=sqlite:///%kernel.project_dir%/var/%kernel.environment%_db.sql
+   ```
+
+4. Then, from the plugin's root directory, run the following commands:
+
+   ```bash
+   (cd tests/Application && yarn install)
+   (cd tests/Application && yarn build)
+   (cd tests/Application && bin/console assets:install public)
+   (cd tests/Application && bin/console doctrine:database:create)
+   (cd tests/Application && bin/console doctrine:schema:create)
+   (cd tests/Application && bin/console server:run localhost:8080 -d public)
+   ```
+
+5. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
+
+### Testing
+
+After your changes you must ensure that the tests are still passing. The current CI suite runs the following tests:
+
+* Easy Coding Standard
+
+  ```bash
+  vendor/bin/ecs check src/ tests/Behat/
+  ```
+
+* PHPStan
+
+  ```bash
+  vendor/bin/phpstan analyse -c phpstan.neon -l max src/
+  ```
+
+* PHPUnit
+
+  ```bash
+  vendor/bin/phpunit
+  ```
+
+* PHPSpec
+
+  ```bash
+  vendor/bin/phpspec run
+  ```
+
+* Behat
+
+  ```bash
+  vendor/bin/behat --strict -vvv --no-interaction || vendor/bin/behat --strict -vvv --no-interaction --rerun
+  ```
+
+To run them all with a single command run:
+
+```bash
+composer suite
+```
+
+To run Behat's JS scenarios you need to setup Selenium and Chromedriver. Do the following:
+
+1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
+
+2. Download [Selenium Standalone Server](https://www.seleniumhq.org/download/)
+
+3. Run Selenium with Chromedriver
+
+   ```bash
+   java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone.jar
+   ```
+
+4. Remember that the test application webserver must be up and running as described above:
+
+   ```bash
+   cd tests/Application && bin/console server:run localhost:8080 -d public
+   ```
+
+License
+-------
+This library is under the MIT license. See the complete license in the LICENSE file.
+
+Credits
+-------
+Developed by [Webgriffe®](http://www.webgriffe.com/).
