@@ -7,3 +7,6 @@ webgriffe_sylius_clerk_shop:
 webgriffe_sylius_clerk_admin:
     resource: "@WebgriffeSyliusClerkPlugin/Resources/config/admin_routing.yml"
     prefix: /admin
+
+webgriffe_sylius_clerk_feed:
+    resource: "@WebgriffeSyliusClerkPlugin/Resources/config/feed_routing.yml"

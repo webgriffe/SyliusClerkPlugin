@@ -1,0 +1,7 @@
+services:
+  Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext:
+    arguments:
+      - '@__symfony__.test.client'
+    tags:
+      - { name: fob.context_service }
+

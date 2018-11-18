@@ -1,5 +1,18 @@
 # Put your Behat suites definitions here
 
 default:
-    suites: {}
+    suites:
+        clerk_plugin:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
 
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.product
+
+                - sylius.behat.context.transform.product
+                - sylius.behat.context.transform.channel
+
+                - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext
+
+            filters:
+                tags: "@clerk_plugin"

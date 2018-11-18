@@ -1,0 +1,5 @@
+webgriffe_sylius_clerk_feed:
+  path: /clerk/feed/{channelId}
+  defaults:
+    _controller: WebgriffeSyliusClerkPlugin:Feed:feed
+    name: ~
