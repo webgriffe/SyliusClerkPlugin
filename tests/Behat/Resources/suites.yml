@@ -1,10 +1,5 @@
 # Put your Behat suites definitions here
 
 default:
-    suites:
-        greeting_customer:
-            contexts_services:
-                - webgriffe_sylius_clerk.context.ui.shop.welcome
+    suites: {}
 
-            filters:
-                tags: "@greeting_customer"
