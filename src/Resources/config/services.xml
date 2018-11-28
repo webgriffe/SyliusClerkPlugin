@@ -3,7 +3,14 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="Webgriffe\SyliusClerkPlugin\Controller\FeedController" public="true">
+            <argument id="Webgriffe\SyliusClerkPlugin\Service\ProductsFeedGenerator" type="service"/>
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Service\ProductsFeedGenerator">
+            <argument id="sylius.repository.product" type="service"/>
+            <argument id="sylius.product_variant_resolver.default" type="service"/>
             <argument id="liip_imagine.service.filter" type="service"/>
+            <argument id="router" type="service"/>
         </service>
     </services>
 </container>
