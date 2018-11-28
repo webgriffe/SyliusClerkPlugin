@@ -22,3 +22,6 @@ default:
             directory: etc/build
             clean_start: false
             screenshot: true
+
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            files_path: "%paths.base%/tests/Behat/Resources/fixtures/"
