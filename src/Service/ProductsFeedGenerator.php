@@ -82,6 +82,7 @@ class ProductsFeedGenerator
                     ['slug' => $product->getSlug(), '_locale' => $product->getTranslation()->getLocale()],
                     UrlGeneratorInterface::ABSOLUTE_URL
                 ),
+                'categories' => $this->getTaxonsIds($product),
             ];
             if ($product->getDescription()) { // todo test this
                 $productData['description'] = $product->getDescription();
@@ -97,11 +98,25 @@ class ProductsFeedGenerator
             if ($channelPricing->getOriginalPrice()) { // todo test this
                 $productData['list_price'] = $channelPricing->getOriginalPrice() / 100;
             }
-            $productData['categories'] = []; // todo implement/test categories
 
             $productsData[] = $productData;
         }
 
         return $productsData;
+    }
+
+    /**
+     * @param ProductInterface $product
+     *
+     * @return array
+     */
+    private function getTaxonsIds(ProductInterface $product): array
+    {
+        $taxonsIds = [];
+        foreach ($product->getTaxons() as $taxon) {
+            $taxonsIds[] = $taxon->getId();
+        }
+
+        return $taxonsIds;
     }
 }

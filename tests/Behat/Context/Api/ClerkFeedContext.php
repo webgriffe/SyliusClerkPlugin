@@ -116,4 +116,19 @@ class ClerkFeedContext implements Context
             Assert::isEmpty($jsonPath->data());
         }
     }
+
+    /**
+     * @Then /^there should be an array with exactly one ID (in this feed JSON paths "([^"]*)")$/
+     */
+    public function thereShouldBeAnArrayWithExactlyOneIdInThisFeedJsonPaths(JSONPath $jsonPaths)
+    {
+        Assert::greaterThanEq($jsonPaths->count(), 1);
+        foreach ($jsonPaths as $jsonPath) {
+            Assert::isArray($jsonPath->data());
+            $array = $jsonPath->data();
+            Assert::count($array, 1);
+            Assert::allInteger($array);
+            Assert::allGreaterThanEq($array, 1);
+        }
+    }
 }
