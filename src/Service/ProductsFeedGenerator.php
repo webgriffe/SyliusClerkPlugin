@@ -84,7 +84,7 @@ class ProductsFeedGenerator
                 ),
                 'categories' => $this->getTaxonsIds($product),
             ];
-            if ($product->getDescription()) { // todo test this
+            if ($product->getDescription()) {
                 $productData['description'] = $product->getDescription();
             }
             $mainImage = $product->getImagesByType('main')->first();

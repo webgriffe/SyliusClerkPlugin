@@ -5,3 +5,10 @@ services:
     tags:
       - { name: fob.context_service }
 
+  Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext:
+    arguments:
+      - '@__symfony__.sylius.repository.product'
+      - '@sylius.behat.shared_storage'
+    tags:
+      - { name: fob.context_service }
+

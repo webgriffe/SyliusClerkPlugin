@@ -10,6 +10,7 @@ default:
                 - sylius.behat.context.setup.product
                 - sylius.behat.context.setup.product_taxon
                 - sylius.behat.context.setup.taxonomy
+                - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext
 
                 - sylius.behat.context.transform.product
                 - sylius.behat.context.transform.channel
