@@ -7,6 +7,7 @@ namespace Webgriffe\SyliusClerkPlugin\Controller;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webgriffe\SyliusClerkPlugin\Service\ProductsFeedGenerator;
@@ -32,7 +33,7 @@ class FeedController extends Controller
         $channel = $this->getChannel($channelId);
         Assert::isInstanceOf($channel->getDefaultLocale(), LocaleInterface::class);
 
-        return new Response(json_encode(['products' => $this->productsFeedGenerator->generate($channel)]));
+        return new JsonResponse(['products' => $this->productsFeedGenerator->generate($channel)]);
     }
 
     /**

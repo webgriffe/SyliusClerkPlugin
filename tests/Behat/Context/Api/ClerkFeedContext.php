@@ -36,6 +36,7 @@ class ClerkFeedContext implements Context
     public function theClerkCrawlerShouldReceiveASuccessfulHttpResponseWithAValidJsonFeedAsItsContent()
     {
         Assert::eq(200, $this->client->getResponse()->getStatusCode());
+        Assert::eq($this->client->getResponse()->headers->get('Content-Type'), 'application/json');
         Assert::object(json_decode($this->client->getResponse()->getContent()));
     }
 
