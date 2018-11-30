@@ -88,7 +88,7 @@ class ProductsFeedGenerator
                 $productData['description'] = $product->getDescription();
             }
             $mainImage = $product->getImagesByType('main')->first();
-            if ($mainImage && $mainImage->getPath()) { // todo test this
+            if ($mainImage && $mainImage->getPath()) {
                 /** @var ImageInterface $mainImage */
                 $productData['image'] = $this->imagineFilterService->getUrlOfFilteredImage(
                     $mainImage->getPath(),
