@@ -7,8 +7,8 @@ services:
 
   Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext:
     arguments:
-      - '@__symfony__.sylius.repository.product'
-      - '@sylius.behat.shared_storage'
+      - '@__symfony__.doctrine.orm.entity_manager'
+      - '@__symfony__.sylius.product_variant_resolver.default'
     tags:
       - { name: fob.context_service }
 

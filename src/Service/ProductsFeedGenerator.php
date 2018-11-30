@@ -95,7 +95,7 @@ class ProductsFeedGenerator
                     'sylius_shop_product_thumbnail'
                 );
             }
-            if ($channelPricing->getOriginalPrice()) { // todo test this
+            if ($channelPricing->getOriginalPrice()) {
                 $productData['list_price'] = $channelPricing->getOriginalPrice() / 100;
             }
 

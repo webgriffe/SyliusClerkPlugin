@@ -16,6 +16,7 @@ default:
                 - sylius.behat.context.transform.channel
                 - sylius.behat.context.transform.shared_storage
                 - sylius.behat.context.transform.taxon
+                - sylius.behat.context.transform.lexical
 
                 - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext
 

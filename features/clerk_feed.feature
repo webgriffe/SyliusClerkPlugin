@@ -7,12 +7,13 @@ Feature: Providing a Clerk.io data feed
   Scenario: Providing a simple Clerk data feed with products
     Given the store operates on a single channel in "United States"
     And the store has "Mugs" taxonomy
-    And the store has a product "Sylius Mug"
+    And the store has a product "Sylius Mug" priced at "$3.99"
     And I assigned this product to "Mugs" taxon
-    And the store has a product "Symfony Mug"
+    And the store has a product "Symfony Mug" priced at "$2.99"
     And I assigned this product to "Mugs" taxon
     And this product has an image "symfony_logo.png" with "main" type
     And this product description is "Great Symfony mug for the real developer"
+    And this product original price is "$3.50" in "United States" channel
     When the Clerk crawler hits the data feed URL for the "United States" channel
     Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
     And there should be an ID in this feed JSON paths "$.products.*.id"
@@ -23,7 +24,10 @@ Feature: Providing a Clerk.io data feed
     And there should be the value "Symfony Mug" in this feed JSON path "$.products[1].name"
     And there shouldn't be any value in this feed JSON paths "$.products[0].description"
     And there should be the value "Great Symfony mug for the real developer" in this feed JSON paths "$.products[1].description"
-    And there should be the value "1" in this feed JSON paths "$.products.*.price"
+    And there should be the value "3.99" in this feed JSON paths "$.products[0].price"
+    And there shouldn't be any value in this feed JSON paths "$.products[0].list_price"
+    And there should be the value "2.99" in this feed JSON paths "$.products[1].price"
+    And there should be the value "3.50" in this feed JSON paths "$.products[1].list_price"
     And there shouldn't be any value in this feed JSON paths "$.products[0].image"
     And there should be a value matching the pattern "|http://localhost/media/cache/sylius_shop_product_thumbnail/.+|" in this feed JSON paths "$.products[1].image"
     And there should be the value "http://localhost/en_US/products/sylius-mug" in this feed JSON path "$.products[0].url"
