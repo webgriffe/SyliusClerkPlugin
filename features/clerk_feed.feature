@@ -14,6 +14,7 @@ Feature: Providing a Clerk.io data feed
     And this product has an image "symfony_logo.png" with "main" type
     And this product description is "Great Symfony mug for the real developer"
     And this product original price is "$3.50" in "United States" channel
+    And this product has text attribute "Text Attribute" with value "Text Value"
     When the Clerk crawler hits the data feed URL for the "United States" channel
     Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
     And there should be an ID in this feed JSON paths "$.products.*.id"
@@ -33,3 +34,4 @@ Feature: Providing a Clerk.io data feed
     And there should be the value "http://localhost/en_US/products/sylius-mug" in this feed JSON path "$.products[0].url"
     And there should be the value "http://localhost/en_US/products/symfony-mug" in this feed JSON path "$.products[1].url"
     And there should be an array with exactly one ID in this feed JSON paths "$.products.*.categories"
+    And there should be the value "Text Value" in this feed JSON path "$.products[1].Text_Attribute"

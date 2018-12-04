@@ -98,6 +98,9 @@ class ProductsFeedGenerator
             if ($channelPricing->getOriginalPrice()) {
                 $productData['list_price'] = $channelPricing->getOriginalPrice() / 100;
             }
+            foreach ($product->getAttributes() as $attribute) {
+                $productData[$attribute->getCode()] = $attribute->getValue();
+            }
 
             $productsData[] = $productData;
         }
