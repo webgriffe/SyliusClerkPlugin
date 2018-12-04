@@ -33,7 +33,13 @@ class FeedController extends Controller
         $channel = $this->getChannel($channelId);
         Assert::isInstanceOf($channel->getDefaultLocale(), LocaleInterface::class);
 
-        return new JsonResponse(['products' => $this->productsFeedGenerator->generate($channel)]);
+        return new JsonResponse(
+            [
+                'products' => $this->productsFeedGenerator->generate($channel),
+                'created' => time(),
+                'strict' => false,
+            ]
+        );
     }
 
     /**

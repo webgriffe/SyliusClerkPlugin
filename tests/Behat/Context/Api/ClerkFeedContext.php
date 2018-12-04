@@ -132,4 +132,28 @@ class ClerkFeedContext implements Context
             Assert::allGreaterThanEq($array, 1);
         }
     }
+
+    /**
+     * @Then /^there should be a Unix timestamp (in this feed JSON path "([^"]*)")$/
+     */
+    public function thereShouldBeAUnixTimestampInThisFeedJsonPath(JSONPath $jsonPath)
+    {
+        // See: https://stackoverflow.com/questions/2524680/check-whether-the-string-is-a-unix-timestamp
+        Assert::integer($jsonPath->first());
+        Assert::greaterThanEq($jsonPath->first(), ~PHP_INT_MAX);
+        Assert::lessThanEq($jsonPath->first(), PHP_INT_MAX);
+    }
+
+    /**
+     * @Then /^there should be the boolean value "([^"]*)" (in this feed JSON path "([^"]*)")$/
+     */
+    public function thereShouldBeTheBooleanValueInThisFeedJsonPath(string $booleanValueString, JSONPath $jsonPath)
+    {
+        $booleanValue = filter_var($booleanValueString, FILTER_VALIDATE_BOOLEAN);
+        Assert::boolean(
+            $booleanValue,
+            'Expected a boolean string (like "true" or "false"), got: ' . $booleanValueString
+        );
+        Assert::eq($jsonPath->first(), $booleanValue);
+    }
 }
