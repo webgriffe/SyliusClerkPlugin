@@ -4,7 +4,7 @@ Feature: Providing a Clerk.io data feed
   As a Store Owner
   I would like to provide a Clerk.io data feed with products, categories and sales like documented on https://docs.clerk.io/docs/data-feed
 
-  Scenario: Providing a simple Clerk data feed with products
+  Scenario: Providing a simple Clerk data feed with products and categories
     Given the store operates on a single channel in "United States"
     And the store has "Mugs" taxonomy
     And the store has a product "Sylius Mug" priced at "$3.99"
@@ -37,3 +37,8 @@ Feature: Providing a Clerk.io data feed
     And there should be the value "http://localhost/en_US/products/symfony-mug" in this feed JSON path "$.products[1].url"
     And there should be an array with exactly one ID in this feed JSON paths "$.products.*.categories"
     And there should be the value "Text Value" in this feed JSON path "$.products[1].Text_Attribute"
+    And there should be a count of 1 element in this feed JSON path "$.categories"
+    And there should be an ID in this feed JSON paths "$.categories.*.id"
+    And there should be the value "Mugs" in this feed JSON path "$.categories[0].name"
+    And there should be the value "http://localhost/en_US/taxons/Mugs" in this feed JSON path "$.categories[0].url"
+    And there should be an empty array in this feed JSON path "$.categories[0].subcategories"

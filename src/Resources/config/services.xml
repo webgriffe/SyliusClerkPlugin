@@ -4,12 +4,18 @@
     <services>
         <service id="Webgriffe\SyliusClerkPlugin\Controller\FeedController" public="true">
             <argument id="Webgriffe\SyliusClerkPlugin\Service\ProductsFeedGenerator" type="service"/>
+            <argument id="Webgriffe\SyliusClerkPlugin\Service\CategoriesFeedGenerator" type="service"/>
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\ProductsFeedGenerator">
             <argument id="sylius.repository.product" type="service"/>
             <argument id="sylius.product_variant_resolver.default" type="service"/>
             <argument id="liip_imagine.service.filter" type="service"/>
+            <argument id="router" type="service"/>
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Service\CategoriesFeedGenerator">
+            <argument id="sylius.repository.taxon" type="service"/>
             <argument id="router" type="service"/>
         </service>
     </services>

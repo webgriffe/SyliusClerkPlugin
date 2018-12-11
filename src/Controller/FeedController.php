@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Webgriffe\SyliusClerkPlugin\Service\CategoriesFeedGenerator;
 use Webgriffe\SyliusClerkPlugin\Service\ProductsFeedGenerator;
 use Webmozart\Assert\Assert;
 
@@ -19,13 +20,20 @@ class FeedController extends Controller
      * @var ProductsFeedGenerator
      */
     private $productsFeedGenerator;
+    /**
+     * @var CategoriesFeedGenerator
+     */
+    private $categoriesFeedGenerator;
 
     /**
      * FeedController constructor.
      */
-    public function __construct(ProductsFeedGenerator $productsFeedGenerator)
-    {
+    public function __construct(
+        ProductsFeedGenerator $productsFeedGenerator,
+        CategoriesFeedGenerator $categoriesFeedGenerator
+    ) {
         $this->productsFeedGenerator = $productsFeedGenerator;
+        $this->categoriesFeedGenerator = $categoriesFeedGenerator;
     }
 
     public function feedAction(int $channelId): Response
@@ -36,6 +44,7 @@ class FeedController extends Controller
         return new JsonResponse(
             [
                 'products' => $this->productsFeedGenerator->generate($channel),
+                'categories' => $this->categoriesFeedGenerator->generate($channel),
                 'created' => time(),
                 'strict' => false,
             ]

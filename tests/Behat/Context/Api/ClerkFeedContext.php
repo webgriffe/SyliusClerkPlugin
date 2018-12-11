@@ -156,4 +156,21 @@ class ClerkFeedContext implements Context
         );
         Assert::eq($jsonPath->first(), $booleanValue);
     }
+
+    /**
+     * @Then /^there should be a count of (\d+) elements? (in this feed JSON path "([^"]*)")$/
+     */
+    public function thereShouldBeACountOfElementInThisFeedJsonPath(int $count, JSONPath $jsonPath)
+    {
+        Assert::count($jsonPath->first(), $count);
+    }
+
+    /**
+     * @Then /^there should be an empty array (in this feed JSON path "([^"]*)")$/
+     */
+    public function thereShouldBeAnEmptyArrayInThisFeedJsonPath(JSONPath $jsonPath)
+    {
+        Assert::isArray($jsonPath->first()->data());
+        Assert::isEmpty($jsonPath->first()->data());
+    }
 }
