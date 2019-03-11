@@ -1,14 +1,11 @@
 services:
+  _defaults: { public: true }
+
   Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext:
     arguments:
-      - '@__symfony__.test.client'
-    tags:
-      - { name: fob.context_service }
+      - '@test.client'
 
   Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext:
     arguments:
-      - '@__symfony__.doctrine.orm.entity_manager'
-      - '@__symfony__.sylius.product_variant_resolver.default'
-    tags:
-      - { name: fob.context_service }
-
+      - '@doctrine.orm.entity_manager'
+      - '@sylius.product_variant_resolver.default'
