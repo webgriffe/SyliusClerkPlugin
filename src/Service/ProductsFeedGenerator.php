@@ -61,47 +61,10 @@ class ProductsFeedGenerator
         $productsData = [];
         /** @var ProductInterface $product */
         foreach ($queryBuilder->getQuery()->getResult() as $product) {
-            $productDefaultVariant = $this->productVariantResolver->getVariant($product);
-            if (!$productDefaultVariant) { // TODO test this
+            $productData = $this->normalizeProduct($channel, $product);
+            if (!$productData) {
                 continue;
             }
-            /** @var ProductVariantInterface $productDefaultVariant */
-            Assert::isInstanceOf($productDefaultVariant, ProductVariantInterface::class);
-            $channelPricing = $productDefaultVariant->getChannelPricingForChannel($channel);
-            if (!$channelPricing) { // TODO test this
-                continue;
-            }
-
-            $productData = [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
-                'sku' => $product->getCode(),
-                'price' => $channelPricing->getPrice() / 100,
-                'url' => $this->router->generate(
-                    'sylius_shop_product_show',
-                    ['slug' => $product->getSlug(), '_locale' => $product->getTranslation()->getLocale()],
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                ),
-                'categories' => $this->getTaxonsIds($product),
-            ];
-            if ($product->getDescription()) {
-                $productData['description'] = $product->getDescription();
-            }
-            $mainImage = $product->getImagesByType('main')->first();
-            if ($mainImage && $mainImage->getPath()) {
-                /** @var ImageInterface $mainImage */
-                $productData['image'] = $this->imagineFilterService->getUrlOfFilteredImage(
-                    $mainImage->getPath(),
-                    'sylius_shop_product_thumbnail'
-                );
-            }
-            if ($channelPricing->getOriginalPrice()) {
-                $productData['list_price'] = $channelPricing->getOriginalPrice() / 100;
-            }
-            foreach ($product->getAttributes() as $attribute) {
-                $productData[$attribute->getCode()] = $attribute->getValue();
-            }
-
             $productsData[] = $productData;
         }
 
@@ -121,5 +84,50 @@ class ProductsFeedGenerator
         }
 
         return $taxonsIds;
+    }
+
+    private function normalizeProduct(ChannelInterface $channel, ProductInterface $product): ?array
+    {
+        $productDefaultVariant = $this->productVariantResolver->getVariant($product);
+        if (!$productDefaultVariant) { // TODO test this
+            return null;
+        }
+        /** @var ProductVariantInterface $productDefaultVariant */
+        Assert::isInstanceOf($productDefaultVariant, ProductVariantInterface::class);
+        $channelPricing = $productDefaultVariant->getChannelPricingForChannel($channel);
+        if (!$channelPricing) { // TODO test this
+            return null;
+        }
+
+        $productData = [
+            'id' => $product->getId(),
+            'name' => $product->getName(),
+            'sku' => $product->getCode(),
+            'price' => $channelPricing->getPrice() / 100,
+            'url' => $this->router->generate(
+                'sylius_shop_product_show',
+                ['slug' => $product->getSlug(), '_locale' => $product->getTranslation()->getLocale()],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ),
+            'categories' => $this->getTaxonsIds($product),
+        ];
+        if ($product->getDescription()) {
+            $productData['description'] = $product->getDescription();
+        }
+        $mainImage = $product->getImagesByType('main')->first();
+        if ($mainImage && $mainImage->getPath()) {
+            /** @var ImageInterface $mainImage */
+            $productData['image'] = $this->imagineFilterService->getUrlOfFilteredImage(
+                $mainImage->getPath(),
+                'sylius_shop_product_thumbnail'
+            );
+        }
+        if ($channelPricing->getOriginalPrice()) {
+            $productData['list_price'] = $channelPricing->getOriginalPrice() / 100;
+        }
+        foreach ($product->getAttributes() as $attribute) {
+            $productData[$attribute->getCode()] = $attribute->getValue();
+        }
+        return $productData;
     }
 }
