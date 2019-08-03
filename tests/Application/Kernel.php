@@ -169,6 +169,6 @@ final class Kernel extends BaseKernel
             }
         }
 
-        $containerServicesPropertyReflection->setValue($container, null);
+        $containerServicesPropertyReflection->setValue($container, []);
     }
 }

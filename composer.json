@@ -8,7 +8,8 @@
         "php": "^7.2",
 
         "sylius/sylius": "~1.4.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "symfony/serializer": "^4.3"
     },
     "require-dev": {
         "behat/behat": "^3.4",
@@ -35,7 +36,8 @@
         "symfony/intl": "^3.4|^4.1",
         "symfony/web-profiler-bundle": "^3.4|^4.1",
         "symfony/web-server-bundle": "^3.4|^4.1",
-        "flow/jsonpath": "^0.4.0"
+        "flow/jsonpath": "^0.4.0",
+        "theofidry/alice-data-fixtures": "^1.1"
     },
     "prefer-stable": true,
     "autoload": {

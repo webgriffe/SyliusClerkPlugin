@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusClerkPlugin\Service;
 
-use Liip\ImagineBundle\Service\FilterService;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\ImageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
-use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Webmozart\Assert\Assert;
 
 class ProductsFeedGenerator
@@ -23,31 +18,17 @@ class ProductsFeedGenerator
      */
     private $productRepository;
     /**
-     * @var ProductVariantResolverInterface
+     * @var SerializerInterface
      */
-    private $productVariantResolver;
-    /**
-     * @var FilterService
-     */
-    private $imagineFilterService;
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private $serializer;
 
-    public function __construct(
-        ProductRepositoryInterface $productRepository,
-        ProductVariantResolverInterface $productVariantResolver,
-        FilterService $imagineFilterService,
-        RouterInterface $router
-    ) {
+    public function __construct(ProductRepositoryInterface $productRepository, SerializerInterface $serializer)
+    {
         $this->productRepository = $productRepository;
-        $this->productVariantResolver = $productVariantResolver;
-        $this->imagineFilterService = $imagineFilterService;
-        $this->router = $router;
+        $this->serializer = $serializer;
     }
 
-    public function generate(ChannelInterface $channel): array
+    public function generate(ChannelInterface $channel): string
     {
         Assert::isInstanceOf($channel->getDefaultLocale(), LocaleInterface::class);
         /** @noinspection NullPointerExceptionInspection */
@@ -61,73 +42,9 @@ class ProductsFeedGenerator
         $productsData = [];
         /** @var ProductInterface $product */
         foreach ($queryBuilder->getQuery()->getResult() as $product) {
-            $productData = $this->normalizeProduct($channel, $product);
-            if (!$productData) {
-                continue;
-            }
-            $productsData[] = $productData;
+            $productsData[] = $product;
         }
 
-        return $productsData;
-    }
-
-    /**
-     * @param ProductInterface $product
-     *
-     * @return array
-     */
-    private function getTaxonsIds(ProductInterface $product): array
-    {
-        $taxonsIds = [];
-        foreach ($product->getTaxons() as $taxon) {
-            $taxonsIds[] = $taxon->getId();
-        }
-
-        return $taxonsIds;
-    }
-
-    private function normalizeProduct(ChannelInterface $channel, ProductInterface $product): ?array
-    {
-        $productDefaultVariant = $this->productVariantResolver->getVariant($product);
-        if (!$productDefaultVariant) { // TODO test this
-            return null;
-        }
-        /** @var ProductVariantInterface $productDefaultVariant */
-        Assert::isInstanceOf($productDefaultVariant, ProductVariantInterface::class);
-        $channelPricing = $productDefaultVariant->getChannelPricingForChannel($channel);
-        if (!$channelPricing) { // TODO test this
-            return null;
-        }
-
-        $productData = [
-            'id' => $product->getId(),
-            'name' => $product->getName(),
-            'sku' => $product->getCode(),
-            'price' => $channelPricing->getPrice() / 100,
-            'url' => $this->router->generate(
-                'sylius_shop_product_show',
-                ['slug' => $product->getSlug(), '_locale' => $product->getTranslation()->getLocale()],
-                UrlGeneratorInterface::ABSOLUTE_URL
-            ),
-            'categories' => $this->getTaxonsIds($product),
-        ];
-        if ($product->getDescription()) {
-            $productData['description'] = $product->getDescription();
-        }
-        $mainImage = $product->getImagesByType('main')->first();
-        if ($mainImage && $mainImage->getPath()) {
-            /** @var ImageInterface $mainImage */
-            $productData['image'] = $this->imagineFilterService->getUrlOfFilteredImage(
-                $mainImage->getPath(),
-                'sylius_shop_product_thumbnail'
-            );
-        }
-        if ($channelPricing->getOriginalPrice()) {
-            $productData['list_price'] = $channelPricing->getOriginalPrice() / 100;
-        }
-        foreach ($product->getAttributes() as $attribute) {
-            $productData[$attribute->getCode()] = $attribute->getValue();
-        }
-        return $productData;
+        return $this->serializer->serialize($productsData, 'json', ['channel' => $channel]);
     }
 }

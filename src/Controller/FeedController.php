@@ -43,7 +43,8 @@ class FeedController extends Controller
 
         return new JsonResponse(
             [
-                'products' => $this->productsFeedGenerator->generate($channel),
+                // TODO refactor this terrible json_decode here
+                'products' => json_decode($this->productsFeedGenerator->generate($channel), false),
                 'categories' => $this->categoriesFeedGenerator->generate($channel),
                 'created' => time(),
                 'strict' => false,
