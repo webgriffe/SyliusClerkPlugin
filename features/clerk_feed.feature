@@ -2,9 +2,9 @@
 Feature: Providing a Clerk.io data feed
   In order to integrate my store with Clerk.io
   As a Store Owner
-  I would like to provide a Clerk.io data feed with products, categories and sales like documented on https://docs.clerk.io/docs/data-feed
+  I would like to provide a Clerk.io data feed with products, taxons and sales like documented on https://docs.clerk.io/docs/data-feed
 
-  Scenario: Providing a simple Clerk data feed with products and categories
+  Background:
     Given the store operates on a single channel in "United States"
     And the store has "Mugs" taxonomy
     And the store has a product "Sylius Mug" priced at "$3.99"
@@ -15,6 +15,8 @@ Feature: Providing a Clerk.io data feed
     And this product description is "Great Symfony mug for the real developer"
     And this product original price is "$3.50" in "United States" channel
     And this product has text attribute "Text Attribute" with value "Text Value"
+
+  Scenario: Providing Clerk data feed with products data
     When the Clerk crawler hits the data feed URL for the "United States" channel
     Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
     And there should be a Unix timestamp in this feed JSON path "$.created"
@@ -37,6 +39,10 @@ Feature: Providing a Clerk.io data feed
     And there should be the value "http://localhost/en_US/products/symfony-mug" in this feed JSON path "$.products[1].url"
     And there should be an array with exactly one ID in this feed JSON paths "$.products.*.categories"
     And there should be the value "Text Value" in this feed JSON path "$.products[1].Text_Attribute"
+
+  Scenario: Providing Clerk data feed with taxons data
+    When the Clerk crawler hits the data feed URL for the "United States" channel
+    Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
     And there should be a count of 1 element in this feed JSON path "$.categories"
     And there should be an ID in this feed JSON paths "$.categories.*.id"
     And there should be the value "Mugs" in this feed JSON path "$.categories[0].name"
