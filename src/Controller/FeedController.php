@@ -10,30 +10,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Webgriffe\SyliusClerkPlugin\Service\CategoriesFeedGenerator;
-use Webgriffe\SyliusClerkPlugin\Service\ProductsFeedGenerator;
+use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 use Webmozart\Assert\Assert;
 
 class FeedController extends Controller
 {
     /**
-     * @var ProductsFeedGenerator
+     * @var FeedGenerator
      */
-    private $productsFeedGenerator;
-    /**
-     * @var CategoriesFeedGenerator
-     */
-    private $categoriesFeedGenerator;
+    private $feedGenerator;
 
-    /**
-     * FeedController constructor.
-     */
-    public function __construct(
-        ProductsFeedGenerator $productsFeedGenerator,
-        CategoriesFeedGenerator $categoriesFeedGenerator
-    ) {
-        $this->productsFeedGenerator = $productsFeedGenerator;
-        $this->categoriesFeedGenerator = $categoriesFeedGenerator;
+    public function __construct(FeedGenerator $productsFeedGenerator)
+    {
+        $this->feedGenerator = $productsFeedGenerator;
     }
 
     public function feedAction(int $channelId): Response
@@ -41,15 +30,7 @@ class FeedController extends Controller
         $channel = $this->getChannel($channelId);
         Assert::isInstanceOf($channel->getDefaultLocale(), LocaleInterface::class);
 
-        return new JsonResponse(
-            [
-                // TODO refactor this terrible json_decode here
-                'products' => json_decode($this->productsFeedGenerator->generate($channel), false),
-                'categories' => json_decode($this->categoriesFeedGenerator->generate($channel)),
-                'created' => time(),
-                'strict' => false,
-            ]
-        );
+        return new JsonResponse($this->feedGenerator->generate($channel), Response::HTTP_OK, [], true);
     }
 
     /**
