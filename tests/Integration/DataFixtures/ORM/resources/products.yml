@@ -1,7 +1,0 @@
-Sylius\Component\Core\Model\Product:
-  product_{1..10}:
-    currentLocale: 'en_US'
-    name: '<words(2, true)>'
-    slug: '<str_replace(" ", "-", $name)>'
-    code: '<strtoupper($slug)>'
-    channels: ['@channel_default']
