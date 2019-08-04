@@ -45,7 +45,7 @@ class FeedController extends Controller
             [
                 // TODO refactor this terrible json_decode here
                 'products' => json_decode($this->productsFeedGenerator->generate($channel), false),
-                'categories' => $this->categoriesFeedGenerator->generate($channel),
+                'categories' => json_decode($this->categoriesFeedGenerator->generate($channel)),
                 'created' => time(),
                 'strict' => false,
             ]

@@ -14,13 +14,19 @@
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\CategoriesFeedGenerator">
             <argument id="sylius.repository.taxon" type="service"/>
-            <argument id="router" type="service"/>
+            <argument id="serializer" type="service"/>
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Normalizer\ProductNormalizer">
             <argument id="sylius.product_variant_resolver.default" type="service"/>
             <argument id="router" type="service"/>
             <argument id="liip_imagine.service.filter" type="service"/>
+            <tag name="serializer.normalizer" />
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Normalizer\TaxonNormalizer">
+            <argument id="router" type="service"/>
+            <argument id="sylius.repository.taxon" type="service"/>
             <tag name="serializer.normalizer" />
         </service>
     </services>

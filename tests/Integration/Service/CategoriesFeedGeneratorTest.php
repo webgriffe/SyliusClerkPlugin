@@ -6,18 +6,18 @@ namespace Tests\Webgriffe\SyliusClerkPlugin\Integration\Service;
 
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Webgriffe\SyliusClerkPlugin\Service\ProductsFeedGenerator;
+use Webgriffe\SyliusClerkPlugin\Service\CategoriesFeedGenerator;
 
-class ProductsFeedGeneratorTest extends KernelTestCase
+class CategoriesFeedGeneratorTest extends KernelTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         $kernel = self::bootKernel();
         $fixtureLoader = $kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
         $fixtureLoader->load(
             [
                 __DIR__ . '/../DataFixtures/ORM/resources/channel_default.yml',
-                __DIR__ . '/../DataFixtures/ORM/resources/products.yml'
+                __DIR__ . '/../DataFixtures/ORM/resources/taxons.yml'
             ],
             [],
             [],
@@ -28,10 +28,9 @@ class ProductsFeedGeneratorTest extends KernelTestCase
     /**
      * @test
      */
-    public function it_generates_products_feed()
+    public function it_generates_categories_feed()
     {
-        self::bootKernel();
-        $generator = self::$container->get(ProductsFeedGenerator::class);
+        $generator = self::$container->get(CategoriesFeedGenerator::class);
         $channelRepository = self::$container->get('sylius.repository.channel');
 
         $feed = $generator->generate($channelRepository->findOneByCode('DEFAULT'));

@@ -1,0 +1,6 @@
+Sylius\Component\Core\Model\Taxon:
+  taxon_{1..10}:
+    currentLocale: 'en_US'
+    name: '<name()>'
+    code: '<strtoupper($name)>'
+    slug: '<slug()>'
