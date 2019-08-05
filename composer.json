@@ -36,8 +36,7 @@
         "symfony/intl": "^3.4|^4.1",
         "symfony/web-profiler-bundle": "^3.4|^4.1",
         "symfony/web-server-bundle": "^3.4|^4.1",
-        "flow/jsonpath": "^0.4.0",
-        "theofidry/alice-data-fixtures": "^1.1"
+        "flow/jsonpath": "^0.4.0"
     },
     "prefer-stable": true,
     "autoload": {
