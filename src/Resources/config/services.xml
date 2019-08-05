@@ -10,6 +10,7 @@
         <service id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator">
             <argument id="sylius.repository.product" type="service"/>
             <argument id="sylius.repository.taxon" type="service"/>
+            <argument id="sylius.repository.order" type="service"/>
             <argument id="serializer" type="service"/>
         </service>
 
@@ -23,6 +24,10 @@
         <service id="Webgriffe\SyliusClerkPlugin\Normalizer\TaxonNormalizer">
             <argument id="router" type="service"/>
             <argument id="sylius.repository.taxon" type="service"/>
+            <tag name="serializer.normalizer" />
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer">
             <tag name="serializer.normalizer" />
         </service>
     </services>
