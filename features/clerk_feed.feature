@@ -16,11 +16,15 @@ Feature: Providing a Clerk.io data feed
     And this product original price is "$3.50" in "United States" channel
     And this product has text attribute "Text Attribute" with value "Text Value"
 
-  Scenario: Providing Clerk data feed with products data
+  Scenario: Providing Clerk data feed with basic data
     When the Clerk crawler hits the data feed URL for the "United States" channel
     Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
     And there should be a Unix timestamp in this feed JSON path "$.created"
     And there should be the boolean value "false" in this feed JSON path "$.strict"
+
+  Scenario: Providing Clerk data feed with products data
+    When the Clerk crawler hits the data feed URL for the "United States" channel
+    Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
     And there should be an ID in this feed JSON paths "$.products.*.id"
     And there should be the value "SYLIUS_MUG" in this feed JSON path "$.products[0].sku"
     And there should be the value "SYMFONY_MUG" in this feed JSON path "$.products[1].sku"
