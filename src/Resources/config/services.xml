@@ -4,6 +4,7 @@
     <services>
         <service id="Webgriffe\SyliusClerkPlugin\Controller\FeedController" public="true">
             <argument id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator" type="service"/>
+            <argument id="sylius.repository.channel" type="service"/>
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator">

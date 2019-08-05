@@ -14,8 +14,13 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('webgriffe_sylius_clerk_plugin');
+        $treeBuilder = new TreeBuilder('webgriffe_sylius_clerk_plugin');
+        if (\method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('webgriffe_sylius_clerk_plugin');
+        }
 
         return $treeBuilder;
     }

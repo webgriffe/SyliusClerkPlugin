@@ -4,25 +4,31 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusClerkPlugin\Controller;
 
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 use Webmozart\Assert\Assert;
 
-class FeedController extends Controller
+class FeedController extends AbstractController
 {
     /**
      * @var FeedGenerator
      */
     private $feedGenerator;
+    /**
+     * @var ChannelRepositoryInterface
+     */
+    private $channelRepository;
 
-    public function __construct(FeedGenerator $productsFeedGenerator)
+    public function __construct(FeedGenerator $productsFeedGenerator, ChannelRepositoryInterface $channelRepository)
     {
         $this->feedGenerator = $productsFeedGenerator;
+        $this->channelRepository = $channelRepository;
     }
 
     public function feedAction(int $channelId): Response
@@ -40,10 +46,12 @@ class FeedController extends Controller
      */
     private function getChannel(int $channelId): ChannelInterface
     {
-        $channel = $this->get('sylius.repository.channel')->find($channelId);
+        /** @var ChannelInterface|null $channel */
+        $channel = $this->channelRepository->find($channelId);
         if (!$channel) {
             throw new NotFoundHttpException('Cannot find channel with ID ' . $channelId);
         }
+        Assert::isInstanceOf($channel, ChannelInterface::class);
 
         return $channel;
     }
