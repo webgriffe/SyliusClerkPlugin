@@ -12,6 +12,7 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webmozart\Assert\Assert;
 
@@ -45,6 +46,9 @@ class ProductNormalizer implements NormalizerInterface
      */
     public function normalize($object, $format = null, array $context = [])
     {
+        if (!array_key_exists('channel', $context)) {
+            throw new InvalidArgumentException('This normalizer needs a channel in the context');
+        }
         Assert::isInstanceOf($object, ProductInterface::class);
         Assert::isInstanceOf($context['channel'], ChannelInterface::class);
         /** @var ProductInterface $product */
@@ -54,11 +58,11 @@ class ProductNormalizer implements NormalizerInterface
         $price = null;
         $originalPrice = null;
         $productDefaultVariant = $this->productVariantResolver->getVariant($product);
-        if ($productDefaultVariant) { // TODO test this
+        if ($productDefaultVariant) {
             /** @var ProductVariantInterface $productDefaultVariant */
             Assert::isInstanceOf($productDefaultVariant, ProductVariantInterface::class);
             $channelPricing = $productDefaultVariant->getChannelPricingForChannel($channel);
-            if ($channelPricing) { // TODO test this
+            if ($channelPricing && $channelPricing->getPrice()) {
                 $price = $channelPricing->getPrice() / 100;
                 if ($channelPricing->getOriginalPrice()) {
                     $originalPrice = $channelPricing->getOriginalPrice() / 100;
