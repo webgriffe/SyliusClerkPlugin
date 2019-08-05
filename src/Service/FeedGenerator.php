@@ -43,7 +43,6 @@ class FeedGenerator
     ) {
         $this->productRepository = $productRepository;
         $this->taxonRepository = $taxonRepository;
-        Assert::isInstanceOf($orderRepository, EntityRepository::class);
         $this->orderRepository = $orderRepository;
         $this->serializer = $serializer;
     }
@@ -60,6 +59,7 @@ class FeedGenerator
             ->setParameter('channel', $channel)
         ;
         $taxonsQueryBuilder = $this->taxonRepository->createListQueryBuilder();
+        Assert::isInstanceOf($this->orderRepository, EntityRepository::class);
         $ordersQueryBuilder = $this->orderRepository
             ->createQueryBuilder('o')
             ->where('o.channel', ':channel')

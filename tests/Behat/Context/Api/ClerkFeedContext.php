@@ -55,6 +55,7 @@ class ClerkFeedContext implements Context
      */
     public function theClerkCrawlerShouldReceiveTheFollowingFeed(JSONPath $jsonPaths): void
     {
+        Assert::minCount($jsonPaths, 1);
         foreach ($jsonPaths as $jsonPath) {
             Assert::integer($jsonPath);
         }
@@ -172,5 +173,16 @@ class ClerkFeedContext implements Context
     {
         Assert::isArray($jsonPath->first()->data());
         Assert::isEmpty($jsonPath->first()->data());
+    }
+
+    /**
+     * @Given /^there should be an email (in this feed JSON paths "([^"]*)")$/
+     */
+    public function thereShouldBeAnEmailInThisFeedJSONPaths(JSONPath $jsonPaths)
+    {
+        Assert::minCount($jsonPaths, 1);
+        foreach ($jsonPaths as $jsonPath) {
+            Assert::true(filter_var($jsonPath, FILTER_VALIDATE_EMAIL) !== false);
+        }
     }
 }

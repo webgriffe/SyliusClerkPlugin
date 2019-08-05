@@ -10,14 +10,16 @@ default:
                 - sylius.behat.context.setup.product
                 - sylius.behat.context.setup.product_taxon
                 - sylius.behat.context.setup.taxonomy
-                - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext
                 - sylius.behat.context.setup.product_attribute
+                - sylius.behat.context.setup.order
+                - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext
 
                 - sylius.behat.context.transform.product
                 - sylius.behat.context.transform.channel
                 - sylius.behat.context.transform.shared_storage
                 - sylius.behat.context.transform.taxon
                 - sylius.behat.context.transform.lexical
+                - sylius.behat.context.transform.customer
 
                 - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext
 

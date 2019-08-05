@@ -15,6 +15,8 @@ Feature: Providing a Clerk.io data feed
     And this product description is "Great Symfony mug for the real developer"
     And this product original price is "$3.50" in "United States" channel
     And this product has text attribute "Text Attribute" with value "Text Value"
+    And there is a customer "customer@sylius.com" that placed an order
+    And the customer bought a single "Sylius Mug"
 
   Scenario: Providing Clerk data feed with basic data
     When the Clerk crawler hits the data feed URL for the "United States" channel
@@ -52,3 +54,14 @@ Feature: Providing a Clerk.io data feed
     And there should be the value "Mugs" in this feed JSON path "$.categories[0].name"
     And there should be the value "http://localhost/en_US/taxons/Mugs" in this feed JSON path "$.categories[0].url"
     And there should be an empty array in this feed JSON path "$.categories[0].subcategories"
+
+  Scenario: Providing Clerk data feed with sales data
+    When the Clerk crawler hits the data feed URL for the "United States" channel
+    Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
+    And there should be an ID in this feed JSON paths "$.sales.*.id"
+    And there should be an ID in this feed JSON paths "$.sales.*.customer"
+    And there should be an email in this feed JSON paths "$.sales.*.email"
+    And there should be a Unix timestamp in this feed JSON path "$.sales.*.time"
+    And there should be an ID in this feed JSON paths "$.sales.*.products.*.id"
+    And there should be the value "1" in this feed JSON paths "$.sales.*.products.*.quantity"
+    And there should be the value "3.99" in this feed JSON paths "$.sales.*.products.*.price"
