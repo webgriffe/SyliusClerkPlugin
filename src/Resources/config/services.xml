@@ -9,9 +9,9 @@
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator">
-            <argument id="sylius.repository.product" type="service"/>
-            <argument id="sylius.repository.taxon" type="service"/>
-            <argument id="sylius.repository.order" type="service"/>
+            <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\ProductsQueryBuilderFactory" type="service" />
+            <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\TaxonsQueryBuilderFactory" type="service" />
+            <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory" type="service" />
             <argument id="serializer" type="service"/>
         </service>
 
@@ -30,6 +30,18 @@
 
         <service id="Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer">
             <tag name="serializer.normalizer" />
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\QueryBuilder\ProductsQueryBuilderFactory">
+            <argument id="sylius.repository.product" type="service"/>
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\QueryBuilder\TaxonsQueryBuilderFactory">
+            <argument id="sylius.repository.taxon" type="service"/>
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory">
+            <argument id="sylius.repository.order" type="service"/>
         </service>
     </services>
 </container>
