@@ -65,3 +65,7 @@ Feature: Providing a Clerk.io data feed
     And there should be an ID in this feed JSON paths "$.sales.*.products.*.id"
     And there should be the value "1" in this feed JSON paths "$.sales.*.products.*.quantity"
     And there should be the value "3.99" in this feed JSON paths "$.sales.*.products.*.price"
+
+  Scenario: Denying access to Clerk data feed with an invalid security hash
+    When the Clerk crawler hits the data feed URL with an invalid security hash
+    Then the Clerk crawler should receive an access denied response

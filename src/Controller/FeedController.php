@@ -9,7 +9,9 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 use Webmozart\Assert\Assert;
@@ -24,15 +26,26 @@ class FeedController extends AbstractController
      * @var ChannelRepositoryInterface
      */
     private $channelRepository;
+    /**
+     * @var string
+     */
+    private $privateApiKey;
 
-    public function __construct(FeedGenerator $productsFeedGenerator, ChannelRepositoryInterface $channelRepository)
-    {
+    public function __construct(
+        FeedGenerator $productsFeedGenerator,
+        ChannelRepositoryInterface $channelRepository,
+        string $privateApiKey
+    ) {
         $this->feedGenerator = $productsFeedGenerator;
         $this->channelRepository = $channelRepository;
+        $this->privateApiKey = $privateApiKey;
     }
 
-    public function feedAction(int $channelId): Response
+    public function feedAction(int $channelId, Request $request): Response
     {
+        if (!$this->isSecurityHashInRequestValid($request)) {
+            throw new AccessDeniedHttpException();
+        }
         $channel = $this->getChannel($channelId);
         Assert::isInstanceOf($channel->getDefaultLocale(), LocaleInterface::class);
 
@@ -54,5 +67,14 @@ class FeedController extends AbstractController
         Assert::isInstanceOf($channel, ChannelInterface::class);
 
         return $channel;
+    }
+
+    private function isSecurityHashInRequestValid(Request $request): bool
+    {
+        $salt = $request->query->get('salt');
+        $hash = $request->query->get('hash');
+        $calculatedHash = hash('sha512', $salt . $this->privateApiKey . floor(time() / 100));
+
+        return $hash === $calculatedHash;
     }
 }

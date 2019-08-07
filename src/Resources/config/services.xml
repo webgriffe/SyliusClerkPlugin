@@ -5,6 +5,7 @@
         <service id="Webgriffe\SyliusClerkPlugin\Controller\FeedController" public="true">
             <argument id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator" type="service"/>
             <argument id="sylius.repository.channel" type="service"/>
+            <argument>%env(CLERK_PRIVATE_API_KEY)%</argument>
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator">

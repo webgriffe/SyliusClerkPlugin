@@ -16,10 +16,15 @@ class ClerkFeedContext implements Context
      * @var Client
      */
     private $client;
+    /**
+     * @var string
+     */
+    private $privateApiKey;
 
-    public function __construct(Client $client)
+    public function __construct(Client $client, string $privateApiKey)
     {
         $this->client = $client;
+        $this->privateApiKey = $privateApiKey;
     }
 
     /**
@@ -27,7 +32,15 @@ class ClerkFeedContext implements Context
      */
     public function theClerkCrawlerHitsTheDataFeedUrl(ChannelInterface $channel): void
     {
-        $this->client->request('GET', '/clerk/feed/' . $channel->getId(), [], [], ['ACCEPT' => 'application/json']);
+        $salt = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 10);
+        $hash = hash('sha512', $salt . $this->privateApiKey . floor(time() / 100));
+        $this->client->request(
+            'GET',
+            '/clerk/feed/' . $channel->getId(),
+            ['salt' => $salt, 'hash' => $hash],
+            [],
+            ['ACCEPT' => 'application/json']
+        );
     }
 
     /**
@@ -184,5 +197,27 @@ class ClerkFeedContext implements Context
         foreach ($jsonPaths as $jsonPath) {
             Assert::true(filter_var($jsonPath, FILTER_VALIDATE_EMAIL) !== false);
         }
+    }
+
+    /**
+     * @When /^the Clerk crawler hits the data feed URL with an invalid security hash$/
+     */
+    public function theClerkCrawlerHitsTheDataFeedURLWithAnInvalidSecurityHash(): void
+    {
+        $this->client->request(
+            'GET',
+            '/clerk/feed/1',
+            ['salt' => 'invalid', 'hash' => 'invalid'],
+            [],
+            ['ACCEPT' => 'application/json']
+        );
+    }
+
+    /**
+     * @Then /^the Clerk crawler should receive an access denied response$/
+     */
+    public function theClerkCrawlerShouldReceiveAnAccessDeniedResponse(): void
+    {
+        Assert::eq(403, $this->client->getResponse()->getStatusCode());
     }
 }
