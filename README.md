@@ -89,6 +89,10 @@ The plugin already provide three query builder factories and three normalizers:
 
 So, to customize the feed generation you can replace these implementations using the common Symfony techniques to do so (see [here](https://symfony.com/doc/current/bundles/override.html#services-configuration)).
 
+## Put Clerk on your frontend pages
+
+Work in progress.
+
 ## Contributing
 
 To contribute you need to:
