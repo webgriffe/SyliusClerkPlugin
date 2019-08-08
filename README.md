@@ -4,9 +4,7 @@
     </a>
 </p>
 <h1 align="center">Clerk.io Plugin</h1>
-
 <p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>.</p>
-
 ## Installation
 
 1. Run `composer require webgriffe/sylius-clerk-plugin`.
@@ -17,25 +15,21 @@
    Webgriffe\SyliusTableRateShippingPlugin\WebgriffeSyliusClerkPlugin::class => ['all' => true],
    ```
 
-3. Add the plugin's config to by creating the file `config/packages/webgriffe_sylius_clerk_plugin.yaml` with the following content:
+3. Add the plugin's routing by creating the file `config/routes.yaml` with the following content:
 
    ```yaml
-   imports:
-       - { resource: "@WebgriffeSyliusClerkPlugin/Resources/config/config.yml" }
-   ```
-
-4. Add the plugin's routing by creating the file `config/routes/webgriffe_sylius_clerk_plugin.yaml` with the following content:
-
-   ```yaml
-   webgriffe_sylius_clerk_plugin_shop:
-     resource: "@WebgriffeSyliusClerkPlugin/Resources/config/shop_routing.yml"
-     prefix: /{_locale}
-     requirements:
-       _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+   webgriffe_sylius_clerk_shop:
+       resource: "@WebgriffeSyliusClerkPlugin/Resources/config/shop_routing.yml"
+       prefix: /{_locale}
+       requirements:
+           _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
    
-   webgriffe_sylius_clerk_plugin_admina:
-     resource: "@WebgriffeSyliusClerkPlugin/Resources/config/admin_routing.yml"
-     prefix: /admin
+   webgriffe_sylius_clerk_admin:
+       resource: "@WebgriffeSyliusClerkPlugin/Resources/config/admin_routing.yml"
+       prefix: /admin
+   
+   webgriffe_sylius_clerk_feed:
+       resource: "@WebgriffeSyliusClerkPlugin/Resources/config/feed_routing.yml"
    
    ```
 
@@ -47,6 +41,53 @@
    bin/console assets:install
    bin/console sylius:theme:assets:install
    ```
+   
+
+## Configuration
+
+The Clerk.io integration with Sylius is per-channel. Every Clerk.io store must be syncronized with just only one Sylius channel. So, to configure this plugin you must create a file in `config/packages/webgriffe_sylius_clerk.yaml` with the following contents:
+
+```yaml
+webgriffe_sylius_clerk:
+  stores:
+    - channel_code: WEB-US
+      private_api_key: 123abc
+    - channel_code: WEB-EU
+      private_api_key: 890xyz
+```
+
+Where every entry in the `stores` key must contain the Sylius channel code in `channel_code` and the related Clerk's private API key in `private_api_key`.
+
+## Sync your data with Clerk.io
+
+Login into your Clerk.io [dashboard](https://my.clerk.io/) and go to the **Data** page. In the **Data Sync Settings** section, select **Clerk.io JSON Feed** as **Sync Method** and enter the following JSON Feed URL:
+
+```
+https://your-sylius-store.com/clerk/feed/channelId
+```
+
+Where `https://your-sylius-store.com` is your Sylius store base URL and `channelId` is the database ID of the Sylius channel you whant to sync.
+
+## Customizing
+
+Basically, this bundle provides an easy way to generate a JSON feed compliant with the [Clerk.io data feed specifications](https://docs.clerk.io/docs/data-feed). The feed basically contains three arrays of the following entities:
+
+* Products
+* Categories (a.k.a. Taxons on Sylius)
+* Orders
+
+For each entity type the following two components are involved in feed generation:
+
+* A `Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface` which is responsible to create a `Doctrine\ORM\QueryBuilder` which builds the query to select the objects you want to include in the feed.
+* A `Symfony\Component\Serializer\Normalizer\NormalizerInterface` which is a common normalizer of the [Symfony's Serializer component](https://symfony.com/doc/current/components/serializer.html). The normalizer is the component responsible to convert every instance of the related entity type to an associative array which is then converted to JSON.
+
+The plugin already provide three query builder factories and three normalizers:
+
+- Products: `Webgriffe\SyliusClerkPlugin\QueryBuilder\ProductsQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\ProductNormalizer`
+- Categories: `Webgriffe\SyliusClerkPlugin\QueryBuilder\TaxonsQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\TaxonNormalizer`
+- Orders: `Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer`
+
+So, to customize the feed generation you can replace these implementations using the common Symfony techniques to do so (see [here](https://symfony.com/doc/current/bundles/override.html#services-configuration)).
 
 ## Contributing
 
