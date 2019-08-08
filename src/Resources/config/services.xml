@@ -47,5 +47,14 @@
         <service id="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider">
             <argument/>
         </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider">
+            <argument/>
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController" public="true">
+            <argument id="sylius.context.channel" type="service"/>
+            <argument id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider" type="service" />
+        </service>
     </services>
 </container>

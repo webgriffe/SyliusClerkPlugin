@@ -9,3 +9,7 @@ services:
     arguments:
       - '@doctrine.orm.entity_manager'
       - '@sylius.product_variant_resolver.default'
+
+  Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Shop\ClerkTrackingCodeContext:
+    arguments:
+      - '@sylius.behat.page.shop.home'

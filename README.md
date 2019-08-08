@@ -51,12 +51,14 @@ The Clerk.io integration with Sylius is per-channel. Every Clerk.io store must b
 webgriffe_sylius_clerk:
   stores:
     - channel_code: WEB-US
+      public_api_key: web-us-public-key
       private_api_key: 123abc
     - channel_code: WEB-EU
+      public_api_key: web-ew-public-key
       private_api_key: 890xyz
 ```
 
-Where every entry in the `stores` key must contain the Sylius channel code in `channel_code` and the related Clerk's private API key in `private_api_key`.
+Where every entry in the `stores` key must contain the Sylius channel code in `channel_code` and the related Clerk's public/private API key in `public_api_key` and  `private_api_key`.
 
 ## Sync your data with Clerk.io
 
@@ -67,6 +69,25 @@ https://your-sylius-store.com/clerk/feed/channelId
 ```
 
 Where `https://your-sylius-store.com` is your Sylius store base URL and `channelId` is the database ID of the Sylius channel you whant to sync.
+
+## Installing Clerk.js on you store front
+
+Like stated in the official Clerk documentation [here](https://docs.clerk.io/docs/clerkjs-quick-start#section-installing-clerkjs), you have to put the Clerk.js tracking code on all pages of your store just before the `</head>` tag. To do so this plugin expose a dedicated controller action which you can render in your Twig template, for example like the following:
+
+```twig
+{# templates/bundles/SyliusShopBundle/layout.html.twig #}
+
+{% extends '@!SyliusShop/layout.html.twig' %}
+
+{# In a real project is probably better to use the "sylius.shop.layout.head" sonata block event. #}
+{% block stylesheets %}
+    {{ parent() }}
+
+    {{ render(url('webgriffe_sylius_clerk_tracking_code')) }}
+{% endblock %}
+```
+
+From then you can use all the Clerk.js features on your store pages.
 
 ## Customizing
 
@@ -88,10 +109,6 @@ The plugin already provide three query builder factories and three normalizers:
 - Orders: `Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer`
 
 So, to customize the feed generation you can replace these implementations using the common Symfony techniques to do so (see [here](https://symfony.com/doc/current/bundles/override.html#services-configuration)).
-
-## Put Clerk on your frontend pages
-
-Work in progress.
 
 ## Contributing
 

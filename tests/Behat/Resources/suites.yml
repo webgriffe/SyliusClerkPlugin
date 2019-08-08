@@ -23,5 +23,7 @@ default:
 
                 - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext
 
+                - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Shop\ClerkTrackingCodeContext
+
             filters:
                 tags: "@clerk_plugin"

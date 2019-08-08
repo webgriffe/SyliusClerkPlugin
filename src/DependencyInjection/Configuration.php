@@ -28,6 +28,7 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode('channel_code')->isRequired()->end()
+                            ->scalarNode('public_api_key')->isRequired()->end()
                             ->scalarNode('private_api_key')->isRequired()->end()
                         ->end()
                     ->end()

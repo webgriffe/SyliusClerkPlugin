@@ -1,1 +1,5 @@
-# Define your own shop routes here
+webgriffe_sylius_clerk_tracking_code:
+  path: /tracking-code
+  defaults:
+    _controller: WebgriffeSyliusClerkPlugin:TrackingCode:trackingCode
+    name: ~
