@@ -11,7 +11,7 @@ use Sylius\Component\Core\Model\TaxonInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface;
 
-class FeedGenerator
+final class FeedGenerator implements FeedGeneratorInterface
 {
     /**
      * @var QueryBuilderFactoryInterface

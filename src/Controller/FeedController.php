@@ -12,14 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
+use Webgriffe\SyliusClerkPlugin\Service\FeedGeneratorInterface;
 use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProviderInterface;
 use Webmozart\Assert\Assert;
 
-class FeedController extends AbstractController
+final class FeedController extends AbstractController
 {
     /**
-     * @var FeedGenerator
+     * @var FeedGeneratorInterface
      */
     private $feedGenerator;
     /**
@@ -32,7 +32,7 @@ class FeedController extends AbstractController
     private $privateApiKeyProvider;
 
     public function __construct(
-        FeedGenerator $productsFeedGenerator,
+        FeedGeneratorInterface $productsFeedGenerator,
         ChannelRepositoryInterface $channelRepository,
         PrivateApiKeyProviderInterface $privateApiKeyProvider
     ) {

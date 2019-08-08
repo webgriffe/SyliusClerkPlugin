@@ -13,7 +13,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webmozart\Assert\Assert;
 
-class TaxonNormalizer implements NormalizerInterface
+final class TaxonNormalizer implements NormalizerInterface
 {
     /**
      * @var RouterInterface

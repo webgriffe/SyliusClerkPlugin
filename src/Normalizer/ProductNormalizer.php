@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webmozart\Assert\Assert;
 
-class ProductNormalizer implements NormalizerInterface
+final class ProductNormalizer implements NormalizerInterface
 {
     /**
      * @var ProductVariantResolverInterface
