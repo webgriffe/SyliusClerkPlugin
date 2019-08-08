@@ -6,7 +6,6 @@ namespace Webgriffe\SyliusClerkPlugin\Controller;
 
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Locale\Model\LocaleInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
+use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProviderInterface;
 use Webmozart\Assert\Assert;
 
 class FeedController extends AbstractController
@@ -27,27 +27,26 @@ class FeedController extends AbstractController
      */
     private $channelRepository;
     /**
-     * @var string
+     * @var PrivateApiKeyProviderInterface
      */
-    private $privateApiKey;
+    private $privateApiKeyProvider;
 
     public function __construct(
         FeedGenerator $productsFeedGenerator,
         ChannelRepositoryInterface $channelRepository,
-        string $privateApiKey
+        PrivateApiKeyProviderInterface $privateApiKeyProvider
     ) {
         $this->feedGenerator = $productsFeedGenerator;
         $this->channelRepository = $channelRepository;
-        $this->privateApiKey = $privateApiKey;
+        $this->privateApiKeyProvider = $privateApiKeyProvider;
     }
 
     public function feedAction(int $channelId, Request $request): Response
     {
-        if (!$this->isSecurityHashInRequestValid($request)) {
+        $channel = $this->getChannel($channelId);
+        if (!$this->isSecurityHashInRequestValidForChannel($request, $channel)) {
             throw new AccessDeniedHttpException();
         }
-        $channel = $this->getChannel($channelId);
-        Assert::isInstanceOf($channel->getDefaultLocale(), LocaleInterface::class);
 
         return new JsonResponse($this->feedGenerator->generate($channel), Response::HTTP_OK, [], true);
     }
@@ -69,11 +68,12 @@ class FeedController extends AbstractController
         return $channel;
     }
 
-    private function isSecurityHashInRequestValid(Request $request): bool
+    private function isSecurityHashInRequestValidForChannel(Request $request, ChannelInterface $channel): bool
     {
+        $privateApiKey = $this->privateApiKeyProvider->providePrivateApiKeyForChannel($channel);
         $salt = $request->query->get('salt');
         $hash = $request->query->get('hash');
-        $calculatedHash = hash('sha512', $salt . $this->privateApiKey . floor(time() / 100));
+        $calculatedHash = hash('sha512', $salt . $privateApiKey . floor(time() / 100));
 
         return $hash === $calculatedHash;
     }

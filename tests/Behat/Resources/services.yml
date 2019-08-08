@@ -4,7 +4,6 @@ services:
   Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext:
     arguments:
       - '@test.client'
-      - '%env(CLERK_PRIVATE_API_KEY)%'
 
   Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext:
     arguments:

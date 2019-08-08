@@ -1,0 +1,4 @@
+webgriffe_sylius_clerk:
+  stores:
+    - channel_code: WEB-US
+      private_api_key: 123abc

@@ -8,6 +8,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider;
 
 final class WebgriffeSyliusClerkExtension extends Extension
 {
@@ -20,5 +21,8 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('services.xml');
+
+        $definition = $container->getDefinition(PrivateApiKeyProvider::class);
+        $definition->replaceArgument(0, $config['stores']);
     }
 }

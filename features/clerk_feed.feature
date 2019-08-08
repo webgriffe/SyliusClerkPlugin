@@ -6,6 +6,7 @@ Feature: Providing a Clerk.io data feed
 
   Background:
     Given the store operates on a single channel in "United States"
+    And the Clerk's private API key for the "United States" channel is "123abc"
     And the store has "Mugs" taxonomy
     And the store has a product "Sylius Mug" priced at "$3.99"
     And I assigned this product to "Mugs" taxon
@@ -67,5 +68,5 @@ Feature: Providing a Clerk.io data feed
     And there should be the value "3.99" in this feed JSON paths "$.sales.*.products.*.price"
 
   Scenario: Denying access to Clerk data feed with an invalid security hash
-    When the Clerk crawler hits the data feed URL with an invalid security hash
+    When the Clerk crawler hits the data feed URL for the "United States" channel with an invalid security hash
     Then the Clerk crawler should receive an access denied response

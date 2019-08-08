@@ -5,7 +5,7 @@
         <service id="Webgriffe\SyliusClerkPlugin\Controller\FeedController" public="true">
             <argument id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator" type="service"/>
             <argument id="sylius.repository.channel" type="service"/>
-            <argument>%env(CLERK_PRIVATE_API_KEY)%</argument>
+            <argument id="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider" type="service" />
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator">
@@ -42,6 +42,10 @@
 
         <service id="Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory">
             <argument id="sylius.repository.order" type="service"/>
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider">
+            <argument/>
         </service>
     </services>
 </container>

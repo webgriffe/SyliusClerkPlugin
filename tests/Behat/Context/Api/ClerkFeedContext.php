@@ -17,14 +17,13 @@ class ClerkFeedContext implements Context
      */
     private $client;
     /**
-     * @var string
+     * @var array
      */
-    private $privateApiKey;
+    private $privateApiKeysForChannels;
 
-    public function __construct(Client $client, string $privateApiKey)
+    public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->privateApiKey = $privateApiKey;
     }
 
     /**
@@ -32,8 +31,9 @@ class ClerkFeedContext implements Context
      */
     public function theClerkCrawlerHitsTheDataFeedUrl(ChannelInterface $channel): void
     {
+        $privateApiKey = $this->privateApiKeysForChannels[$channel->getId()];
         $salt = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 10);
-        $hash = hash('sha512', $salt . $this->privateApiKey . floor(time() / 100));
+        $hash = hash('sha512', $salt . $privateApiKey . floor(time() / 100));
         $this->client->request(
             'GET',
             '/clerk/feed/' . $channel->getId(),
@@ -48,7 +48,7 @@ class ClerkFeedContext implements Context
      */
     public function theClerkCrawlerShouldReceiveASuccessfulHttpResponseWithAValidJsonFeedAsItsContent()
     {
-        Assert::eq(200, $this->client->getResponse()->getStatusCode());
+        Assert::eq($this->client->getResponse()->getStatusCode(), 200);
         Assert::eq($this->client->getResponse()->headers->get('Content-Type'), 'application/json');
         Assert::object(json_decode($this->client->getResponse()->getContent()));
     }
@@ -200,13 +200,13 @@ class ClerkFeedContext implements Context
     }
 
     /**
-     * @When /^the Clerk crawler hits the data feed URL with an invalid security hash$/
+     * @When /^the Clerk crawler hits the data feed URL for the ("([^"]+)" channel) with an invalid security hash$/
      */
-    public function theClerkCrawlerHitsTheDataFeedURLWithAnInvalidSecurityHash(): void
+    public function theClerkCrawlerHitsTheDataFeedURLForTheChannelWithAnInvalidSecurityHash(ChannelInterface $channel)
     {
         $this->client->request(
             'GET',
-            '/clerk/feed/1',
+            '/clerk/feed/' . $channel->getId(),
             ['salt' => 'invalid', 'hash' => 'invalid'],
             [],
             ['ACCEPT' => 'application/json']
@@ -219,5 +219,13 @@ class ClerkFeedContext implements Context
     public function theClerkCrawlerShouldReceiveAnAccessDeniedResponse(): void
     {
         Assert::eq(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @Given /^the Clerk's private API key for the ("[^"]+" channel) is "([^"]*)"$/
+     */
+    public function theClerkSPrivateAPIKeyForChannelIs(ChannelInterface $channel, string $privateApiKey): void
+    {
+        $this->privateApiKeysForChannels[$channel->getId()] = $privateApiKey;
     }
 }
