@@ -3,3 +3,9 @@ webgriffe_sylius_clerk_tracking_code:
   defaults:
     _controller: WebgriffeSyliusClerkPlugin:TrackingCode:trackingCode
     name: ~
+
+webgriffe_sylius_clerk_sales_tracking:
+  path: /clerk-sales-tracking/{orderId}
+  defaults:
+    _controller: WebgriffeSyliusClerkPlugin:SalesTracking:index
+    name: ~

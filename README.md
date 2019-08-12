@@ -6,7 +6,6 @@
 <h1 align="center">Clerk.io Plugin</h1>
 <p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>.</p>
 
-
 ## Installation
 
 1. Run `composer require webgriffe/sylius-clerk-plugin`.
@@ -90,6 +89,21 @@ Like stated in the official Clerk documentation [here](https://docs.clerk.io/doc
 ```
 
 From then you can use all the Clerk.js features on your store pages.
+
+## Installing sales tracking on order success page
+
+Like stated in the official Clerk documentation [here](https://help.clerk.io/en/articles/1130393-installing-sales-tracking-on-other-custom-platforms), you should optimise Clerk.io by optimising the sales tracking installing the instant sales tracking code on your thank you page. To do so this plugin expose a dedicated controller action which you can render in your thank you page Twig template, for example like the following:
+
+```twig
+{# templates/bundles/SyliusShopBundle/Order/thankYou.html.twig #}
+{% extends '@!SyliusShop/Order/thankYou.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ render(url('webgriffe_sylius_clerk_sales_tracking', {orderId: order.id})) }}
+{% endblock %}
+```
 
 ## Customizing
 

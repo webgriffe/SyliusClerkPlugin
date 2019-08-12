@@ -13,3 +13,11 @@ services:
   Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Shop\ClerkTrackingCodeContext:
     arguments:
       - '@sylius.behat.page.shop.home'
+
+  Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Shop\ClerkSalesTrackingContext:
+    arguments:
+      - '@Tests\Webgriffe\SyliusClerkPlugin\Behat\Page\Shop\ThankYouPage'
+
+  Tests\Webgriffe\SyliusClerkPlugin\Behat\Page\Shop\ThankYouPage:
+    parent: 'sylius.behat.page.shop.order.thank_you'
+    public: false

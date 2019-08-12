@@ -56,5 +56,10 @@
             <argument id="sylius.context.channel" type="service"/>
             <argument id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider" type="service" />
         </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController" public="true">
+            <argument id="sylius.repository.order" type="service"/>
+            <argument id="serializer" type="service"/>
+        </service>
     </services>
 </container>

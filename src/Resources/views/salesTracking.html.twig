@@ -1,0 +1,9 @@
+<span
+        class="clerk"
+        data-api="log/sale"
+
+        data-sale="{{ order.id }}"
+        data-email="{{ order.email }}"
+        data-customer="{{ order.customer }}"
+        data-products='{{ order.products|json_encode }}'>
+</span>

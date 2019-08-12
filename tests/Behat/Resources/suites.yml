@@ -12,6 +12,9 @@ default:
                 - sylius.behat.context.setup.taxonomy
                 - sylius.behat.context.setup.product_attribute
                 - sylius.behat.context.setup.order
+                - sylius.behat.context.setup.shipping
+                - sylius.behat.context.setup.payment
+                - sylius.behat.context.setup.shop_security
                 - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext
 
                 - sylius.behat.context.transform.product
@@ -20,10 +23,16 @@ default:
                 - sylius.behat.context.transform.taxon
                 - sylius.behat.context.transform.lexical
                 - sylius.behat.context.transform.customer
+                - sylius.behat.context.transform.order
 
                 - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext
 
+                - sylius.behat.context.ui.shop.cart
+                - sylius.behat.context.ui.shop.checkout
+                - sylius.behat.context.ui.shop.checkout.complete
+                - sylius.behat.context.ui.shop.checkout.thank_you
                 - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Shop\ClerkTrackingCodeContext
+                - Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Shop\ClerkSalesTrackingContext
 
             filters:
                 tags: "@clerk_plugin"
