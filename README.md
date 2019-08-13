@@ -5,6 +5,9 @@
 </p>
 <h1 align="center">Clerk.io Plugin</h1>
 <p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>.</p>
+<p align="center"><img src="https://travis-ci.org/webgriffe/SyliusClerkPlugin.svg?branch=master" alt="Build Status" /></p>
+
+
 
 ## Installation
 
@@ -71,7 +74,7 @@ https://your-sylius-store.com/clerk/feed/channelId
 
 Where `https://your-sylius-store.com` is your Sylius store base URL and `channelId` is the database ID of the Sylius channel you whant to sync.
 
-## Installing Clerk.js on you store front
+## Install Clerk.js on you store front
 
 Like stated in the official Clerk documentation [here](https://docs.clerk.io/docs/clerkjs-quick-start#section-installing-clerkjs), you have to put the Clerk.js tracking code on all pages of your store just before the `</head>` tag. To do so this plugin expose a dedicated controller action which you can render in your Twig template, for example like the following:
 
@@ -90,7 +93,7 @@ Like stated in the official Clerk documentation [here](https://docs.clerk.io/doc
 
 From then you can use all the Clerk.js features on your store pages.
 
-## Installing sales tracking on order success page
+## Install sales tracking on order success page
 
 Like stated in the official Clerk documentation [here](https://help.clerk.io/en/articles/1130393-installing-sales-tracking-on-other-custom-platforms), you should optimise Clerk.io by optimising the sales tracking installing the instant sales tracking code on your thank you page. To do so this plugin expose a dedicated controller action which you can render in your thank you page Twig template, for example like the following:
 
