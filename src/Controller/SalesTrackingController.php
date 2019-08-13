@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webmozart\Assert\Assert;
 
-class SalesTrackingController extends AbstractController
+final class SalesTrackingController extends AbstractController
 {
     /**
      * @var OrderRepositoryInterface
