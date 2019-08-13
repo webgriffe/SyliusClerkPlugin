@@ -8,7 +8,6 @@
 <p align="center"><img src="https://travis-ci.org/webgriffe/SyliusClerkPlugin.svg?branch=master" alt="Build Status" /></p>
 
 
-
 ## Installation
 
 1. Run `composer require webgriffe/sylius-clerk-plugin`.
@@ -135,30 +134,26 @@ To contribute you need to:
 
 1. Clone this repository into your development environment
 
-2. Copy the `.env.test.dist` file inside the test application directory to the `.env` file:
+2. [OPTIONAL] Copy the `.env` file inside the test application directory to the `.env.local` file:
 
    ```bash
-   cp tests/Application/.env.test.dist tests/Application/.env
+   cp tests/Application/.env tests/Application/.env.local
    ```
 
-3. Edit the `tests/Application/.env` file by setting configuration specific for your development environment. For example, if you want to use SQLite as database driver during testing you can set the `DATABASE_URL` environment variable as follows:
+   Then edit the `tests/Application/.env.local` file by setting configuration specific for you development environment.
 
-   ```bash
-   DATABASE_URL=sqlite:///%kernel.project_dir%/var/%kernel.environment%_db.sql
-   ```
-
-4. Then, from the plugin's root directory, run the following commands:
+3. Then, from the plugin's root directory, run the following commands:
 
    ```bash
    (cd tests/Application && yarn install)
    (cd tests/Application && yarn build)
-   (cd tests/Application && bin/console assets:install public)
-   (cd tests/Application && bin/console doctrine:database:create)
-   (cd tests/Application && bin/console doctrine:schema:create)
-   (cd tests/Application && bin/console server:run localhost:8080 -d public)
+   (cd tests/Application && bin/console -e test assets:install public)
+   (cd tests/Application && bin/console -e test doctrine:database:create)
+   (cd tests/Application && bin/console -e test doctrine:schema:create)
+   (cd tests/Application && bin/console -e test server:run localhost:8080 -d public)
    ```
 
-5. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
+4. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
 
 ### Testing
 
@@ -215,7 +210,7 @@ To run Behat's JS scenarios you need to setup Selenium and Chromedriver. Do the 
 4. Remember that the test application webserver must be up and running as described above:
 
    ```bash
-   cd tests/Application && bin/console server:run localhost:8080 -d public
+   cd tests/Application && bin/console -e test server:run localhost:8080 -d public
    ```
 
 License
