@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Webgriffe\SyliusClerkPlugin\Encoder\ClerkJsonEncoder;
 use Webmozart\Assert\Assert;
 
 final class ProductNormalizer implements NormalizerInterface
@@ -108,7 +109,7 @@ final class ProductNormalizer implements NormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof ProductInterface;
+        return $data instanceof ProductInterface && $format === ClerkJsonEncoder::FORMAT;
     }
 
     private function getTaxonsIds(ProductInterface $product): array

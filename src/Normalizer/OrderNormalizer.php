@@ -8,6 +8,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Webgriffe\SyliusClerkPlugin\Encoder\ClerkJsonEncoder;
 
 final class OrderNormalizer implements NormalizerInterface
 {
@@ -56,6 +57,6 @@ final class OrderNormalizer implements NormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof OrderInterface;
+        return $data instanceof OrderInterface && $format === ClerkJsonEncoder::FORMAT;
     }
 }

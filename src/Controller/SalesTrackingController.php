@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Webgriffe\SyliusClerkPlugin\Encoder\ClerkJsonEncoder;
 use Webmozart\Assert\Assert;
 
 final class SalesTrackingController extends AbstractController
@@ -34,7 +35,7 @@ final class SalesTrackingController extends AbstractController
         /** @var OrderInterface $order */
         $order = $this->orderRepository->find($orderId);
         Assert::isInstanceOf($order, OrderInterface::class);
-        $order = $this->normalizer->normalize($order, 'json', ['channel' => $order->getChannel()]);
+        $order = $this->normalizer->normalize($order, ClerkJsonEncoder::FORMAT, ['channel' => $order->getChannel()]);
 
         return $this->render('@WebgriffeSyliusClerkPlugin/salesTracking.html.twig', ['order' => $order]);
     }

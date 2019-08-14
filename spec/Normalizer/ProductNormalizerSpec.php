@@ -69,9 +69,20 @@ class ProductNormalizerSpec extends ObjectBehavior
         $this->shouldHaveType(NormalizerInterface::class);
     }
 
-    function it_supports_normalization_for_products()
+    function it_supports_product_normalization_for_clerk_json_format()
     {
-        $this->supportsNormalization(new Product())->shouldBe(true);
+        $this->supportsNormalization(new Product(), 'clerk_json')->shouldBe(true);
+    }
+
+    function it_does_not_support_product_normalization_for_other_formats()
+    {
+        $this->supportsNormalization(new Product(), 'json')->shouldReturn(false);
+        $this->supportsNormalization(new Product(), 'other_format')->shouldReturn(false);
+    }
+
+    function it_does_not_support_other_object_normalization()
+    {
+        $this->supportsNormalization(new \stdClass(), 'clerk_json')->shouldReturn(false);
     }
 
     function it_throws_an_exception_if_channel_is_not_in_context()

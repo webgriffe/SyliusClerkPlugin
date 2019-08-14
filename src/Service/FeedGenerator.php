@@ -9,6 +9,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Webgriffe\SyliusClerkPlugin\Encoder\ClerkJsonEncoder;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface;
 
 final class FeedGenerator implements FeedGeneratorInterface
@@ -68,6 +69,6 @@ final class FeedGenerator implements FeedGeneratorInterface
             $feed['sales'][] = $order;
         }
 
-        return $this->serializer->serialize($feed, 'json', ['channel' => $channel]);
+        return $this->serializer->serialize($feed, ClerkJsonEncoder::FORMAT, ['channel' => $channel]);
     }
 }

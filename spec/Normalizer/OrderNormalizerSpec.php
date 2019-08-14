@@ -42,14 +42,20 @@ class OrderNormalizerSpec extends ObjectBehavior
         $this->shouldHaveType(NormalizerInterface::class);
     }
 
-    function it_supports_order_normalization()
+    function it_supports_order_normalization_for_clerk_json_format()
     {
-        $this->supportsNormalization(new Order(), null)->shouldReturn(true);
+        $this->supportsNormalization(new Order(), 'clerk_json')->shouldReturn(true);
+    }
+
+    function it_does_not_support_order_normalization_for_other_formats()
+    {
+        $this->supportsNormalization(new Order(), 'json')->shouldReturn(false);
+        $this->supportsNormalization(new Order(), 'other_format')->shouldReturn(false);
     }
 
     function it_does_not_support_other_object_normalization()
     {
-        $this->supportsNormalization(new \stdClass(), null)->shouldReturn(false);
+        $this->supportsNormalization(new \stdClass(), 'clerk_json')->shouldReturn(false);
     }
 
     function it_throws_an_exception_normalizing_object_which_is_not_an_order()
