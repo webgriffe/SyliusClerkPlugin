@@ -5,7 +5,10 @@
 </p>
 <h1 align="center">Clerk.io Plugin</h1>
 <p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>.</p>
-<p align="center"><img src="https://travis-ci.org/webgriffe/SyliusClerkPlugin.svg?branch=master" alt="Build Status" /></p>
+<p align="center"><a href="https://travis-ci.org/webgriffe/SyliusClerkPlugin"><img src="https://travis-ci.org/webgriffe/SyliusClerkPlugin.svg?branch=master" alt="Build Status" /></a></p>
+
+
+
 ## Installation
 
 1. Run `composer require webgriffe/sylius-clerk-plugin`.
