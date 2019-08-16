@@ -24,9 +24,9 @@ class TaxonNormalizerSpec extends ObjectBehavior
         $this->shouldHaveType(NormalizerInterface::class);
     }
 
-    function it_supports_taxon_normalization_for_clerk_json_format()
+    function it_supports_taxon_normalization_for_clerk_array_format()
     {
-        $this->supportsNormalization(new Taxon(), 'clerk_json')->shouldReturn(true);
+        $this->supportsNormalization(new Taxon(), 'clerk_array')->shouldReturn(true);
     }
 
     function it_does_not_support_taxon_normalization_for_other_formats()
@@ -37,6 +37,6 @@ class TaxonNormalizerSpec extends ObjectBehavior
 
     function it_does_not_support_other_object_normalization()
     {
-        $this->supportsNormalization(new \stdClass(), 'clerk_json')->shouldReturn(false);
+        $this->supportsNormalization(new \stdClass(), 'clerk_array')->shouldReturn(false);
     }
 }

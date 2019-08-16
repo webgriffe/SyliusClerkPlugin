@@ -42,9 +42,9 @@ class OrderNormalizerSpec extends ObjectBehavior
         $this->shouldHaveType(NormalizerInterface::class);
     }
 
-    function it_supports_order_normalization_for_clerk_json_format()
+    function it_supports_order_normalization_for_clerk_array_format()
     {
-        $this->supportsNormalization(new Order(), 'clerk_json')->shouldReturn(true);
+        $this->supportsNormalization(new Order(), 'clerk_array')->shouldReturn(true);
     }
 
     function it_does_not_support_order_normalization_for_other_formats()
@@ -55,7 +55,7 @@ class OrderNormalizerSpec extends ObjectBehavior
 
     function it_does_not_support_other_object_normalization()
     {
-        $this->supportsNormalization(new \stdClass(), 'clerk_json')->shouldReturn(false);
+        $this->supportsNormalization(new \stdClass(), 'clerk_array')->shouldReturn(false);
     }
 
     function it_throws_an_exception_normalizing_object_which_is_not_an_order()

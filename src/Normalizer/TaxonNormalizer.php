@@ -11,7 +11,7 @@ use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Webgriffe\SyliusClerkPlugin\Encoder\ClerkJsonEncoder;
+use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 use Webmozart\Assert\Assert;
 
 final class TaxonNormalizer implements NormalizerInterface
@@ -68,6 +68,6 @@ final class TaxonNormalizer implements NormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof TaxonInterface && $format === ClerkJsonEncoder::FORMAT;
+        return $data instanceof TaxonInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
     }
 }

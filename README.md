@@ -115,7 +115,7 @@ Basically, this bundle provides an easy way to generate a JSON feed compliant wi
 For each entity type the following two components are involved in feed generation:
 
 * A `Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface` which is responsible to create a `Doctrine\ORM\QueryBuilder` which builds the query to select the objects you want to include in the feed.
-* A `Symfony\Component\Serializer\Normalizer\NormalizerInterface` which is a common normalizer of the [Symfony's Serializer component](https://symfony.com/doc/current/components/serializer.html). The normalizer is the component responsible to convert every instance of the related entity type to an associative array which is then converted to JSON. Normalized data will be encoded using the custom `Webgriffe\SyliusClerkPlugin\Encoder\ClerkJsonEncoder` which is bound to the `clerk_json` format. So your normalizers should support only normalization for the `clerk_json` format. In this way there's no risk to break other serializer usages for that objects. 
+* A `Symfony\Component\Serializer\Normalizer\NormalizerInterface` which is a common normalizer of the [Symfony's Serializer component](https://symfony.com/doc/current/components/serializer.html). The normalizer is the component responsible to convert every instance of the related entity type to an associative array which is then converted to JSON. To the normalization process will be passed a special `clerk_array` format. So, your normalizers should support only normalization for the `clerk_array` format. In this way there's no risk to break other serializer usages for that objects. 
 
 The plugin already provides three query builder factories and three normalizers:
 

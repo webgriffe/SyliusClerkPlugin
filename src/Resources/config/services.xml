@@ -61,10 +61,5 @@
             <argument id="sylius.repository.order" type="service"/>
             <argument id="serializer" type="service"/>
         </service>
-
-        <service id="Webgriffe\SyliusClerkPlugin\Encoder\ClerkJsonEncoder">
-            <argument id="serializer.encoder.json" type="service" />
-            <tag name="serializer.encoder" />
-        </service>
     </services>
 </container>

@@ -8,12 +8,16 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Webgriffe\SyliusClerkPlugin\Encoder\ClerkJsonEncoder;
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class FeedGenerator implements FeedGeneratorInterface
 {
+    public const NORMALIZATION_FORMAT = 'clerk_array';
+
     /**
      * @var QueryBuilderFactoryInterface
      */
@@ -27,7 +31,7 @@ final class FeedGenerator implements FeedGeneratorInterface
      */
     private $ordersQueryBuilderFactory;
     /**
-     * @var SerializerInterface
+     * @var NormalizerInterface&EncoderInterface
      */
     private $serializer;
 
@@ -35,14 +39,23 @@ final class FeedGenerator implements FeedGeneratorInterface
         QueryBuilderFactoryInterface $productsQueryBuilderFactory,
         QueryBuilderFactoryInterface $taxonsQueryBuilderFactory,
         QueryBuilderFactoryInterface $ordersQueryBuilderFactory,
-        SerializerInterface $serializer
+        $serializer
     ) {
         $this->productsQueryBuilderFactory = $productsQueryBuilderFactory;
         $this->taxonsQueryBuilderFactory = $taxonsQueryBuilderFactory;
         $this->ordersQueryBuilderFactory = $ordersQueryBuilderFactory;
+        Assert::isInstanceOf($serializer, NormalizerInterface::class);
+        Assert::isInstanceOf($serializer, EncoderInterface::class);
         $this->serializer = $serializer;
     }
 
+    /**
+     * @param ChannelInterface $channel
+     *
+     * @return string
+     *
+     * @throws ExceptionInterface
+     */
     public function generate(ChannelInterface $channel): string
     {
         $productsQueryBuilder = $this->productsQueryBuilderFactory->createQueryBuilder($channel);
@@ -69,6 +82,9 @@ final class FeedGenerator implements FeedGeneratorInterface
             $feed['sales'][] = $order;
         }
 
-        return $this->serializer->serialize($feed, ClerkJsonEncoder::FORMAT, ['channel' => $channel]);
+        return (string) $this->serializer->encode(
+            $this->serializer->normalize($feed, self::NORMALIZATION_FORMAT, ['channel' => $channel]),
+            'json'
+        );
     }
 }
