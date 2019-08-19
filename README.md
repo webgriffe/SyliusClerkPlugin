@@ -5,7 +5,7 @@
 </p>
 <h1 align="center">Clerk.io Plugin</h1>
 <p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>.</p>
-<p align="center"><a href="https://travis-ci.org/webgriffe/SyliusClerkPlugin"><img src="https://travis-ci.org/webgriffe/SyliusClerkPlugin.svg?branch=master" alt="Build Status" /></a></p>
+<p align="center"><a href="https://travis-ci.org/webgriffe/SyliusClerkPlugin" target="_blank"><img src="https://travis-ci.org/webgriffe/SyliusClerkPlugin.svg?branch=master" alt="Build Status" /></a></p>
 
 
 
@@ -16,7 +16,7 @@
 2. Add the plugin to the `config/bundles.php` file:
 
    ```php
-   Webgriffe\SyliusTableRateShippingPlugin\WebgriffeSyliusClerkPlugin::class => ['all' => true],
+   Webgriffe\SyliusClerkPlugin\WebgriffeSyliusClerkPlugin::class => ['all' => true],
    ```
 
 3. Add the plugin's routing by creating the file `config/routes.yaml` with the following content:
