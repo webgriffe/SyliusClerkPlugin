@@ -5,7 +5,7 @@
     "description": "Clerk.io plugin for Sylius.",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
 
         "sylius/sylius": "^1.4",
         "ext-json": "*",
