@@ -14,13 +14,10 @@ use Webmozart\Assert\Assert;
 
 final class TrackingCodeController extends AbstractController
 {
-    /**
-     * @var ChannelContextInterface
-     */
+    /** @var ChannelContextInterface */
     private $channelContext;
-    /**
-     * @var PublicApiKeyProviderInterface
-     */
+
+    /** @var PublicApiKeyProviderInterface */
     private $publicApiKeyProvider;
 
     public function __construct(

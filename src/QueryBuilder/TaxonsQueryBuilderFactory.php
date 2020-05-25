@@ -10,9 +10,7 @@ use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
 final class TaxonsQueryBuilderFactory implements QueryBuilderFactoryInterface
 {
-    /**
-     * @var TaxonRepositoryInterface
-     */
+    /** @var TaxonRepositoryInterface */
     private $taxonRepository;
 
     public function __construct(TaxonRepositoryInterface $taxonRepository)

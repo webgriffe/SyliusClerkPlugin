@@ -15,13 +15,10 @@ use Webmozart\Assert\Assert;
 
 final class SalesTrackingController extends AbstractController
 {
-    /**
-     * @var OrderRepositoryInterface
-     */
+    /** @var OrderRepositoryInterface */
     private $orderRepository;
-    /**
-     * @var NormalizerInterface
-     */
+
+    /** @var NormalizerInterface */
     private $normalizer;
 
     public function __construct(OrderRepositoryInterface $orderRepository, NormalizerInterface $normalizer)

@@ -12,13 +12,10 @@ use Webmozart\Assert\Assert;
 
 class ClerkFeedContext implements Context
 {
-    /**
-     * @var Client
-     */
+    /** @var Client */
     private $client;
-    /**
-     * @var array
-     */
+
+    /** @var array */
     private $privateApiKeysForChannels;
 
     public function __construct(Client $client)
@@ -154,8 +151,8 @@ class ClerkFeedContext implements Context
     {
         // See: https://stackoverflow.com/questions/2524680/check-whether-the-string-is-a-unix-timestamp
         Assert::integer($jsonPath->first());
-        Assert::greaterThanEq($jsonPath->first(), ~PHP_INT_MAX);
-        Assert::lessThanEq($jsonPath->first(), PHP_INT_MAX);
+        Assert::greaterThanEq($jsonPath->first(), ~\PHP_INT_MAX);
+        Assert::lessThanEq($jsonPath->first(), \PHP_INT_MAX);
     }
 
     /**
@@ -163,7 +160,7 @@ class ClerkFeedContext implements Context
      */
     public function thereShouldBeTheBooleanValueInThisFeedJsonPath(string $booleanValueString, JSONPath $jsonPath)
     {
-        $booleanValue = filter_var($booleanValueString, FILTER_VALIDATE_BOOLEAN);
+        $booleanValue = filter_var($booleanValueString, \FILTER_VALIDATE_BOOLEAN);
         Assert::boolean(
             $booleanValue,
             'Expected a boolean string (like "true" or "false"), got: ' . $booleanValueString
@@ -195,7 +192,7 @@ class ClerkFeedContext implements Context
     {
         Assert::minCount($jsonPaths, 1);
         foreach ($jsonPaths as $jsonPath) {
-            Assert::true(filter_var($jsonPath, FILTER_VALIDATE_EMAIL) !== false);
+            Assert::true(filter_var($jsonPath, \FILTER_VALIDATE_EMAIL) !== false);
         }
     }
 

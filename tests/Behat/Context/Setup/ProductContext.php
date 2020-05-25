@@ -13,13 +13,10 @@ use Sylius\Component\Product\Resolver\DefaultProductVariantResolver;
 
 class ProductContext implements Context
 {
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
-    /**
-     * @var DefaultProductVariantResolver
-     */
+
+    /** @var DefaultProductVariantResolver */
     private $defaultVariantResolver;
 
     public function __construct(ObjectManager $objectManager, DefaultProductVariantResolver $defaultVariantResolver)

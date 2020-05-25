@@ -10,9 +10,7 @@ use Tests\Webgriffe\SyliusClerkPlugin\Behat\Page\Shop\ThankYouPageInterface;
 
 class ClerkSalesTrackingContext implements Context
 {
-    /**
-     * @var ThankYouPageInterface
-     */
+    /** @var ThankYouPageInterface */
     private $thankYouPage;
 
     public function __construct(ThankYouPageInterface $thankYouPage)

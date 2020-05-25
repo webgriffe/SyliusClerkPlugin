@@ -16,13 +16,10 @@ use Webmozart\Assert\Assert;
 
 final class TaxonNormalizer implements NormalizerInterface
 {
-    /**
-     * @var RouterInterface
-     */
+    /** @var RouterInterface */
     private $router;
-    /**
-     * @var TaxonRepositoryInterface
-     */
+
+    /** @var TaxonRepositoryInterface */
     private $taxonRepository;
 
     public function __construct(RouterInterface $router, TaxonRepositoryInterface $taxonRepository)

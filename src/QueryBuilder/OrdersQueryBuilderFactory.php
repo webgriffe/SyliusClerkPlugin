@@ -12,9 +12,7 @@ use Webmozart\Assert\Assert;
 
 final class OrdersQueryBuilderFactory implements QueryBuilderFactoryInterface
 {
-    /**
-     * @var OrderRepositoryInterface|EntityRepository
-     */
+    /** @var OrderRepositoryInterface|EntityRepository */
     private $orderRepository;
 
     public function __construct(OrderRepositoryInterface $orderRepository)

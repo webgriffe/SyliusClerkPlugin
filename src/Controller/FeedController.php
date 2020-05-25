@@ -18,17 +18,13 @@ use Webmozart\Assert\Assert;
 
 final class FeedController extends AbstractController
 {
-    /**
-     * @var FeedGeneratorInterface
-     */
+    /** @var FeedGeneratorInterface */
     private $feedGenerator;
-    /**
-     * @var ChannelRepositoryInterface
-     */
+
+    /** @var ChannelRepositoryInterface */
     private $channelRepository;
-    /**
-     * @var PrivateApiKeyProviderInterface
-     */
+
+    /** @var PrivateApiKeyProviderInterface */
     private $privateApiKeyProvider;
 
     public function __construct(
@@ -51,11 +47,6 @@ final class FeedController extends AbstractController
         return new JsonResponse($this->feedGenerator->generate($channel), Response::HTTP_OK, [], true);
     }
 
-    /**
-     * @param int $channelId
-     *
-     * @return ChannelInterface
-     */
     private function getChannel(int $channelId): ChannelInterface
     {
         /** @var ChannelInterface|null $channel */

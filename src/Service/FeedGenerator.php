@@ -18,23 +18,21 @@ final class FeedGenerator implements FeedGeneratorInterface
 {
     public const NORMALIZATION_FORMAT = 'clerk_array';
 
-    /**
-     * @var QueryBuilderFactoryInterface
-     */
+    /** @var QueryBuilderFactoryInterface */
     private $productsQueryBuilderFactory;
-    /**
-     * @var QueryBuilderFactoryInterface
-     */
+
+    /** @var QueryBuilderFactoryInterface */
     private $taxonsQueryBuilderFactory;
-    /**
-     * @var QueryBuilderFactoryInterface
-     */
+
+    /** @var QueryBuilderFactoryInterface */
     private $ordersQueryBuilderFactory;
-    /**
-     * @var NormalizerInterface&EncoderInterface
-     */
+
+    /** @var NormalizerInterface&EncoderInterface */
     private $serializer;
 
+    /**
+     * @param NormalizerInterface&EncoderInterface $serializer
+     */
     public function __construct(
         QueryBuilderFactoryInterface $productsQueryBuilderFactory,
         QueryBuilderFactoryInterface $taxonsQueryBuilderFactory,
@@ -50,10 +48,6 @@ final class FeedGenerator implements FeedGeneratorInterface
     }
 
     /**
-     * @param ChannelInterface $channel
-     *
-     * @return string
-     *
      * @throws ExceptionInterface
      */
     public function generate(ChannelInterface $channel): string

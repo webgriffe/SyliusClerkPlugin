@@ -10,9 +10,7 @@ use Webmozart\Assert\Assert;
 
 class ClerkTrackingCodeContext implements Context
 {
-    /**
-     * @var HomePageInterface
-     */
+    /** @var HomePageInterface */
     private $homePage;
 
     public function __construct(HomePageInterface $homePage)

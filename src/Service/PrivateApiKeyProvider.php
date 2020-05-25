@@ -9,9 +9,7 @@ use Webgriffe\SyliusClerkPlugin\Exception\PrivateApiKeyNotFoundForChannelExcepti
 
 final class PrivateApiKeyProvider implements PrivateApiKeyProviderInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $clerkStores;
 
     public function __construct(array $clerkStores)

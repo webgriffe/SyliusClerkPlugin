@@ -10,10 +10,6 @@ use Webgriffe\SyliusClerkPlugin\Exception\PublicApiKeyNotFoundForChannelExceptio
 interface PublicApiKeyProviderInterface
 {
     /**
-     * @param ChannelInterface $channel
-     *
-     * @return string
-     *
      * @throws PublicApiKeyNotFoundForChannelException
      */
     public function providePublicApiKeyForChannel(ChannelInterface $channel): string;

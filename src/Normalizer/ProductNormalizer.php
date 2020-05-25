@@ -6,7 +6,6 @@ namespace Webgriffe\SyliusClerkPlugin\Normalizer;
 
 use Liip\ImagineBundle\Service\FilterService;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\ImageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
@@ -19,17 +18,13 @@ use Webmozart\Assert\Assert;
 
 final class ProductNormalizer implements NormalizerInterface
 {
-    /**
-     * @var ProductVariantResolverInterface
-     */
+    /** @var ProductVariantResolverInterface */
     private $productVariantResolver;
-    /**
-     * @var RouterInterface
-     */
+
+    /** @var RouterInterface */
     private $router;
-    /**
-     * @var FilterService
-     */
+
+    /** @var FilterService */
     private $imagineFilterService;
 
     public function __construct(
@@ -60,7 +55,6 @@ final class ProductNormalizer implements NormalizerInterface
         $originalPrice = null;
         $productDefaultVariant = $this->productVariantResolver->getVariant($product);
         if ($productDefaultVariant) {
-            /** @var ProductVariantInterface $productDefaultVariant */
             Assert::isInstanceOf($productDefaultVariant, ProductVariantInterface::class);
             $channelPricing = $productDefaultVariant->getChannelPricingForChannel($channel);
             if ($channelPricing && $channelPricing->getPrice()) {
@@ -88,7 +82,6 @@ final class ProductNormalizer implements NormalizerInterface
         }
         $mainImage = $product->getImagesByType('main')->first();
         if ($mainImage && $mainImage->getPath()) {
-            /** @var ImageInterface $mainImage */
             $productData['image'] = $this->imagineFilterService->getUrlOfFilteredImage(
                 $mainImage->getPath(),
                 'sylius_shop_product_thumbnail'
