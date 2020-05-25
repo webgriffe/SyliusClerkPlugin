@@ -33,7 +33,7 @@ class ClerkTrackingCodeContext implements Context
      */
     public function thereShouldBeTheClerkJsTrackingCodeInTheResponseBodyWithThePublicAPIKey(string $publicApiKey): void
     {
-        Assert::contains($this->homePage->getContents(), 'clerk.js');
-        Assert::contains($this->homePage->getContents(), $publicApiKey);
+        Assert::contains($this->homePage->getContent(), 'clerk.js');
+        Assert::contains($this->homePage->getContent(), $publicApiKey);
     }
 }
