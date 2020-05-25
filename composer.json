@@ -66,5 +66,8 @@
             "@phpspec",
             "@behat"
         ]
+    },
+    "conflict": {
+        "doctrine/inflector": "^1.4"
     }
 }
