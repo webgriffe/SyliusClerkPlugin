@@ -147,13 +147,18 @@ To contribute you need to:
    ```bash
    (cd tests/Application && yarn install)
    (cd tests/Application && yarn build)
-   (cd tests/Application && bin/console -e test assets:install public)
-   (cd tests/Application && bin/console -e test doctrine:database:create)
-   (cd tests/Application && bin/console -e test doctrine:schema:create)
-   (cd tests/Application && bin/console -e test server:run localhost:8080 -d public)
+   (cd tests/Application && bin/console APP_ENV=test assets:install public)
+   (cd tests/Application && bin/console APP_ENV=test doctrine:database:create)
+   (cd tests/Application && bin/console APP_ENV=test doctrine:schema:create)
    ```
+4. Run test application's webserver on `127.0.0.1:8080`:
 
-4. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
+      ```bash
+      symfony server:ca:install
+      APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
+      ```
+
+4. Now at https://127.0.0.1:8080/ you have a full Sylius testing application which runs the plugin
 
 ### Testing
 
@@ -197,21 +202,20 @@ composer suite
 
 To run Behat's JS scenarios you need to setup Selenium and Chromedriver. Do the following:
 
-1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
+1. [Install Symfony CLI command](https://symfony.com/download).
 
-2. Download [Selenium Standalone Server](https://www.seleniumhq.org/download/)
+2. Start Headless Chrome:
 
-3. Run Selenium with Chromedriver
-
-   ```bash
-   java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone.jar
-   ```
+      ```bash
+      google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1
+      ```
 
 4. Remember that the test application webserver must be up and running as described above:
 
-   ```bash
-   cd tests/Application && bin/console -e test server:run localhost:8080 -d public
-   ```
+      ```bash
+      symfony server:ca:install
+      APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
+      ```
 
 License
 -------
