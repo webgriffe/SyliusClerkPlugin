@@ -147,9 +147,9 @@ To contribute you need to:
    ```bash
    (cd tests/Application && yarn install)
    (cd tests/Application && yarn build)
-   (cd tests/Application && bin/console APP_ENV=test assets:install public)
-   (cd tests/Application && bin/console APP_ENV=test doctrine:database:create)
-   (cd tests/Application && bin/console APP_ENV=test doctrine:schema:create)
+   (cd tests/Application && APP_ENV=test bin/console assets:install public)
+   (cd tests/Application && APP_ENV=test bin/console doctrine:database:create)
+   (cd tests/Application && APP_ENV=test bin/console doctrine:schema:create)
    ```
 4. Run test application's webserver on `127.0.0.1:8080`:
 
