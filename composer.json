@@ -6,10 +6,9 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
-
-        "sylius/sylius": "^1.8",
         "ext-json": "*",
-        "symfony/serializer": "^4.3"
+        "sylius/sylius": "^1.8",
+        "symfony/serializer": "^5.0"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
