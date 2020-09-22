@@ -32,7 +32,6 @@ final class TrackingCodeController extends AbstractController
     {
         $channel = $this->channelContext->getChannel();
         Assert::isInstanceOf($channel, ChannelInterface::class);
-        /** @var ChannelInterface $channel */
 
         return $this->render(
             '@WebgriffeSyliusClerkPlugin/trackingCode.html.twig',

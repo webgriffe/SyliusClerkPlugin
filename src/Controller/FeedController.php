@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGeneratorInterface;
 use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProviderInterface;
-use Webmozart\Assert\Assert;
 
 final class FeedController extends AbstractController
 {

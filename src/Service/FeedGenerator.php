@@ -12,7 +12,6 @@ use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface;
-use Webmozart\Assert\Assert;
 
 final class FeedGenerator implements FeedGeneratorInterface
 {

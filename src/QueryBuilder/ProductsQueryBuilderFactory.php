@@ -26,6 +26,7 @@ final class ProductsQueryBuilderFactory implements QueryBuilderFactoryInterface
         /** @noinspection NullPointerExceptionInspection */
         $localeCode = $channel->getDefaultLocale()->getCode();
         Assert::string($localeCode);
+
         return $this->productRepository
             ->createListQueryBuilder($localeCode)
             ->andWhere(':channel MEMBER OF o.channels')
