@@ -31,7 +31,7 @@ final class TaxonNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, string $format = null, array $context = [])
     {
         Assert::isInstanceOf($object, TaxonInterface::class);
         Assert::isInstanceOf($context['channel'], ChannelInterface::class);
@@ -42,6 +42,15 @@ final class TaxonNormalizer implements NormalizerInterface
         $locale = $channel->getDefaultLocale();
         Assert::isInstanceOf($locale, LocaleInterface::class);
         $taxonTranslation = $taxon->getTranslation($locale->getCode());
+        $subcategories = [];
+        if ($taxon->getCode() !== null) {
+            $subcategories = array_map(
+                function (TaxonInterface $taxon) {
+                    return $taxon->getId();
+                },
+                $this->taxonRepository->findChildren($taxon->getCode(), $locale->getCode())
+            );
+        }
 
         return [
             'id' => $taxon->getId(),
@@ -51,19 +60,14 @@ final class TaxonNormalizer implements NormalizerInterface
                 ['slug' => $taxonTranslation->getName(), '_locale' => $locale->getCode()],
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
-            'subcategories' => array_map(
-                function (TaxonInterface $taxon) {
-                    return $taxon->getId();
-                },
-                $this->taxonRepository->findChildren($taxon->getCode(), $locale->getCode())
-            ),
+            'subcategories' => $subcategories,
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, string $format = null)
     {
         return $data instanceof TaxonInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
     }

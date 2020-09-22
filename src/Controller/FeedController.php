@@ -51,10 +51,9 @@ final class FeedController extends AbstractController
     {
         /** @var ChannelInterface|null $channel */
         $channel = $this->channelRepository->find($channelId);
-        if (!$channel) {
+        if ($channel === null) {
             throw new NotFoundHttpException('Cannot find channel with ID ' . $channelId);
         }
-        Assert::isInstanceOf($channel, ChannelInterface::class);
 
         return $channel;
     }

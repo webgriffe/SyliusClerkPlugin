@@ -6,6 +6,8 @@ namespace Webgriffe\SyliusClerkPlugin\Normalizer;
 
 use Liip\ImagineBundle\Service\FilterService;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\ChannelPricingInterface;
+use Sylius\Component\Core\Model\ImageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
@@ -40,7 +42,7 @@ final class ProductNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, string $format = null, array $context = [])
     {
         if (!array_key_exists('channel', $context)) {
             throw new InvalidArgumentException('This normalizer needs a channel in the context');
@@ -54,12 +56,11 @@ final class ProductNormalizer implements NormalizerInterface
         $price = null;
         $originalPrice = null;
         $productDefaultVariant = $this->productVariantResolver->getVariant($product);
-        if ($productDefaultVariant) {
-            Assert::isInstanceOf($productDefaultVariant, ProductVariantInterface::class);
+        if ($productDefaultVariant instanceof ProductVariantInterface) {
             $channelPricing = $productDefaultVariant->getChannelPricingForChannel($channel);
-            if ($channelPricing && $channelPricing->getPrice()) {
+            if ($channelPricing instanceof ChannelPricingInterface && $channelPricing->getPrice() !== null) {
                 $price = $channelPricing->getPrice() / 100;
-                if ($channelPricing->getOriginalPrice()) {
+                if ($channelPricing->getOriginalPrice() !== null) {
                     $originalPrice = $channelPricing->getOriginalPrice() / 100;
                 }
             }
@@ -77,17 +78,17 @@ final class ProductNormalizer implements NormalizerInterface
             ),
             'categories' => $this->getTaxonsIds($product),
         ];
-        if ($product->getDescription()) {
+        if ($product->getDescription() !== null) {
             $productData['description'] = $product->getDescription();
         }
         $mainImage = $product->getImagesByType('main')->first();
-        if ($mainImage && $mainImage->getPath()) {
+        if ($mainImage instanceof ImageInterface && $mainImage->getPath() !== null) {
             $productData['image'] = $this->imagineFilterService->getUrlOfFilteredImage(
                 $mainImage->getPath(),
                 'sylius_shop_product_thumbnail'
             );
         }
-        if ($originalPrice) {
+        if ($originalPrice !== null) {
             $productData['list_price'] = $originalPrice;
         }
         foreach ($product->getAttributes() as $attribute) {
@@ -100,7 +101,7 @@ final class ProductNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, string $format = null)
     {
         return $data instanceof ProductInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
     }

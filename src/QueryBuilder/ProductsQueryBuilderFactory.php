@@ -25,11 +25,10 @@ final class ProductsQueryBuilderFactory implements QueryBuilderFactoryInterface
         Assert::isInstanceOf($channel->getDefaultLocale(), LocaleInterface::class);
         /** @noinspection NullPointerExceptionInspection */
         $localeCode = $channel->getDefaultLocale()->getCode();
-        $productsQueryBuilder = $this->productRepository
+        Assert::string($localeCode);
+        return $this->productRepository
             ->createListQueryBuilder($localeCode)
             ->andWhere(':channel MEMBER OF o.channels')
             ->setParameter('channel', $channel);
-
-        return $productsQueryBuilder;
     }
 }

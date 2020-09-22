@@ -6,6 +6,7 @@ namespace Webgriffe\SyliusClerkPlugin\Normalizer;
 
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Customer\Model\CustomerInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
@@ -15,7 +16,7 @@ final class OrderNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, string $format = null, array $context = [])
     {
         if (!$object instanceof OrderInterface) {
             throw new InvalidArgumentException('This normalizer supports only instances of ' . OrderInterface::class);
@@ -27,14 +28,15 @@ final class OrderNormalizer implements NormalizerInterface
         foreach ($order->getItems() as $item) {
             $productId = null;
             $productVariant = $item->getVariant();
-            if ($productVariant) {
-                $product = $productVariant->getProduct();
-                if ($product) {
-                    $productId = $product->getId();
-                }
+            if ($productVariant === null) {
+                continue;
+            }
+            $product = $productVariant->getProduct();
+            if ($product === null) {
+                continue;
             }
             $products[] = [
-                'id' => $productId,
+                'id' => $product->getId(),
                 'quantity' => $item->getQuantity(),
                 'price' => $item->getUnitPrice() / 100,
             ];
@@ -46,16 +48,16 @@ final class OrderNormalizer implements NormalizerInterface
         return [
             'id' => $order->getId(),
             'products' => $products,
-            'time' => $checkoutCompletedAt ? $checkoutCompletedAt->getTimestamp() : null,
-            'email' => $customer ? $customer->getEmail() : null,
-            'customer' => $customer ? $customer->getId() : null,
+            'time' => $checkoutCompletedAt instanceof \DateTimeInterface ? $checkoutCompletedAt->getTimestamp() : null,
+            'email' => $customer instanceof CustomerInterface ? $customer->getEmail() : null,
+            'customer' => $customer instanceof CustomerInterface ? $customer->getId() : null,
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, string $format = null)
     {
         return $data instanceof OrderInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
     }

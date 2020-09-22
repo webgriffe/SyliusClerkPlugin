@@ -42,8 +42,6 @@ final class FeedGenerator implements FeedGeneratorInterface
         $this->productsQueryBuilderFactory = $productsQueryBuilderFactory;
         $this->taxonsQueryBuilderFactory = $taxonsQueryBuilderFactory;
         $this->ordersQueryBuilderFactory = $ordersQueryBuilderFactory;
-        Assert::isInstanceOf($serializer, NormalizerInterface::class);
-        Assert::isInstanceOf($serializer, EncoderInterface::class);
         $this->serializer = $serializer;
     }
 

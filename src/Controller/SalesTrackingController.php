@@ -29,9 +29,9 @@ final class SalesTrackingController extends AbstractController
 
     public function indexAction(int $orderId, Request $request): Response
     {
-        /** @var OrderInterface $order */
+        /** @var OrderInterface|null $order */
         $order = $this->orderRepository->find($orderId);
-        Assert::isInstanceOf($order, OrderInterface::class);
+        Assert::notNull($order);
         $order = $this->normalizer->normalize(
             $order,
             FeedGenerator::NORMALIZATION_FORMAT,
