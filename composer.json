@@ -47,6 +47,9 @@
             "Tests\\Webgriffe\\SyliusClerkPlugin\\": "tests/"
         }
     },
+    "conflict": {
+        "symplify/package-builder": "^8.3.25"
+    },
     "autoload-dev": {
         "classmap": ["tests/Application/Kernel.php"]
     },
