@@ -4,7 +4,9 @@
     </a>
 </p>
 <h1 align="center">Clerk.io Plugin</h1>
-<p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>.</p>
+<p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>, the world's #1 e‑commerce personalization platform (AI) for product recommendations.
+
+</p>
 <p align="center"><a href="https://travis-ci.org/webgriffe/SyliusClerkPlugin" target="_blank"><img src="https://travis-ci.org/webgriffe/SyliusClerkPlugin.svg?branch=master" alt="Build Status" /></a></p>
 
 
@@ -37,7 +39,7 @@
    
    ```
 
-5. Finish the installation by updating the database schema and installing assets:
+5. Finish the installation by installing assets:
 
    ```bash
    bin/console assets:install
