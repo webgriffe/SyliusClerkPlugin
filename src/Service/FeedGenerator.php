@@ -73,7 +73,7 @@ final class FeedGenerator implements FeedGeneratorInterface
             $feed['sales'][] = $order;
         }
 
-        return (string) $this->serializer->encode(
+        return $this->serializer->encode(
             $this->serializer->normalize($feed, self::NORMALIZATION_FORMAT, ['channel' => $channel]),
             'json'
         );
