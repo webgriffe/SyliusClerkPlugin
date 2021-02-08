@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.4.1@9fd7a7d885b3a216cff8dec9d8c21a132f275224">
+  <file src="src/Controller/FeedController.php">
+    <MixedAssignment occurrences="2">
+      <code>$hash</code>
+      <code>$salt</code>
+    </MixedAssignment>
+    <MixedOperand occurrences="1">
+      <code>$salt</code>
+    </MixedOperand>
+  </file>
+  <file src="src/DependencyInjection/Configuration.php">
+    <MixedMethodCall occurrences="17">
+      <code>arrayNode</code>
+      <code>arrayPrototype</code>
+      <code>children</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>isRequired</code>
+      <code>isRequired</code>
+      <code>isRequired</code>
+      <code>requiresAtLeastOneElement</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>children</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="src/DependencyInjection/WebgriffeSyliusClerkExtension.php">
+    <ParamNameMismatch occurrences="1">
+      <code>$config</code>
+    </ParamNameMismatch>
+    <PossiblyNullArgument occurrences="1">
+      <code>$this-&gt;getConfiguration([], $container)</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Exception/PrivateApiKeyNotFoundForChannelException.php">
+    <PossiblyNullArgument occurrences="1">
+      <code>$channel-&gt;getCode()</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Exception/PublicApiKeyNotFoundForChannelException.php">
+    <PossiblyNullArgument occurrences="1">
+      <code>$channel-&gt;getCode()</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Normalizer/OrderNormalizer.php">
+    <MethodSignatureMismatch occurrences="2">
+      <code>$format</code>
+      <code>$format</code>
+    </MethodSignatureMismatch>
+  </file>
+  <file src="src/Normalizer/ProductNormalizer.php">
+    <MethodSignatureMismatch occurrences="2">
+      <code>$format</code>
+      <code>$format</code>
+    </MethodSignatureMismatch>
+    <MixedAssignment occurrences="2">
+      <code>$productData[$attribute-&gt;getCode()]</code>
+      <code>$taxonsIds[]</code>
+    </MixedAssignment>
+    <PossiblyNullArgument occurrences="1">
+      <code>$mainImage-&gt;getPath()</code>
+    </PossiblyNullArgument>
+    <PossiblyNullArrayOffset occurrences="1">
+      <code>$productData</code>
+    </PossiblyNullArrayOffset>
+    <PossiblyNullOperand occurrences="2">
+      <code>$channelPricing-&gt;getOriginalPrice()</code>
+      <code>$channelPricing-&gt;getPrice()</code>
+    </PossiblyNullOperand>
+  </file>
+  <file src="src/Normalizer/TaxonNormalizer.php">
+    <MethodSignatureMismatch occurrences="2">
+      <code>$format</code>
+      <code>$format</code>
+    </MethodSignatureMismatch>
+    <MissingClosureReturnType occurrences="1">
+      <code>function (TaxonInterface $taxon) {</code>
+    </MissingClosureReturnType>
+    <PossiblyNullArgument occurrences="1">
+      <code>$taxon-&gt;getCode()</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/QueryBuilder/OrdersQueryBuilderFactory.php">
+    <TooManyArguments occurrences="1">
+      <code>where</code>
+    </TooManyArguments>
+  </file>
+  <file src="src/QueryBuilder/ProductsQueryBuilderFactory.php">
+    <PossiblyNullReference occurrences="1">
+      <code>getCode</code>
+    </PossiblyNullReference>
+  </file>
+  <file src="src/Service/PrivateApiKeyProvider.php">
+    <MixedArrayAccess occurrences="2">
+      <code>$clerkStore['channel_code']</code>
+      <code>$clerkStore['private_api_key']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="1">
+      <code>$clerkStore</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$clerkStore['private_api_key']</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Service/PublicApiKeyProvider.php">
+    <MixedArrayAccess occurrences="2">
+      <code>$clerkStore['channel_code']</code>
+      <code>$clerkStore['public_api_key']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="1">
+      <code>$clerkStore</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$clerkStore['public_api_key']</code>
+    </MixedReturnStatement>
+  </file>
+</files>
