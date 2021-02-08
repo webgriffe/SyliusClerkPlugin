@@ -16,7 +16,7 @@ final class OrderNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, string $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = [])
     {
         if (!$object instanceof OrderInterface) {
             throw new InvalidArgumentException('This normalizer supports only instances of ' . OrderInterface::class);
@@ -57,7 +57,7 @@ final class OrderNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, string $format = null)
+    public function supportsNormalization($data, $format = null)
     {
         return $data instanceof OrderInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
     }
