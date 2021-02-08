@@ -7,7 +7,7 @@
 <p align="center">This plugin integrates your Sylius store with <a href="https://clerk.io/">Clerk.io</a>, the world's #1 e‑commerce personalization platform (AI) for product recommendations.
 
 </p>
-<p align="center"><a href="https://travis-ci.org/webgriffe/SyliusClerkPlugin" target="_blank"><img src="https://travis-ci.org/webgriffe/SyliusClerkPlugin.svg?branch=master" alt="Build Status" /></a></p>
+<p align="center"><a href="https://github.com/webgriffe/SyliusClerkPlugin/actions"><img src="https://github.com/webgriffe/SyliusClerkPlugin/workflows/Build/badge.svg" alt="Build Status" /></a></p>
 
 
 
