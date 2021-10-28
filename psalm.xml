@@ -19,5 +19,12 @@
                 <referencedProperty name="Symfony\Bundle\FrameworkBundle\Controller\AbstractController::$container"/>
             </errorLevel>
         </PropertyNotSetInConstructor>
+        <DuplicateClass>
+            <errorLevel type="suppress">
+                <file name="src/Normalizer/OrderNormalizer.php" />
+                <file name="src/Normalizer/ProductNormalizer.php" />
+                <file name="src/Normalizer/TaxonNormalizer.php" />
+            </errorLevel>
+        </DuplicateClass>
     </issueHandlers>
 </psalm>

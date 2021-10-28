@@ -8,67 +8,137 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 use Webmozart\Assert\Assert;
 
-final class TaxonNormalizer implements NormalizerInterface
-{
-    /** @var RouterInterface */
-    private $router;
-
-    /** @var TaxonRepositoryInterface */
-    private $taxonRepository;
-
-    public function __construct(RouterInterface $router, TaxonRepositoryInterface $taxonRepository)
+/**
+ * @psalm-suppress
+ * @phpstan-ignore-next-line
+ */
+if (Kernel::MAJOR_VERSION === 4) {
+    final class TaxonNormalizer implements NormalizerInterface
     {
-        $this->router = $router;
-        $this->taxonRepository = $taxonRepository;
-    }
+        /** @var RouterInterface */
+        private $router;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function normalize($object, string $format = null, array $context = [])
-    {
-        Assert::isInstanceOf($object, TaxonInterface::class);
-        Assert::isInstanceOf($context['channel'], ChannelInterface::class);
-        /** @var TaxonInterface $taxon */
-        $taxon = $object;
-        /** @var ChannelInterface $channel */
-        $channel = $context['channel'];
-        $locale = $channel->getDefaultLocale();
-        Assert::isInstanceOf($locale, LocaleInterface::class);
-        $taxonTranslation = $taxon->getTranslation($locale->getCode());
-        $subcategories = [];
-        if ($taxon->getCode() !== null) {
-            $subcategories = array_map(
-                function (TaxonInterface $taxon) {
-                    return $taxon->getId();
-                },
-                $this->taxonRepository->findChildren($taxon->getCode(), $locale->getCode())
-            );
+        /** @var TaxonRepositoryInterface */
+        private $taxonRepository;
+
+        public function __construct(RouterInterface $router, TaxonRepositoryInterface $taxonRepository)
+        {
+            $this->router = $router;
+            $this->taxonRepository = $taxonRepository;
         }
 
-        return [
-            'id' => $taxon->getId(),
-            'name' => $taxonTranslation->getName(),
-            'url' => $this->router->generate(
-                'sylius_shop_product_index',
-                ['slug' => $taxonTranslation->getName(), '_locale' => $locale->getCode()],
-                UrlGeneratorInterface::ABSOLUTE_URL
-            ),
-            'subcategories' => $subcategories,
-        ];
-    }
+        /**
+         * @inheritdoc
+         * @phpstan-ignore-next-line
+         */
+        public function normalize($object, $format = null, array $context = [])
+        {
+            Assert::isInstanceOf($object, TaxonInterface::class);
+            Assert::isInstanceOf($context['channel'], ChannelInterface::class);
+            /** @var TaxonInterface $taxon */
+            $taxon = $object;
+            /** @var ChannelInterface $channel */
+            $channel = $context['channel'];
+            $locale = $channel->getDefaultLocale();
+            Assert::isInstanceOf($locale, LocaleInterface::class);
+            $taxonTranslation = $taxon->getTranslation($locale->getCode());
+            $subcategories = [];
+            if ($taxon->getCode() !== null) {
+                $subcategories = array_map(
+                    function (TaxonInterface $taxon) {
+                        return $taxon->getId();
+                    },
+                    $this->taxonRepository->findChildren($taxon->getCode(), $locale->getCode())
+                );
+            }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsNormalization($data, string $format = null)
+            return [
+                'id' => $taxon->getId(),
+                'name' => $taxonTranslation->getName(),
+                'url' => $this->router->generate(
+                    'sylius_shop_product_index',
+                    ['slug' => $taxonTranslation->getName(), '_locale' => $locale->getCode()],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                ),
+                'subcategories' => $subcategories,
+            ];
+        }
+
+        /**
+         * @inheritdoc
+         * @phpstan-ignore-next-line
+         */
+        public function supportsNormalization($data, $format = null)
+        {
+            return $data instanceof TaxonInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
+        }
+    }
+} else {
+    final class TaxonNormalizer implements NormalizerInterface
     {
-        return $data instanceof TaxonInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
+        /** @var RouterInterface */
+        private $router;
+
+        /** @var TaxonRepositoryInterface */
+        private $taxonRepository;
+
+        public function __construct(RouterInterface $router, TaxonRepositoryInterface $taxonRepository)
+        {
+            $this->router = $router;
+            $this->taxonRepository = $taxonRepository;
+        }
+
+        /**
+         * @inheritdoc
+         * @phpstan-ignore-next-line
+         */
+        public function normalize($object, string $format = null, array $context = [])
+        {
+            Assert::isInstanceOf($object, TaxonInterface::class);
+            Assert::isInstanceOf($context['channel'], ChannelInterface::class);
+            /** @var TaxonInterface $taxon */
+            $taxon = $object;
+            /** @var ChannelInterface $channel */
+            $channel = $context['channel'];
+            $locale = $channel->getDefaultLocale();
+            Assert::isInstanceOf($locale, LocaleInterface::class);
+            $taxonTranslation = $taxon->getTranslation($locale->getCode());
+            $subcategories = [];
+            if ($taxon->getCode() !== null) {
+                $subcategories = array_map(
+                    function (TaxonInterface $taxon) {
+                        return $taxon->getId();
+                    },
+                    $this->taxonRepository->findChildren($taxon->getCode(), $locale->getCode())
+                );
+            }
+
+            return [
+                'id' => $taxon->getId(),
+                'name' => $taxonTranslation->getName(),
+                'url' => $this->router->generate(
+                    'sylius_shop_product_index',
+                    ['slug' => $taxonTranslation->getName(), '_locale' => $locale->getCode()],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                ),
+                'subcategories' => $subcategories,
+            ];
+        }
+
+        /**
+         * @inheritdoc
+         * @phpstan-ignore-next-line
+         */
+        public function supportsNormalization($data, string $format = null)
+        {
+            return $data instanceof TaxonInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
+        }
     }
 }
