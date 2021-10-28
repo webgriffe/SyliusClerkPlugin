@@ -42,7 +42,7 @@ final class ProductNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, string $format = null, array $context = [])
     {
         if (!array_key_exists('channel', $context)) {
             throw new InvalidArgumentException('This normalizer needs a channel in the context');
@@ -101,7 +101,7 @@ final class ProductNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, string $format = null)
     {
         return $data instanceof ProductInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
     }

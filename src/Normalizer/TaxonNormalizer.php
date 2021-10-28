@@ -31,7 +31,7 @@ final class TaxonNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, string $format = null, array $context = [])
     {
         Assert::isInstanceOf($object, TaxonInterface::class);
         Assert::isInstanceOf($context['channel'], ChannelInterface::class);
@@ -67,7 +67,7 @@ final class TaxonNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, string $format = null)
     {
         return $data instanceof TaxonInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
     }
