@@ -18,7 +18,7 @@ final class PublicApiKeyProvider implements PublicApiKeyProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function providePublicApiKeyForChannel(ChannelInterface $channel): string
     {
