@@ -5,23 +5,21 @@ declare(strict_types=1);
 namespace Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Resolver\DefaultProductVariantResolver;
 
-class ProductContext implements Context
+final class ProductContext implements Context
 {
-    /** @var ObjectManager */
-    private $objectManager;
+    private EntityManagerInterface $entityManager;
 
-    /** @var DefaultProductVariantResolver */
-    private $defaultVariantResolver;
+    private DefaultProductVariantResolver $defaultVariantResolver;
 
-    public function __construct(ObjectManager $objectManager, DefaultProductVariantResolver $defaultVariantResolver)
+    public function __construct(EntityManagerInterface $entityManager, DefaultProductVariantResolver $defaultVariantResolver)
     {
-        $this->objectManager = $objectManager;
+        $this->entityManager = $entityManager;
         $this->defaultVariantResolver = $defaultVariantResolver;
     }
 
@@ -31,7 +29,7 @@ class ProductContext implements Context
     public function thisProductDescriptionIs(ProductInterface $product, string $description)
     {
         $product->setDescription($description);
-        $this->objectManager->flush();
+        $this->entityManager->flush();
     }
 
     /**
@@ -47,6 +45,6 @@ class ProductContext implements Context
         $channelPricing = $productVariant->getChannelPricingForChannel($channel);
         $channelPricing->setOriginalPrice($originalPrice);
 
-        $this->objectManager->flush();
+        $this->entityManager->flush();
     }
 }

@@ -5,6 +5,10 @@
         <defaults public="true" />
 
         <service id="Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api\ClerkFeedContext">
+            <argument type="service" id="test.client" />
+        </service>
+
+        <service id="Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Setup\ProductContext">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="sylius.product_variant_resolver.default" />
         </service>
