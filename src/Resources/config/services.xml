@@ -6,6 +6,28 @@
             <argument id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator" type="service"/>
             <argument id="sylius.repository.channel" type="service"/>
             <argument id="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider" type="service" />
+            <tag name="controller.service_arguments"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController" public="true">
+            <argument id="sylius.context.channel" type="service"/>
+            <argument id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider" type="service" />
+            <tag name="controller.service_arguments"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController" public="true">
+            <argument id="sylius.repository.order" type="service"/>
+            <argument id="serializer" type="service"/>
+            <tag name="controller.service_arguments"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator">
@@ -50,16 +72,6 @@
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider">
             <argument/>
-        </service>
-
-        <service id="Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController" public="true">
-            <argument id="sylius.context.channel" type="service"/>
-            <argument id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider" type="service" />
-        </service>
-
-        <service id="Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController" public="true">
-            <argument id="sylius.repository.order" type="service"/>
-            <argument id="serializer" type="service"/>
         </service>
     </services>
 </container>

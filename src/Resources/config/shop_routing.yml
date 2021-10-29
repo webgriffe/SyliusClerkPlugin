@@ -1,11 +1,11 @@
 webgriffe_sylius_clerk_tracking_code:
   path: /tracking-code
   defaults:
-    _controller: WebgriffeSyliusClerkPlugin:TrackingCode:trackingCode
+    _controller: Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController::trackingCodeAction
     name: ~
 
 webgriffe_sylius_clerk_sales_tracking:
   path: /clerk-sales-tracking/{orderId}
   defaults:
-    _controller: WebgriffeSyliusClerkPlugin:SalesTracking:index
+    _controller: Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController::indexAction
     name: ~

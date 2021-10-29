@@ -15,7 +15,7 @@ Feature: Providing a Clerk.io data feed
     And this product has an image "symfony_logo.png" with "main" type
     And this product description is "Great Symfony mug for the real developer"
     And this product original price is "$3.50" in "United States" channel
-    And this product has text attribute "Text Attribute" with value "Text Value"
+    And this product has a text attribute "Text Attribute" with value "Text Value"
     And there is a customer "customer@sylius.com" that placed an order
     And the customer bought a single "Sylius Mug"
 

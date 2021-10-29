@@ -7,18 +7,16 @@ namespace Tests\Webgriffe\SyliusClerkPlugin\Behat\Context\Api;
 use Behat\Behat\Context\Context;
 use Flow\JSONPath\JSONPath;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Symfony\Component\HttpKernel\Client;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Webmozart\Assert\Assert;
 
-class ClerkFeedContext implements Context
+final class ClerkFeedContext implements Context
 {
-    /** @var Client */
-    private $client;
+    private HttpKernelBrowser $client;
 
-    /** @var array */
-    private $privateApiKeysForChannels;
+    private array $privateApiKeysForChannels;
 
-    public function __construct(Client $client)
+    public function __construct(HttpKernelBrowser $client)
     {
         $this->client = $client;
     }
@@ -43,7 +41,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
      */
-    public function theClerkCrawlerShouldReceiveASuccessfulHttpResponseWithAValidJsonFeedAsItsContent()
+    public function theClerkCrawlerShouldReceiveASuccessfulHttpResponseWithAValidJsonFeedAsItsContent(): void
     {
         Assert::eq($this->client->getResponse()->getStatusCode(), 200);
         Assert::eq($this->client->getResponse()->headers->get('Content-Type'), 'application/json');
@@ -74,7 +72,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be the value "([^"]+)" (in this feed JSON paths "([^"]*)")$/
      */
-    public function thisFeedShouldHaveValueInTheJsonPaths(string $value, JSONPath $jsonPaths)
+    public function thisFeedShouldHaveValueInTheJsonPaths(string $value, JSONPath $jsonPaths): void
     {
         Assert::greaterThanEq($jsonPaths->count(), 1);
         foreach ($jsonPaths as $jsonPath) {
@@ -85,7 +83,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be the value "([^"]+)" (in this feed JSON path "([^"]*)")$/
      */
-    public function thisFeedShouldHaveValueInTheJsonPath(string $value, JSONPath $jsonPath)
+    public function thisFeedShouldHaveValueInTheJsonPath(string $value, JSONPath $jsonPath): void
     {
         Assert::eq($jsonPath->first(), $value);
     }
@@ -93,7 +91,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there shouldn\'t be any value (in this feed JSON paths "([^"]*)")$/
      */
-    public function thereShouldntBeAnyValueInThisFeedJsonPath(JSONPath $jsonPaths)
+    public function thereShouldntBeAnyValueInThisFeedJsonPath(JSONPath $jsonPaths): void
     {
         Assert::count($jsonPaths, 0);
     }
@@ -101,7 +99,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be a value matching the pattern "([^"]*)" (in this feed JSON paths "([^"]*)")$/
      */
-    public function thereShouldAValueMatchingThePatternInThisFeedJsonPaths(string $pattern, JSONPath $jsonPaths)
+    public function thereShouldAValueMatchingThePatternInThisFeedJsonPaths(string $pattern, JSONPath $jsonPaths): void
     {
         Assert::greaterThanEq($jsonPaths->count(), 1);
         foreach ($jsonPaths as $jsonPath) {
@@ -112,7 +110,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be a value matching the pattern "([^"]*)" (in this feed JSON path "([^"]*)")$/
      */
-    public function thereShouldAValueMatchingThePatternInThisFeedJsonPath(string $pattern, JSONPath $jsonPath)
+    public function thereShouldAValueMatchingThePatternInThisFeedJsonPath(string $pattern, JSONPath $jsonPath): void
     {
         Assert::regex($jsonPath->first(), $pattern);
     }
@@ -120,7 +118,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be an empty array (in this feed JSON paths "([^"]*)")$/
      */
-    public function thereShouldBeAnEmptyArrayInThisFeedJsonPaths(JSONPath $jsonPaths)
+    public function thereShouldBeAnEmptyArrayInThisFeedJsonPaths(JSONPath $jsonPaths): void
     {
         Assert::greaterThanEq($jsonPaths->count(), 1);
         foreach ($jsonPaths as $jsonPath) {
@@ -132,7 +130,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be an array with exactly one ID (in this feed JSON paths "([^"]*)")$/
      */
-    public function thereShouldBeAnArrayWithExactlyOneIdInThisFeedJsonPaths(JSONPath $jsonPaths)
+    public function thereShouldBeAnArrayWithExactlyOneIdInThisFeedJsonPaths(JSONPath $jsonPaths): void
     {
         Assert::greaterThanEq($jsonPaths->count(), 1);
         foreach ($jsonPaths as $jsonPath) {
@@ -147,7 +145,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be a Unix timestamp (in this feed JSON path "([^"]*)")$/
      */
-    public function thereShouldBeAUnixTimestampInThisFeedJsonPath(JSONPath $jsonPath)
+    public function thereShouldBeAUnixTimestampInThisFeedJsonPath(JSONPath $jsonPath): void
     {
         // See: https://stackoverflow.com/questions/2524680/check-whether-the-string-is-a-unix-timestamp
         Assert::integer($jsonPath->first());
@@ -158,7 +156,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be the boolean value "([^"]*)" (in this feed JSON path "([^"]*)")$/
      */
-    public function thereShouldBeTheBooleanValueInThisFeedJsonPath(string $booleanValueString, JSONPath $jsonPath)
+    public function thereShouldBeTheBooleanValueInThisFeedJsonPath(string $booleanValueString, JSONPath $jsonPath): void
     {
         $booleanValue = filter_var($booleanValueString, \FILTER_VALIDATE_BOOLEAN);
         Assert::boolean(
@@ -171,7 +169,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be a count of (\d+) elements? (in this feed JSON path "([^"]*)")$/
      */
-    public function thereShouldBeACountOfElementInThisFeedJsonPath(int $count, JSONPath $jsonPath)
+    public function thereShouldBeACountOfElementInThisFeedJsonPath(int $count, JSONPath $jsonPath): void
     {
         Assert::count($jsonPath->first(), $count);
     }
@@ -179,7 +177,7 @@ class ClerkFeedContext implements Context
     /**
      * @Then /^there should be an empty array (in this feed JSON path "([^"]*)")$/
      */
-    public function thereShouldBeAnEmptyArrayInThisFeedJsonPath(JSONPath $jsonPath)
+    public function thereShouldBeAnEmptyArrayInThisFeedJsonPath(JSONPath $jsonPath): void
     {
         Assert::isArray($jsonPath->first()->data());
         Assert::isEmpty($jsonPath->first()->data());
@@ -188,7 +186,7 @@ class ClerkFeedContext implements Context
     /**
      * @Given /^there should be an email (in this feed JSON paths "([^"]*)")$/
      */
-    public function thereShouldBeAnEmailInThisFeedJSONPaths(JSONPath $jsonPaths)
+    public function thereShouldBeAnEmailInThisFeedJSONPaths(JSONPath $jsonPaths): void
     {
         Assert::minCount($jsonPaths, 1);
         foreach ($jsonPaths as $jsonPath) {
@@ -199,7 +197,7 @@ class ClerkFeedContext implements Context
     /**
      * @When /^the Clerk crawler hits the data feed URL for the ("([^"]+)" channel) with an invalid security hash$/
      */
-    public function theClerkCrawlerHitsTheDataFeedURLForTheChannelWithAnInvalidSecurityHash(ChannelInterface $channel)
+    public function theClerkCrawlerHitsTheDataFeedURLForTheChannelWithAnInvalidSecurityHash(ChannelInterface $channel): void
     {
         $this->client->request(
             'GET',

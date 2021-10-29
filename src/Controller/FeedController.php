@@ -62,6 +62,9 @@ final class FeedController extends AbstractController
         $privateApiKey = $this->privateApiKeyProvider->providePrivateApiKeyForChannel($channel);
         $salt = $request->query->get('salt');
         $hash = $request->query->get('hash');
+        if ($salt === null) {
+            return false;
+        }
         $calculatedHash = hash('sha512', $salt . $privateApiKey . floor(time() / 100));
 
         return $hash === $calculatedHash;
