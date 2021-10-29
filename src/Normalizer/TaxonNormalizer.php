@@ -19,7 +19,7 @@ use Webmozart\Assert\Assert;
  * @psalm-suppress
  * @phpstan-ignore-next-line
  */
-if (Kernel::MAJOR_VERSION === 4) {
+if (Kernel::MAJOR_VERSION < 5) {
     final class TaxonNormalizer implements NormalizerInterface
     {
         /** @var RouterInterface */
@@ -36,7 +36,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function normalize($object, $format = null, array $context = [])
         {
@@ -73,7 +72,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function supportsNormalization($data, $format = null)
         {
@@ -97,7 +95,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function normalize($object, string $format = null, array $context = [])
         {
@@ -134,7 +131,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function supportsNormalization($data, string $format = null)
         {

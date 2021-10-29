@@ -19,8 +19,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 use Webmozart\Assert\Assert;
 
-// @phpstan-ignore-next-line
-if (Kernel::MAJOR_VERSION === 4) {
+if (Kernel::MAJOR_VERSION < 5) {
     final class ProductNormalizer implements NormalizerInterface
     {
         /** @var ProductVariantResolverInterface */
@@ -44,7 +43,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function normalize($object, $format = null, array $context = [])
         {
@@ -104,7 +102,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function supportsNormalization($data, $format = null)
         {
@@ -145,7 +142,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function normalize($object, string $format = null, array $context = [])
         {
@@ -205,7 +201,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function supportsNormalization($data, string $format = null)
         {

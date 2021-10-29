@@ -12,13 +12,11 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 
-// @phpstan-ignore-next-line
-if (Kernel::MAJOR_VERSION === 4) {
+if (Kernel::MAJOR_VERSION < 5) {
     final class OrderNormalizer implements NormalizerInterface
     {
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function normalize($object, $format = null, array $context = [])
         {
@@ -60,7 +58,6 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function supportsNormalization($data, $format = null)
         {
@@ -72,7 +69,6 @@ if (Kernel::MAJOR_VERSION === 4) {
     {
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
         public function normalize($object, string $format = null, array $context = [])
         {
@@ -114,9 +110,8 @@ if (Kernel::MAJOR_VERSION === 4) {
 
         /**
          * @inheritdoc
-         * @phpstan-ignore-next-line
          */
-        public function supportsNormalization($data, string $format = null) // @phpstan-ignore-line
+        public function supportsNormalization($data, string $format = null)
         {
             return $data instanceof OrderInterface && $format === FeedGenerator::NORMALIZATION_FORMAT;
         }
