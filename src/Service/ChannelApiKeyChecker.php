@@ -17,6 +17,7 @@ final class ChannelApiKeyChecker implements ChannelApiKeyCheckerInterface
 
     public function check(ChannelInterface $channel): bool
     {
+        /** @var array $clerkStore */
         foreach ($this->clerkStores as $clerkStore) {
             if ($clerkStore['channel_code'] === $channel->getCode()) {
                 return true;
