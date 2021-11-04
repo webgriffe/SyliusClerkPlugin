@@ -6,6 +6,7 @@
             <argument id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator" type="service"/>
             <argument id="sylius.repository.channel" type="service"/>
             <argument id="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider" type="service" />
+            <argument id="webgriffe_sylius_clerk.resolver.channel_enabled" type="service" />
             <tag name="controller.service_arguments"/>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
@@ -15,6 +16,7 @@
         <service id="Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController" public="true">
             <argument id="sylius.context.channel" type="service"/>
             <argument id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider" type="service" />
+            <argument id="webgriffe_sylius_clerk.resolver.channel_enabled" type="service" />
             <tag name="controller.service_arguments"/>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
@@ -24,6 +26,7 @@
         <service id="Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController" public="true">
             <argument id="sylius.repository.order" type="service"/>
             <argument id="serializer" type="service"/>
+            <argument id="webgriffe_sylius_clerk.resolver.channel_enabled" type="service" />
             <tag name="controller.service_arguments"/>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
@@ -71,6 +74,10 @@
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider">
+            <argument/>
+        </service>
+
+        <service id="webgriffe_sylius_clerk.resolver.channel_enabled" class="Webgriffe\SyliusClerkPlugin\Service\ChannelApiKeyChecker">
             <argument/>
         </service>
     </services>

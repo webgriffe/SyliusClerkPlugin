@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Webgriffe\SyliusClerkPlugin\Service\ChannelApiKeyCheckerInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGeneratorInterface;
 use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProviderInterface;
 
@@ -26,19 +27,26 @@ final class FeedController extends AbstractController
     /** @var PrivateApiKeyProviderInterface */
     private $privateApiKeyProvider;
 
+    private ChannelApiKeyCheckerInterface $channelApiKeyChecker;
+
     public function __construct(
         FeedGeneratorInterface $productsFeedGenerator,
         ChannelRepositoryInterface $channelRepository,
-        PrivateApiKeyProviderInterface $privateApiKeyProvider
+        PrivateApiKeyProviderInterface $privateApiKeyProvider,
+        ChannelApiKeyCheckerInterface $channelApiKeyChecker
     ) {
         $this->feedGenerator = $productsFeedGenerator;
         $this->channelRepository = $channelRepository;
         $this->privateApiKeyProvider = $privateApiKeyProvider;
+        $this->channelApiKeyChecker = $channelApiKeyChecker;
     }
 
     public function feedAction(int $channelId, Request $request): Response
     {
         $channel = $this->getChannel($channelId);
+        if (!$this->channelApiKeyChecker->check($channel)) {
+            throw new NotFoundHttpException();
+        }
         if (!$this->isSecurityHashInRequestValidForChannel($request, $channel)) {
             throw new AccessDeniedHttpException();
         }

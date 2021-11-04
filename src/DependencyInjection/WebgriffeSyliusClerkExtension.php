@@ -28,6 +28,8 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $definition->replaceArgument(0, $config['stores']);
         $definition = $container->getDefinition(PublicApiKeyProvider::class);
         $definition->replaceArgument(0, $config['stores']);
+        $definition = $container->getDefinition('webgriffe_sylius_clerk.resolver.channel_enabled');
+        $definition->replaceArgument(0, $config['stores']);
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
