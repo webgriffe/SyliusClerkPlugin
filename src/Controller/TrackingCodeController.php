@@ -21,15 +21,24 @@ final class TrackingCodeController extends AbstractController
     /** @var PublicApiKeyProviderInterface */
     private $publicApiKeyProvider;
 
-    private ChannelApiKeyCheckerInterface $channelApiKeyChecker;
+    private ?ChannelApiKeyCheckerInterface $channelApiKeyChecker;
 
     public function __construct(
         ChannelContextInterface $channelContext,
         PublicApiKeyProviderInterface $publicApiKeyProvider,
-        ChannelApiKeyCheckerInterface $channelApiKeyChecker
+        ChannelApiKeyCheckerInterface $channelApiKeyChecker = null
     ) {
         $this->publicApiKeyProvider = $publicApiKeyProvider;
         $this->channelContext = $channelContext;
+        if ($channelApiKeyChecker === null) {
+            trigger_deprecation(
+                'webgriffe/sylius-clerk-plugin',
+                '2.2',
+                'Not passing a channel api key checker to "%s" is deprecated and will be removed in %s.',
+                __CLASS__,
+                '3.0'
+            );
+        }
         $this->channelApiKeyChecker = $channelApiKeyChecker;
     }
 
@@ -38,7 +47,7 @@ final class TrackingCodeController extends AbstractController
         $channel = $this->channelContext->getChannel();
         Assert::isInstanceOf($channel, ChannelInterface::class);
 
-        if (!$this->channelApiKeyChecker->check($channel)) {
+        if ($this->channelApiKeyChecker !== null && !$this->channelApiKeyChecker->check($channel)) {
             return new Response();
         }
 

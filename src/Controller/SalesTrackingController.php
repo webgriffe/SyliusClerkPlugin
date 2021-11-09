@@ -23,15 +23,24 @@ final class SalesTrackingController extends AbstractController
     /** @var NormalizerInterface */
     private $normalizer;
 
-    private ChannelApiKeyCheckerInterface $channelApiKeyChecker;
+    private ?ChannelApiKeyCheckerInterface $channelApiKeyChecker;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         NormalizerInterface $normalizer,
-        ChannelApiKeyCheckerInterface $channelApiKeyChecker
+        ChannelApiKeyCheckerInterface $channelApiKeyChecker = null
     ) {
         $this->orderRepository = $orderRepository;
         $this->normalizer = $normalizer;
+        if ($channelApiKeyChecker === null) {
+            trigger_deprecation(
+                'webgriffe/sylius-clerk-plugin',
+                '2.2',
+                'Not passing a channel api key checker to "%s" is deprecated and will be removed in %s.',
+                __CLASS__,
+                '3.0'
+            );
+        }
         $this->channelApiKeyChecker = $channelApiKeyChecker;
     }
 
@@ -42,7 +51,7 @@ final class SalesTrackingController extends AbstractController
         Assert::notNull($order);
         $channel = $order->getChannel();
         Assert::isInstanceOf($channel, ChannelInterface::class);
-        if (!$this->channelApiKeyChecker->check($channel)) {
+        if ($this->channelApiKeyChecker !== null && !$this->channelApiKeyChecker->check($channel)) {
             return new Response();
         }
         $orderNormalized = $this->normalizer->normalize(
