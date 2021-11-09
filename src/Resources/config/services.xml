@@ -6,7 +6,7 @@
             <argument id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator" type="service"/>
             <argument id="sylius.repository.channel" type="service"/>
             <argument id="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider" type="service" />
-            <argument id="webgriffe_sylius_clerk.resolver.channel_enabled" type="service" />
+            <argument id="webgriffe_sylius_clerk.checker.channel_enabled" type="service" />
             <tag name="controller.service_arguments"/>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
@@ -16,7 +16,7 @@
         <service id="Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController" public="true">
             <argument id="sylius.context.channel" type="service"/>
             <argument id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider" type="service" />
-            <argument id="webgriffe_sylius_clerk.resolver.channel_enabled" type="service" />
+            <argument id="webgriffe_sylius_clerk.checker.channel_enabled" type="service" />
             <tag name="controller.service_arguments"/>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
@@ -26,7 +26,7 @@
         <service id="Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController" public="true">
             <argument id="sylius.repository.order" type="service"/>
             <argument id="serializer" type="service"/>
-            <argument id="webgriffe_sylius_clerk.resolver.channel_enabled" type="service" />
+            <argument id="webgriffe_sylius_clerk.checker.channel_enabled" type="service" />
             <tag name="controller.service_arguments"/>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
@@ -69,16 +69,23 @@
             <argument id="sylius.repository.order" type="service"/>
         </service>
 
-        <service id="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider">
+        <service id="webgriffe_sylius_clerk.provider.private_api_key" class="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider">
             <argument/>
         </service>
 
-        <service id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider">
+        <!-- The following alias is for BC compatibility and could be removed in 3.x. -->
+        <service id="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider" alias="webgriffe_sylius_clerk.provider.private_api_key" />
+
+        <service id="webgriffe_sylius_clerk.provider.public_api_key" class="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider">
             <argument/>
         </service>
 
-        <service id="webgriffe_sylius_clerk.resolver.channel_enabled" class="Webgriffe\SyliusClerkPlugin\Service\ChannelApiKeyChecker">
-            <argument/>
+        <!-- The following alias is for BC compatibility and could be removed in 3.x. -->
+        <service id="Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider" alias="webgriffe_sylius_clerk.provider.public_api_key" />
+
+        <service id="webgriffe_sylius_clerk.checker.channel_enabled" class="Webgriffe\SyliusClerkPlugin\Service\ChannelApiKeyChecker">
+            <argument type="service" id="webgriffe_sylius_clerk.provider.public_api_key"/>
+            <argument type="service" id="webgriffe_sylius_clerk.provider.private_api_key"/>
         </service>
     </services>
 </container>

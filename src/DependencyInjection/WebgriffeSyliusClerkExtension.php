@@ -9,8 +9,6 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider;
-use Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider;
 
 final class WebgriffeSyliusClerkExtension extends Extension
 {
@@ -24,11 +22,9 @@ final class WebgriffeSyliusClerkExtension extends Extension
 
         $loader->load('services.xml');
 
-        $definition = $container->getDefinition(PrivateApiKeyProvider::class);
+        $definition = $container->getDefinition('webgriffe_sylius_clerk.provider.private_api_key');
         $definition->replaceArgument(0, $config['stores']);
-        $definition = $container->getDefinition(PublicApiKeyProvider::class);
-        $definition->replaceArgument(0, $config['stores']);
-        $definition = $container->getDefinition('webgriffe_sylius_clerk.resolver.channel_enabled');
+        $definition = $container->getDefinition('webgriffe_sylius_clerk.provider.public_api_key');
         $definition->replaceArgument(0, $config['stores']);
     }
 

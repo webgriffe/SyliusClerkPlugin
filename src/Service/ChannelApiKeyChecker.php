@@ -5,25 +5,35 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusClerkPlugin\Service;
 
 use Sylius\Component\Core\Model\ChannelInterface;
+use Webgriffe\SyliusClerkPlugin\Exception\PrivateApiKeyNotFoundForChannelException;
+use Webgriffe\SyliusClerkPlugin\Exception\PublicApiKeyNotFoundForChannelException;
 
 final class ChannelApiKeyChecker implements ChannelApiKeyCheckerInterface
 {
-    private array $clerkStores;
+    private PublicApiKeyProviderInterface $publicApiKeyProvider;
 
-    public function __construct(array $clerkStores)
-    {
-        $this->clerkStores = $clerkStores;
+    private PrivateApiKeyProviderInterface $privateApiKeyProvider;
+
+    public function __construct(
+        PublicApiKeyProviderInterface $publicApiKeyProvider,
+        PrivateApiKeyProviderInterface $privateApiKeyProvider
+    ) {
+        $this->publicApiKeyProvider = $publicApiKeyProvider;
+        $this->privateApiKeyProvider = $privateApiKeyProvider;
     }
 
     public function check(ChannelInterface $channel): bool
     {
-        /** @var array $clerkStore */
-        foreach ($this->clerkStores as $clerkStore) {
-            if ($clerkStore['channel_code'] === $channel->getCode()) {
-                return true;
+        try {
+            $this->privateApiKeyProvider->providePrivateApiKeyForChannel($channel);
+        } catch (PrivateApiKeyNotFoundForChannelException $e) {
+            try {
+                $this->publicApiKeyProvider->providePublicApiKeyForChannel($channel);
+            } catch (PublicApiKeyNotFoundForChannelException $e) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }
