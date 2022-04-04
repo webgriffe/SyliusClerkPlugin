@@ -10,16 +10,10 @@ use Webgriffe\SyliusClerkPlugin\Exception\PublicApiKeyNotFoundForChannelExceptio
 
 final class ChannelApiKeyChecker implements ChannelApiKeyCheckerInterface
 {
-    private PublicApiKeyProviderInterface $publicApiKeyProvider;
-
-    private PrivateApiKeyProviderInterface $privateApiKeyProvider;
-
     public function __construct(
-        PublicApiKeyProviderInterface $publicApiKeyProvider,
-        PrivateApiKeyProviderInterface $privateApiKeyProvider
+        private PublicApiKeyProviderInterface $publicApiKeyProvider,
+        private PrivateApiKeyProviderInterface $privateApiKeyProvider
     ) {
-        $this->publicApiKeyProvider = $publicApiKeyProvider;
-        $this->privateApiKeyProvider = $privateApiKeyProvider;
     }
 
     public function check(ChannelInterface $channel): bool

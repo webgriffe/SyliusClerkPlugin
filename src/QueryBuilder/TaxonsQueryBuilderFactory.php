@@ -10,12 +10,8 @@ use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
 final class TaxonsQueryBuilderFactory implements QueryBuilderFactoryInterface
 {
-    /** @var TaxonRepositoryInterface */
-    private $taxonRepository;
-
-    public function __construct(TaxonRepositoryInterface $taxonRepository)
+    public function __construct(private TaxonRepositoryInterface $taxonRepository)
     {
-        $this->taxonRepository = $taxonRepository;
     }
 
     public function createQueryBuilder(ChannelInterface $channel): QueryBuilder

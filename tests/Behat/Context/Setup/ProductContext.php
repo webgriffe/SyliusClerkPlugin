@@ -13,20 +13,16 @@ use Sylius\Component\Product\Resolver\DefaultProductVariantResolver;
 
 final class ProductContext implements Context
 {
-    private EntityManagerInterface $entityManager;
-
-    private DefaultProductVariantResolver $defaultVariantResolver;
-
-    public function __construct(EntityManagerInterface $entityManager, DefaultProductVariantResolver $defaultVariantResolver)
-    {
-        $this->entityManager = $entityManager;
-        $this->defaultVariantResolver = $defaultVariantResolver;
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private DefaultProductVariantResolver $defaultVariantResolver
+    ) {
     }
 
     /**
      * @Given /^(this product) description is "([^"]*)"$/
      */
-    public function thisProductDescriptionIs(ProductInterface $product, string $description)
+    public function thisProductDescriptionIs(ProductInterface $product, string $description): void
     {
         $product->setDescription($description);
         $this->entityManager->flush();
@@ -39,7 +35,7 @@ final class ProductContext implements Context
         ProductInterface $product,
         int $originalPrice,
         ChannelInterface $channel
-    ) {
+    ): void {
         /** @var ProductVariantInterface $productVariant */
         $productVariant = $this->defaultVariantResolver->getVariant($product);
         $channelPricing = $productVariant->getChannelPricingForChannel($channel);

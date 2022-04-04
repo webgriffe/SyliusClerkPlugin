@@ -10,18 +10,14 @@ use Webmozart\Assert\Assert;
 
 class ClerkTrackingCodeContext implements Context
 {
-    /** @var HomePageInterface */
-    private $homePage;
-
-    public function __construct(HomePageInterface $homePage)
+    public function __construct(private HomePageInterface $homePage)
     {
-        $this->homePage = $homePage;
     }
 
     /**
      * @When /^I open the homepage$/
      */
-    public function iOpenTheHomepage()
+    public function iOpenTheHomepage(): void
     {
         $this->homePage->open();
     }

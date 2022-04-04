@@ -9,17 +9,10 @@ use Webgriffe\SyliusClerkPlugin\Exception\PrivateApiKeyNotFoundForChannelExcepti
 
 final class PrivateApiKeyProvider implements PrivateApiKeyProviderInterface
 {
-    /** @var array */
-    private $clerkStores;
-
-    public function __construct(array $clerkStores)
+    public function __construct(private array $clerkStores)
     {
-        $this->clerkStores = $clerkStores;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function providePrivateApiKeyForChannel(ChannelInterface $channel): string
     {
         foreach ($this->clerkStores as $clerkStore) {
