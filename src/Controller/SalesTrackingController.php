@@ -17,21 +17,13 @@ use Webmozart\Assert\Assert;
 
 final class SalesTrackingController extends AbstractController
 {
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
-
-    /** @var NormalizerInterface */
-    private $normalizer;
-
     private ?ChannelApiKeyCheckerInterface $channelApiKeyChecker;
 
     public function __construct(
-        OrderRepositoryInterface $orderRepository,
-        NormalizerInterface $normalizer,
+        private OrderRepositoryInterface $orderRepository,
+        private NormalizerInterface $normalizer,
         ChannelApiKeyCheckerInterface $channelApiKeyChecker = null
     ) {
-        $this->orderRepository = $orderRepository;
-        $this->normalizer = $normalizer;
         if ($channelApiKeyChecker === null) {
             trigger_deprecation(
                 'webgriffe/sylius-clerk-plugin',

@@ -12,13 +12,10 @@ use Webmozart\Assert\Assert;
 
 final class ClerkFeedContext implements Context
 {
-    private HttpKernelBrowser $client;
-
     private array $privateApiKeysForChannels;
 
-    public function __construct(HttpKernelBrowser $client)
+    public function __construct(private HttpKernelBrowser $client)
     {
-        $this->client = $client;
     }
 
     /**

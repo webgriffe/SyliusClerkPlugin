@@ -12,12 +12,8 @@ use Webmozart\Assert\Assert;
 
 final class ProductsQueryBuilderFactory implements QueryBuilderFactoryInterface
 {
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function __construct(private ProductRepositoryInterface $productRepository)
     {
-        $this->productRepository = $productRepository;
     }
 
     public function createQueryBuilder(ChannelInterface $channel): QueryBuilder

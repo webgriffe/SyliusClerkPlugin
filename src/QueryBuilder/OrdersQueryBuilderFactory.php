@@ -12,12 +12,8 @@ use Webmozart\Assert\Assert;
 
 final class OrdersQueryBuilderFactory implements QueryBuilderFactoryInterface
 {
-    /** @var OrderRepositoryInterface|EntityRepository */
-    private $orderRepository;
-
-    public function __construct(OrderRepositoryInterface $orderRepository)
+    public function __construct(private OrderRepositoryInterface $orderRepository)
     {
-        $this->orderRepository = $orderRepository;
     }
 
     public function createQueryBuilder(ChannelInterface $channel): QueryBuilder

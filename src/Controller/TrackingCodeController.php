@@ -15,21 +15,13 @@ use Webmozart\Assert\Assert;
 
 final class TrackingCodeController extends AbstractController
 {
-    /** @var ChannelContextInterface */
-    private $channelContext;
-
-    /** @var PublicApiKeyProviderInterface */
-    private $publicApiKeyProvider;
-
     private ?ChannelApiKeyCheckerInterface $channelApiKeyChecker;
 
     public function __construct(
-        ChannelContextInterface $channelContext,
-        PublicApiKeyProviderInterface $publicApiKeyProvider,
+        private ChannelContextInterface $channelContext,
+        private PublicApiKeyProviderInterface $publicApiKeyProvider,
         ChannelApiKeyCheckerInterface $channelApiKeyChecker = null
     ) {
-        $this->publicApiKeyProvider = $publicApiKeyProvider;
-        $this->channelContext = $channelContext;
         if ($channelApiKeyChecker === null) {
             trigger_deprecation(
                 'webgriffe/sylius-clerk-plugin',

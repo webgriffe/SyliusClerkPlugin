@@ -17,31 +17,13 @@ final class FeedGenerator implements FeedGeneratorInterface
 {
     public const NORMALIZATION_FORMAT = 'clerk_array';
 
-    /** @var QueryBuilderFactoryInterface */
-    private $productsQueryBuilderFactory;
-
-    /** @var QueryBuilderFactoryInterface */
-    private $taxonsQueryBuilderFactory;
-
-    /** @var QueryBuilderFactoryInterface */
-    private $ordersQueryBuilderFactory;
-
-    /** @var NormalizerInterface&EncoderInterface */
-    private $serializer;
-
-    /**
-     * @param NormalizerInterface&EncoderInterface $serializer
-     */
+    /** @param NormalizerInterface&EncoderInterface $serializer */
     public function __construct(
-        QueryBuilderFactoryInterface $productsQueryBuilderFactory,
-        QueryBuilderFactoryInterface $taxonsQueryBuilderFactory,
-        QueryBuilderFactoryInterface $ordersQueryBuilderFactory,
-        $serializer
+        private QueryBuilderFactoryInterface $productsQueryBuilderFactory,
+        private QueryBuilderFactoryInterface $taxonsQueryBuilderFactory,
+        private QueryBuilderFactoryInterface $ordersQueryBuilderFactory,
+        private $serializer
     ) {
-        $this->productsQueryBuilderFactory = $productsQueryBuilderFactory;
-        $this->taxonsQueryBuilderFactory = $taxonsQueryBuilderFactory;
-        $this->ordersQueryBuilderFactory = $ordersQueryBuilderFactory;
-        $this->serializer = $serializer;
     }
 
     /**

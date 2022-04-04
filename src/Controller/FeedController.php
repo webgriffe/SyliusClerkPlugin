@@ -18,26 +18,14 @@ use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProviderInterface;
 
 final class FeedController extends AbstractController
 {
-    /** @var FeedGeneratorInterface */
-    private $feedGenerator;
-
-    /** @var ChannelRepositoryInterface */
-    private $channelRepository;
-
-    /** @var PrivateApiKeyProviderInterface */
-    private $privateApiKeyProvider;
-
     private ?ChannelApiKeyCheckerInterface $channelApiKeyChecker;
 
     public function __construct(
-        FeedGeneratorInterface $productsFeedGenerator,
-        ChannelRepositoryInterface $channelRepository,
-        PrivateApiKeyProviderInterface $privateApiKeyProvider,
+        private FeedGeneratorInterface $feedGenerator,
+        private ChannelRepositoryInterface $channelRepository,
+        private PrivateApiKeyProviderInterface $privateApiKeyProvider,
         ChannelApiKeyCheckerInterface $channelApiKeyChecker = null
     ) {
-        $this->feedGenerator = $productsFeedGenerator;
-        $this->channelRepository = $channelRepository;
-        $this->privateApiKeyProvider = $privateApiKeyProvider;
         if ($channelApiKeyChecker === null) {
             trigger_deprecation(
                 'webgriffe/sylius-clerk-plugin',
