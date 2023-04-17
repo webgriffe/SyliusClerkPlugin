@@ -42,16 +42,19 @@ final class FeedGenerator implements FeedGeneratorInterface
             'created' => time(),
             'strict' => false,
         ];
-        /** @var ProductInterface $product */
-        foreach ($productsQueryBuilder->getQuery()->getResult() as $product) {
+        /** @var ProductInterface[] $products */
+        $products = $productsQueryBuilder->getQuery()->getResult();
+        foreach ($products as $product) {
             $feed['products'][] = $product;
         }
-        /** @var TaxonInterface $taxon */
-        foreach ($taxonsQueryBuilder->getQuery()->getResult() as $taxon) {
+        /** @var TaxonInterface[] $taxa */
+        $taxa = $taxonsQueryBuilder->getQuery()->getResult();
+        foreach ($taxa as $taxon) {
             $feed['categories'][] = $taxon;
         }
-        /** @var OrderInterface $order */
-        foreach ($ordersQueryBuilder->getQuery()->getResult() as $order) {
+        /** @var OrderInterface[] $orders */
+        $orders = $ordersQueryBuilder->getQuery()->getResult();
+        foreach ($orders as $order) {
             $feed['sales'][] = $order;
         }
 
