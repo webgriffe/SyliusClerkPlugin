@@ -108,16 +108,35 @@ class ProductNormalizerSpec extends ObjectBehavior
         );
     }
 
-    function it_normalize_null_price_if_product_has_no_variant(ProductVariantResolverInterface $productVariantResolver)
-    {
+    function it_normalize_null_price_if_product_has_no_variant(
+        ProductVariantResolverInterface $productVariantResolver,
+        RouterInterface $router,
+    ) {
+        $router->generate(
+            'sylius_shop_product_show',
+            [
+                'slug' => $this->product->getSlug(),
+                '_locale' => $this->product->getTranslation()->getLocale(),
+            ],
+            0
+        )->willReturn('http://example.com')->shouldBeCalledOnce();
         $productVariantResolver->getVariant($this->product)->willReturn(null);
 
         $this->normalize($this->product, null, ['channel' => $this->channel])['price']->shouldBeNull();
     }
 
     function it_normalize_null_price_if_product_has_variant_without_price_in_channel(
-        ProductVariantResolverInterface $productVariantResolver
+        ProductVariantResolverInterface $productVariantResolver,
+        RouterInterface $router,
     ) {
+        $router->generate(
+            'sylius_shop_product_show',
+            [
+                'slug' => $this->product->getSlug(),
+                '_locale' => $this->product->getTranslation()->getLocale(),
+            ],
+            0
+        )->willReturn('http://example.com')->shouldBeCalledOnce();
         $this->productVariant->removeChannelPricing($this->channelPricing);
         $productVariantResolver->getVariant($this->product)->willReturn($this->productVariant);
 
@@ -125,8 +144,17 @@ class ProductNormalizerSpec extends ObjectBehavior
     }
 
     function it_normalize_null_price_if_product_has_variant_with_null_price_in_channel(
-        ProductVariantResolverInterface $productVariantResolver
+        ProductVariantResolverInterface $productVariantResolver,
+        RouterInterface $router,
     ) {
+        $router->generate(
+            'sylius_shop_product_show',
+            [
+                'slug' => $this->product->getSlug(),
+                '_locale' => $this->product->getTranslation()->getLocale(),
+            ],
+            0
+        )->willReturn('http://example.com')->shouldBeCalledOnce();
         $this->channelPricing->setPrice(null);
         $productVariantResolver->getVariant($this->product)->willReturn($this->productVariant);
 
