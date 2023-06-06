@@ -47,12 +47,12 @@ class CustomerNormalizerSpec extends ObjectBehavior
         $this->supportsNormalization(new \stdClass(), 'clerk_array')->shouldReturn(false);
     }
 
-    function it_throws_an_exception_normalizing_object_which_is_not_an_order()
+    function it_throws_an_exception_normalizing_object_which_is_not_a_customer()
     {
         $this->shouldThrow(InvalidArgumentException::class)->during('normalize', [new \stdClass(), null, []]);
     }
 
-    function it_normalize_an_order_without_products()
+    function it_normalizes_a_customer()
     {
         $this->normalize($this->customer)->shouldBeLike(
             [
