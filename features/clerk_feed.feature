@@ -18,6 +18,7 @@ Feature: Providing a Clerk.io data feed
     And this product has a text attribute "Text Attribute" with value "Text Value"
     And there is a customer "customer@sylius.com" that placed an order
     And the customer bought a single "Sylius Mug"
+    And the store has customer "Plughin Webgriffe" with email "iamplughin@webgriffe.com"
 
   Scenario: Providing Clerk data feed with basic data
     When the Clerk crawler hits the data feed URL for the "United States" channel
@@ -66,6 +67,14 @@ Feature: Providing a Clerk.io data feed
     And there should be an ID in this feed JSON paths "$.sales.*.products.*.id"
     And there should be the value "1" in this feed JSON paths "$.sales.*.products.*.quantity"
     And there should be the value "3.99" in this feed JSON paths "$.sales.*.products.*.price"
+
+  Scenario: Providing Clerk data feed with customers data
+    When the Clerk crawler hits the data feed URL for the "United States" channel
+    Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
+    And there should be an ID in this feed JSON paths "$.customers.*.id"
+    And there should be an email in this feed JSON paths "$.customers.*.email"
+    And there should be the value "Plughin Webgriffe" in this feed JSON paths "$.customers[1].name"
+    And there should be the value "u" in this feed JSON paths "$.customers.*.gender"
 
   Scenario: Denying access to Clerk data feed with an invalid security hash
     When the Clerk crawler hits the data feed URL for the "United States" channel with an invalid security hash
