@@ -77,7 +77,7 @@ Where `https://your-sylius-store.com` is your Sylius store base URL and `channel
 Or set up a cronjob for this command:
 
 ```bash
-bin/console webgriffe:clerk:generate-feed
+bin/console webgriffe:clerk:generate-feed channelCode
 ```
 
 and use the following JSON Feed URL:

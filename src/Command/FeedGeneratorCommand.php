@@ -10,6 +10,7 @@ use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -38,7 +39,8 @@ final class FeedGeneratorCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Generate JSON feed for Clerk.io');
+        $this->setDescription('Generate JSON feed for Clerk.io')
+             ->addArgument('channelCode', InputArgument::REQUIRED, 'Channel code');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -53,7 +55,7 @@ final class FeedGeneratorCommand extends Command
         $this->output('Enable lock', [], LogLevel::DEBUG, OutputInterface::VERBOSITY_DEBUG);
 
         $this->output('Generating JSON feed in memory', [], LogLevel::DEBUG, OutputInterface::VERBOSITY_DEBUG);
-        $channel = $this->channelRepository->findOneBy(['code' => 'ecommerce']);
+        $channel = $this->channelRepository->findOneBy(['code' => $input->getArgument('channelCode')]);
         Assert::isInstanceOf($channel, ChannelInterface::class);
 
         // avoid timeout
