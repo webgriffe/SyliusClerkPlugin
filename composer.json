@@ -14,6 +14,7 @@
         "ext-json": "*",
         "symfony/serializer": "^5.0 || ^6.0",
         "sylius/mailer-bundle":  "^1.8 || ^2.0@beta",
+        "symfony/lock": "^5.4 || ^6.0",
         "symfony/webpack-encore-bundle": "^1.15"
     },
     "require-dev": {

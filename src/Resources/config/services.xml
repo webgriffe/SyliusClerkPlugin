@@ -96,5 +96,14 @@
             <argument type="service" id="webgriffe_sylius_clerk.provider.public_api_key"/>
             <argument type="service" id="webgriffe_sylius_clerk.provider.private_api_key"/>
         </service>
+
+        <service id="webgriffe_sylius_clerk.command.generate_feed" class="Webgriffe\SyliusClerkPlugin\Command\FeedGeneratorCommand">
+            <argument id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator" type="service"/>
+            <argument id="sylius.repository.channel" type="service" />
+            <argument id="router" type="service" />
+            <argument>%kernel.project_dir%</argument>
+            <argument id="monolog.logger" type="service" />
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>
