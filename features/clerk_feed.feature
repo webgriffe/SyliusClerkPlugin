@@ -67,6 +67,14 @@ Feature: Providing a Clerk.io data feed
     And there should be the value "1" in this feed JSON paths "$.sales.*.products.*.quantity"
     And there should be the value "3.99" in this feed JSON paths "$.sales.*.products.*.price"
 
+  Scenario: Providing Clerk data feed with customers data
+    When the Clerk crawler hits the data feed URL for the "United States" channel
+    Then the Clerk crawler should receive a successful HTTP response with a valid JSON feed as its content
+    And there should be an ID in this feed JSON paths "$.customers.*.id"
+    And there should be an email in this feed JSON paths "$.customers.*.email"
+    And there should be the value "Plughin Webgriffe" in this feed JSON paths "$.customers.*.name"
+    And there should be the value "neutral" in this feed JSON paths "$.customers.*.gender"
+
   Scenario: Denying access to Clerk data feed with an invalid security hash
     When the Clerk crawler hits the data feed URL for the "United States" channel with an invalid security hash
     Then the Clerk crawler should receive an access denied response

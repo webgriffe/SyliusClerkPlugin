@@ -8,6 +8,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
+use Sylius\Component\Core\Model\CustomerInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -22,6 +23,7 @@ final class FeedGenerator implements FeedGeneratorInterface
         private QueryBuilderFactoryInterface $productsQueryBuilderFactory,
         private QueryBuilderFactoryInterface $taxonsQueryBuilderFactory,
         private QueryBuilderFactoryInterface $ordersQueryBuilderFactory,
+        private QueryBuilderFactoryInterface $customersQueryBuilderFactory,
         private $serializer
     ) {
     }
@@ -34,10 +36,12 @@ final class FeedGenerator implements FeedGeneratorInterface
         $productsQueryBuilder = $this->productsQueryBuilderFactory->createQueryBuilder($channel);
         $taxonsQueryBuilder = $this->taxonsQueryBuilderFactory->createQueryBuilder($channel);
         $ordersQueryBuilder = $this->ordersQueryBuilderFactory->createQueryBuilder($channel);
+        $customersQueryBuilder = $this->customersQueryBuilderFactory->createQueryBuilder($channel);
 
         $feed = [
             'products' => [],
             'categories' => [],
+            'customers' => [],
             'sales' => [],
             'created' => time(),
             'strict' => false,
@@ -51,6 +55,11 @@ final class FeedGenerator implements FeedGeneratorInterface
         $taxa = $taxonsQueryBuilder->getQuery()->getResult();
         foreach ($taxa as $taxon) {
             $feed['categories'][] = $taxon;
+        }
+        /** @var CustomerInterface[] $customers */
+        $customers = $customersQueryBuilder->getQuery()->getResult();
+        foreach ($customers as $customer) {
+            $feed['customers'][] = $customer;
         }
         /** @var OrderInterface[] $orders */
         $orders = $ordersQueryBuilder->getQuery()->getResult();
