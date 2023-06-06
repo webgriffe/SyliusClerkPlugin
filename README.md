@@ -74,6 +74,18 @@ https://your-sylius-store.com/clerk/feed/channelId
 
 Where `https://your-sylius-store.com` is your Sylius store base URL and `channelId` is the database ID of the Sylius channel you whant to sync.
 
+Or set up a cronjob for this command:
+
+```bash
+bin/console webgriffe:clerk:generate-feed
+```
+
+and use the following JSON Feed URL:
+
+```
+https://your-sylius-store.com/clerk_feed.json
+```
+
 ## Install Clerk.js on you store front
 
 Like stated in the official Clerk documentation [here](https://docs.clerk.io/docs/clerkjs-quick-start#section-installing-clerkjs), you have to put the Clerk.js tracking code on all pages of your store just before the `</head>` tag. To do so this plugin expose a dedicated controller action which you can render in your Twig template, for example like the following:
@@ -114,6 +126,7 @@ Basically, this bundle provides an easy way to generate a JSON feed compliant wi
 * Products
 * Categories (a.k.a. Taxons on Sylius)
 * Orders
+* Customers
 
 For each entity type the following two components are involved in feed generation:
 
@@ -125,6 +138,7 @@ The plugin already provides three query builder factories and three normalizers:
 - Products: `Webgriffe\SyliusClerkPlugin\QueryBuilder\ProductsQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\ProductNormalizer`
 - Categories: `Webgriffe\SyliusClerkPlugin\QueryBuilder\TaxonsQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\TaxonNormalizer`
 - Orders: `Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer`
+- Customers: `Webgriffe\SyliusClerkPlugin\QueryBuilder\CustomersQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\CustomerNormalizer`
 
 So, to customize the feed generation you can replace these implementations using the common Symfony techniques to do so (see [here](https://symfony.com/doc/current/bundles/override.html#services-configuration)).
 
