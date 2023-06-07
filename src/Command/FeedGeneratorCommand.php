@@ -31,8 +31,8 @@ final class FeedGeneratorCommand extends Command
         private FeedGeneratorInterface $feedGenerator,
         private ChannelRepositoryInterface $channelRepository,
         private RouterInterface $router,
-        private string $projectDir,
         private LoggerInterface $logger,
+        private string $storagePath,
     ) {
         parent::__construct();
     }
@@ -64,8 +64,7 @@ final class FeedGeneratorCommand extends Command
 
         $jsonFeed = $this->feedGenerator->generate($channel);
 
-        $baseDir = rtrim($this->projectDir, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
-        $targetFile = $baseDir . 'var' . \DIRECTORY_SEPARATOR . 'storage' . \DIRECTORY_SEPARATOR . 'clerk_feed.json';
+        $targetFile = $this->storagePath . \DIRECTORY_SEPARATOR . $channel->getCode() . '_clerk_feed.json';
         $this->output(sprintf('Writing JSON feed to file "%s"', $targetFile), [], LogLevel::DEBUG, OutputInterface::VERBOSITY_DEBUG);
         file_put_contents($targetFile, $jsonFeed);
 
