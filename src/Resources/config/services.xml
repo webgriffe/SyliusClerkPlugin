@@ -45,21 +45,21 @@
             <argument id="sylius.product_variant_resolver.default" type="service"/>
             <argument id="router" type="service"/>
             <argument id="liip_imagine.service.filter" type="service"/>
-            <tag name="serializer.normalizer" />
+            <tag name="serializer.normalizer" priority="120" />
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Normalizer\TaxonNormalizer">
             <argument id="router" type="service"/>
             <argument id="sylius.repository.taxon" type="service"/>
-            <tag name="serializer.normalizer" />
+            <tag name="serializer.normalizer" priority="120" />
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer">
-            <tag name="serializer.normalizer" />
+            <tag name="serializer.normalizer" priority="120" />
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Normalizer\CustomerNormalizer">
-            <tag name="serializer.normalizer" />
+            <tag name="serializer.normalizer" priority="120" />
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\QueryBuilder\ProductsQueryBuilderFactory">
