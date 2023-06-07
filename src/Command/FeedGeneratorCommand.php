@@ -57,6 +57,8 @@ final class FeedGeneratorCommand extends Command
         $this->output('Generating JSON feed in memory', [], LogLevel::DEBUG, OutputInterface::VERBOSITY_DEBUG);
         $channel = $this->channelRepository->findOneBy(['code' => $input->getArgument('channelCode')]);
         Assert::isInstanceOf($channel, ChannelInterface::class);
+        $channelCode = $channel->getCode();
+        Assert::notNull($channelCode);
 
         // avoid timeout
         set_time_limit(0);
@@ -64,7 +66,7 @@ final class FeedGeneratorCommand extends Command
 
         $jsonFeed = $this->feedGenerator->generate($channel);
 
-        $targetFile = $this->storagePath . \DIRECTORY_SEPARATOR . $channel->getCode() . '_clerk_feed.json';
+        $targetFile = $this->storagePath . \DIRECTORY_SEPARATOR . $channelCode . '_clerk_feed.json';
         $this->output(sprintf('Writing JSON feed to file "%s"', $targetFile), [], LogLevel::DEBUG, OutputInterface::VERBOSITY_DEBUG);
         file_put_contents($targetFile, $jsonFeed);
 

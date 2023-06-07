@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.4.1@9fd7a7d885b3a216cff8dec9d8c21a132f275224">
-  <file src="src/Controller/FeedController.php">
-    <MixedAssignment occurrences="2">
-      <code>$hash</code>
-      <code>$salt</code>
-    </MixedAssignment>
-    <MixedOperand occurrences="1">
-      <code>$salt</code>
-    </MixedOperand>
-  </file>
+<files psalm-version="4.27.0@faf106e717c37b8c81721845dba9de3d8deed8ff">
   <file src="src/DependencyInjection/Configuration.php">
-    <MixedMethodCall occurrences="17">
+    <MixedMethodCall occurrences="21">
       <code>arrayNode</code>
       <code>arrayPrototype</code>
       <code>children</code>
+      <code>defaultValue</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -28,18 +22,12 @@
       <code>scalarNode</code>
       <code>scalarNode</code>
       <code>scalarNode</code>
+      <code>scalarNode</code>
     </MixedMethodCall>
-    <PossiblyUndefinedMethod occurrences="1">
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>children</code>
       <code>children</code>
     </PossiblyUndefinedMethod>
-  </file>
-  <file src="src/DependencyInjection/WebgriffeSyliusClerkExtension.php">
-    <ParamNameMismatch occurrences="1">
-      <code>$config</code>
-    </ParamNameMismatch>
-    <PossiblyNullArgument occurrences="1">
-      <code>$this-&gt;getConfiguration([], $container)</code>
-    </PossiblyNullArgument>
   </file>
   <file src="src/Exception/PrivateApiKeyNotFoundForChannelException.php">
     <PossiblyNullArgument occurrences="1">
@@ -51,17 +39,7 @@
       <code>$channel-&gt;getCode()</code>
     </PossiblyNullArgument>
   </file>
-  <file src="src/Normalizer/OrderNormalizer.php">
-    <MethodSignatureMismatch occurrences="2">
-      <code>$format</code>
-      <code>$format</code>
-    </MethodSignatureMismatch>
-  </file>
   <file src="src/Normalizer/ProductNormalizer.php">
-    <MethodSignatureMismatch occurrences="2">
-      <code>$format</code>
-      <code>$format</code>
-    </MethodSignatureMismatch>
     <MixedAssignment occurrences="2">
       <code>$productData[$attribute-&gt;getCode()]</code>
       <code>$taxonsIds[]</code>
@@ -78,10 +56,6 @@
     </PossiblyNullOperand>
   </file>
   <file src="src/Normalizer/TaxonNormalizer.php">
-    <MethodSignatureMismatch occurrences="2">
-      <code>$format</code>
-      <code>$format</code>
-    </MethodSignatureMismatch>
     <MissingClosureReturnType occurrences="1">
       <code>function (TaxonInterface $taxon) {</code>
     </MissingClosureReturnType>
