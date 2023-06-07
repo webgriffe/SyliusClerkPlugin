@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface;
+use Webgriffe\SyliusClerkPlugin\Resolver\PageResolverInterface;
 
 final class FeedGenerator implements FeedGeneratorInterface
 {
@@ -24,6 +25,7 @@ final class FeedGenerator implements FeedGeneratorInterface
         private QueryBuilderFactoryInterface $taxonsQueryBuilderFactory,
         private QueryBuilderFactoryInterface $ordersQueryBuilderFactory,
         private QueryBuilderFactoryInterface $customersQueryBuilderFactory,
+        private PageResolverInterface $pageResolver,
         private $serializer
     ) {
     }
@@ -66,6 +68,7 @@ final class FeedGenerator implements FeedGeneratorInterface
         foreach ($orders as $order) {
             $feed['sales'][] = $order;
         }
+        $feed['pages'] = $this->pageResolver->createPageList();
 
         return $this->serializer->encode(
             $this->serializer->normalize($feed, self::NORMALIZATION_FORMAT, ['channel' => $channel]),

@@ -38,6 +38,7 @@
             <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\TaxonsQueryBuilderFactory" type="service" />
             <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory" type="service" />
             <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\CustomersQueryBuilderFactory" type="service" />
+            <argument id="Webgriffe\SyliusClerkPlugin\Resolver\PageResolver" type="service" />
             <argument id="serializer" type="service"/>
         </service>
 
