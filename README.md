@@ -130,6 +130,7 @@ Basically, this bundle provides an easy way to generate a JSON feed compliant wi
 * Categories (a.k.a. Taxons on Sylius)
 * Orders
 * Customers
+* Pages
 
 For each entity type the following two components are involved in feed generation:
 
@@ -142,6 +143,7 @@ The plugin already provides three query builder factories and three normalizers:
 - Categories: `Webgriffe\SyliusClerkPlugin\QueryBuilder\TaxonsQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\TaxonNormalizer`
 - Orders: `Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer`
 - Customers: `Webgriffe\SyliusClerkPlugin\QueryBuilder\CustomersQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\CustomerNormalizer`
+- Pages: This entity is not provided by Sylius core so you have to implement your own resolver. See `Webgriffe\SyliusClerkPlugin\PageResolver` for example. If you want to use, you have to decorate `FeedGenerator` and create a service that implement `Webgriffe\SyliusClerkPlugin\PageResolverInterface`
 
 So, to customize the feed generation you can replace these implementations using the common Symfony techniques to do so (see [here](https://symfony.com/doc/current/bundles/override.html#services-configuration)).
 
