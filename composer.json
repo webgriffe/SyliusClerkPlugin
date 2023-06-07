@@ -59,7 +59,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.12-dev"
+            "dev-master": "1.12-dev",
+            "dev-version-2.3.x": "1.11-dev"
         }
     },
     "autoload": {
