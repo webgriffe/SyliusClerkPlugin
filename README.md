@@ -53,6 +53,9 @@ The Clerk.io integration with Sylius is per-channel. Every Clerk.io store must b
 
 ```yaml
 webgriffe_sylius_clerk:
+  # optional - if you want to change the default feed path
+  # storage_feed_path: '%kernel.project_dir%/%env(CLERK_FEED_PATH)%'  
+  # storage_feed_path: '%kernel.project_dir%/var/storage'  
   stores:
     - channel_code: WEB-US
       public_api_key: web-us-public-key
@@ -83,7 +86,7 @@ bin/console webgriffe:clerk:generate-feed channelCode
 and use the following JSON Feed URL:
 
 ```
-https://your-sylius-store.com/clerk_feed.json
+https://your-sylius-store.com/media/<channelCode>_clerk_feed.json
 ```
 
 ## Install Clerk.js on you store front

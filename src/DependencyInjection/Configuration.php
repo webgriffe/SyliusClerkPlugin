@@ -31,6 +31,14 @@ final class Configuration implements ConfigurationInterface
             ->end()
         ;
 
+        $rootNode
+            ->children()
+                ->scalarNode('storage_feed_path')
+                    ->defaultValue('%kernel.project_dir%/public/media')
+                    ->end()
+            ->end()
+        ;
+
         return $treeBuilder;
     }
 }

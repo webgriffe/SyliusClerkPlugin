@@ -101,8 +101,8 @@
             <argument id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator" type="service"/>
             <argument id="sylius.repository.channel" type="service" />
             <argument id="router" type="service" />
-            <argument>%kernel.project_dir%</argument>
             <argument id="monolog.logger" type="service" />
+            <argument>%webgriffe_sylius_clerk.storage_feed_path%</argument>
             <tag name="console.command"/>
         </service>
     </services>

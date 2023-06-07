@@ -26,6 +26,8 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $definition->replaceArgument(0, $config['stores']);
         $definition = $container->getDefinition('webgriffe_sylius_clerk.provider.public_api_key');
         $definition->replaceArgument(0, $config['stores']);
+
+        $container->setParameter('webgriffe_sylius_clerk.storage_feed_path', (string) $config['storage_feed_path']);
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
