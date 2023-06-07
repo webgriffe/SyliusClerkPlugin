@@ -79,6 +79,8 @@
             <argument id="sylius.repository.customer" type="service"/>
         </service>
 
+        <service id="Webgriffe\SyliusClerkPlugin\Resover\PageResolver" />
+
         <service id="webgriffe_sylius_clerk.provider.private_api_key" class="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider">
             <argument/>
         </service>
