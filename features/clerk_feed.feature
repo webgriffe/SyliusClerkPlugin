@@ -54,7 +54,7 @@ Feature: Providing a Clerk.io data feed
     And there should be a count of 1 element in this feed JSON path "$.categories"
     And there should be an ID in this feed JSON paths "$.categories.*.id"
     And there should be the value "Mugs" in this feed JSON path "$.categories[0].name"
-    And there should be the value "http://localhost/en_US/taxons/Mugs" in this feed JSON path "$.categories[0].url"
+    And there should be the value "http://localhost/en_US/taxons/mugs" in this feed JSON path "$.categories[0].url"
     And there should be an empty array in this feed JSON path "$.categories[0].subcategories"
 
   Scenario: Providing Clerk data feed with sales data
