@@ -46,7 +46,7 @@ final class TaxonNormalizer implements NormalizerInterface
             'name' => $taxonTranslation->getName(),
             'url' => $this->router->generate(
                 'sylius_shop_product_index',
-                ['slug' => $taxonTranslation->getName(), '_locale' => $locale->getCode()],
+                ['slug' => $taxonTranslation->getSlug(), '_locale' => $locale->getCode()],
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
             'subcategories' => $subcategories,
