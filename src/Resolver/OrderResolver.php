@@ -6,6 +6,7 @@ namespace Webgriffe\SyliusClerkPlugin\Resolver;
 
 use Sylius\Component\Core\Model\ChannelInterface;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class OrderResolver implements OrderResolverInterface
 {
@@ -18,6 +19,9 @@ final class OrderResolver implements OrderResolverInterface
     {
         $ordersQueryBuilder = $this->ordersQueryBuilderFactory->createQueryBuilder($channel);
 
-        return $ordersQueryBuilder->getQuery()->getResult();
+        $result = $ordersQueryBuilder->getQuery()->getResult();
+        Assert::isArray($result);
+
+        return $result;
     }
 }
