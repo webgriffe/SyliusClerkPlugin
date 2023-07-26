@@ -15,7 +15,7 @@ final class ProductContext implements Context
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private DefaultProductVariantResolver $defaultVariantResolver
+        private DefaultProductVariantResolver $defaultVariantResolver,
     ) {
     }
 
@@ -34,7 +34,7 @@ final class ProductContext implements Context
     public function thisProductOriginalPriceIsInChannel(
         ProductInterface $product,
         int $originalPrice,
-        ChannelInterface $channel
+        ChannelInterface $channel,
     ): void {
         /** @var ProductVariantInterface $productVariant */
         $productVariant = $this->defaultVariantResolver->getVariant($product);
