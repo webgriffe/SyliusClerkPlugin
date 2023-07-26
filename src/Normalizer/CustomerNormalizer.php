@@ -14,14 +14,14 @@ final class CustomerNormalizer implements NormalizerInterface
     public function normalize($object, string $format = null, array $context = [])
     {
         if (!$object instanceof CustomerInterface) {
-            throw new InvalidArgumentException('This normalizer supports only instances of '.CustomerInterface::class);
+            throw new InvalidArgumentException('This normalizer supports only instances of ' . CustomerInterface::class);
         }
         $customer = $object;
 
         return [
-            'id'     => $customer->getId(),
-            'name'   => $customer->getFullName(),
-            'email'  => $customer->getEmail(),
+            'id' => $customer->getId(),
+            'name' => $customer->getFullName(),
+            'email' => $customer->getEmail(),
             'gender' => $customer->getGender(),
         ];
     }

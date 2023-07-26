@@ -22,7 +22,7 @@ final class SalesTrackingController extends AbstractController
     public function __construct(
         private OrderRepositoryInterface $orderRepository,
         private NormalizerInterface $normalizer,
-        ChannelApiKeyCheckerInterface $channelApiKeyChecker = null
+        ChannelApiKeyCheckerInterface $channelApiKeyChecker = null,
     ) {
         if ($channelApiKeyChecker === null) {
             trigger_deprecation(
@@ -30,7 +30,7 @@ final class SalesTrackingController extends AbstractController
                 '2.2',
                 'Not passing a channel api key checker to "%s" is deprecated and will be removed in %s.',
                 __CLASS__,
-                '3.0'
+                '3.0',
             );
         }
         $this->channelApiKeyChecker = $channelApiKeyChecker;
@@ -49,7 +49,7 @@ final class SalesTrackingController extends AbstractController
         $orderNormalized = $this->normalizer->normalize(
             $order,
             FeedGenerator::NORMALIZATION_FORMAT,
-            ['channel' => $channel]
+            ['channel' => $channel],
         );
 
         return $this->render('@WebgriffeSyliusClerkPlugin/salesTracking.html.twig', ['order' => $orderNormalized]);

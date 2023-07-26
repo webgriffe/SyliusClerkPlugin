@@ -12,7 +12,7 @@ final class PrivateApiKeyNotFoundForChannelException extends \RuntimeException
     {
         $message = sprintf(
             'Cannot find Clerk store for channel "%s". Please configure Clerk stores.',
-            $channel->getCode()
+            $channel->getCode(),
         );
         parent::__construct($message);
     }

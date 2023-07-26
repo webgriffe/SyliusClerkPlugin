@@ -18,7 +18,7 @@ final class TaxonNormalizer implements NormalizerInterface
 {
     public function __construct(
         private RouterInterface $router,
-        private TaxonRepositoryInterface $taxonRepository
+        private TaxonRepositoryInterface $taxonRepository,
     ) {
     }
 
@@ -37,7 +37,7 @@ final class TaxonNormalizer implements NormalizerInterface
                 function (TaxonInterface $taxon) {
                     return $taxon->getId();
                 },
-                $this->taxonRepository->findChildren($taxon->getCode(), $locale->getCode())
+                $this->taxonRepository->findChildren($taxon->getCode(), $locale->getCode()),
             );
         }
 
@@ -47,7 +47,7 @@ final class TaxonNormalizer implements NormalizerInterface
             'url' => $this->router->generate(
                 'sylius_shop_product_index',
                 ['slug' => $taxonTranslation->getSlug(), '_locale' => $locale->getCode()],
-                UrlGeneratorInterface::ABSOLUTE_URL
+                UrlGeneratorInterface::ABSOLUTE_URL,
             ),
             'subcategories' => $subcategories,
         ];

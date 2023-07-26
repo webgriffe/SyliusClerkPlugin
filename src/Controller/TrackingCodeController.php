@@ -20,7 +20,7 @@ final class TrackingCodeController extends AbstractController
     public function __construct(
         private ChannelContextInterface $channelContext,
         private PublicApiKeyProviderInterface $publicApiKeyProvider,
-        ChannelApiKeyCheckerInterface $channelApiKeyChecker = null
+        ChannelApiKeyCheckerInterface $channelApiKeyChecker = null,
     ) {
         if ($channelApiKeyChecker === null) {
             trigger_deprecation(
@@ -28,7 +28,7 @@ final class TrackingCodeController extends AbstractController
                 '2.2',
                 'Not passing a channel api key checker to "%s" is deprecated and will be removed in %s.',
                 __CLASS__,
-                '3.0'
+                '3.0',
             );
         }
         $this->channelApiKeyChecker = $channelApiKeyChecker;
@@ -45,7 +45,7 @@ final class TrackingCodeController extends AbstractController
 
         return $this->render(
             '@WebgriffeSyliusClerkPlugin/trackingCode.html.twig',
-            ['publicApiKey' => $this->publicApiKeyProvider->providePublicApiKeyForChannel($channel)]
+            ['publicApiKey' => $this->publicApiKeyProvider->providePublicApiKeyForChannel($channel)],
         );
     }
 }

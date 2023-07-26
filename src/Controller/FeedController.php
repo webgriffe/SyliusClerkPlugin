@@ -24,7 +24,7 @@ final class FeedController extends AbstractController
         private FeedGeneratorInterface $feedGenerator,
         private ChannelRepositoryInterface $channelRepository,
         private PrivateApiKeyProviderInterface $privateApiKeyProvider,
-        ChannelApiKeyCheckerInterface $channelApiKeyChecker = null
+        ChannelApiKeyCheckerInterface $channelApiKeyChecker = null,
     ) {
         if ($channelApiKeyChecker === null) {
             trigger_deprecation(
@@ -32,7 +32,7 @@ final class FeedController extends AbstractController
                 '2.2',
                 'Not passing a channel api key checker to "%s" is deprecated and will be removed in %s.',
                 __CLASS__,
-                '3.0'
+                '3.0',
             );
         }
         $this->channelApiKeyChecker = $channelApiKeyChecker;

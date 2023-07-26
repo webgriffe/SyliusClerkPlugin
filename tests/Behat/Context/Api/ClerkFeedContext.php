@@ -31,7 +31,7 @@ final class ClerkFeedContext implements Context
             '/clerk/feed/' . $channel->getId(),
             ['salt' => $salt, 'hash' => $hash],
             [],
-            ['ACCEPT' => 'application/json']
+            ['ACCEPT' => 'application/json'],
         );
     }
 
@@ -158,7 +158,7 @@ final class ClerkFeedContext implements Context
         $booleanValue = filter_var($booleanValueString, \FILTER_VALIDATE_BOOLEAN);
         Assert::boolean(
             $booleanValue,
-            'Expected a boolean string (like "true" or "false"), got: ' . $booleanValueString
+            'Expected a boolean string (like "true" or "false"), got: ' . $booleanValueString,
         );
         Assert::eq($jsonPath->first(), $booleanValue);
     }
@@ -201,7 +201,7 @@ final class ClerkFeedContext implements Context
             '/clerk/feed/' . $channel->getId(),
             ['salt' => 'invalid', 'hash' => 'invalid'],
             [],
-            ['ACCEPT' => 'application/json']
+            ['ACCEPT' => 'application/json'],
         );
     }
 

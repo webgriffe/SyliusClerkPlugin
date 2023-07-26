@@ -8,13 +8,12 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
-
 use Webmozart\Assert\Assert;
 
 final class CustomersQueryBuilderFactory implements QueryBuilderFactoryInterface
 {
     public function __construct(
-        private CustomerRepositoryInterface $customerRepository
+        private CustomerRepositoryInterface $customerRepository,
     ) {
     }
 
