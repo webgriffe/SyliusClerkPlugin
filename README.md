@@ -141,9 +141,9 @@ The plugin already provides three query builder factories and three normalizers:
 
 - Products: `Webgriffe\SyliusClerkPlugin\QueryBuilder\ProductsQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\ProductNormalizer`
 - Categories: `Webgriffe\SyliusClerkPlugin\QueryBuilder\TaxonsQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\TaxonNormalizer`
-- Orders: `Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer`
+- Orders: implemented as a resolver. See `Webgriffe\SyliusClerkPlugin\OrderResolver` for default source values (database). If you want to customize, you have to  decorate `OrderResolver` and create a service that implement `Webgriffe\SyliusClerkPlugin\Resolver\OrderResolverInterface`. Also you need to decorate the `OrderNormalizer` to have the correct output for Clerk (based on your own data source)
 - Customers: `Webgriffe\SyliusClerkPlugin\QueryBuilder\CustomersQueryBuilderFactory` and `Webgriffe\SyliusClerkPlugin\Normalizer\CustomerNormalizer`
-- Pages: This entity is not provided by Sylius core so you have to implement your own resolver. See `Webgriffe\SyliusClerkPlugin\PageResolver` for example. If you want to use, you have to decorate `FeedGenerator` and create a service that implement `Webgriffe\SyliusClerkPlugin\PageResolverInterface`
+- Pages: This entity is not provided by Sylius core so you have to implement your own resolver. See `Webgriffe\SyliusClerkPlugin\PageResolver` for example. If you want to use, you have to decorate `PageResolver` and create a service that implement `Webgriffe\SyliusClerkPlugin\Resolver\PageResolverInterface`
 
 So, to customize the feed generation you can replace these implementations using the common Symfony techniques to do so (see [here](https://symfony.com/doc/current/bundles/override.html#services-configuration)).
 
