@@ -36,7 +36,7 @@
         <service id="Webgriffe\SyliusClerkPlugin\Service\FeedGenerator">
             <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\ProductsQueryBuilderFactory" type="service" />
             <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\TaxonsQueryBuilderFactory" type="service" />
-            <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory" type="service" />
+            <argument id="Webgriffe\SyliusClerkPlugin\Resolver\OrderResolver" type="service" />
             <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\CustomersQueryBuilderFactory" type="service" />
             <argument id="Webgriffe\SyliusClerkPlugin\Resolver\PageResolver" type="service" />
             <argument id="serializer" type="service"/>
@@ -80,6 +80,10 @@
         </service>
 
         <service id="Webgriffe\SyliusClerkPlugin\Resolver\PageResolver" />
+
+        <service id="Webgriffe\SyliusClerkPlugin\Resolver\OrderResolver">
+            <argument id="Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory" type="service" />
+        </service>
 
         <service id="webgriffe_sylius_clerk.provider.private_api_key" class="Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider">
             <argument/>

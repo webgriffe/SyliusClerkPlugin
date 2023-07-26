@@ -23,7 +23,7 @@ final class ProductNormalizer implements NormalizerInterface
     public function __construct(
         private ProductVariantResolverInterface $productVariantResolver,
         private RouterInterface $router,
-        private FilterService $imagineFilterService
+        private FilterService $imagineFilterService,
     ) {
     }
 
@@ -57,7 +57,7 @@ final class ProductNormalizer implements NormalizerInterface
             'url' => $this->router->generate(
                 'sylius_shop_product_show',
                 ['slug' => $product->getSlug(), '_locale' => $product->getTranslation()->getLocale()],
-                UrlGeneratorInterface::ABSOLUTE_URL
+                UrlGeneratorInterface::ABSOLUTE_URL,
             ),
             'categories' => $this->getTaxonsIds($product),
         ];
@@ -68,7 +68,7 @@ final class ProductNormalizer implements NormalizerInterface
         if ($mainImage instanceof ImageInterface && $mainImage->getPath() !== null) {
             $productData['image'] = $this->imagineFilterService->getUrlOfFilteredImage(
                 $mainImage->getPath(),
-                'sylius_shop_product_thumbnail'
+                'sylius_shop_product_thumbnail',
             );
         }
         if ($originalPrice !== null) {
