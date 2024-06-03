@@ -9,17 +9,17 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.0",
-        "sylius/sylius": "^1.12",
+        "php": "^8.1",
         "ext-json": "*",
+        "sylius/sylius": "^1.12",
         "symfony/serializer": "^5.0 || ^6.0",
-        "sylius/mailer-bundle":  "^1.8 || ^2.0@beta",
         "symfony/lock": "^5.4 || ^6.0",
         "symfony/webpack-encore-bundle": "^1.15"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
-        "behat/mink-selenium2-driver": "^1.4",
+        "behat/mink-selenium2-driver": "^1.6",
+        "dbrekelmans/bdi": "^1.1",
         "dmore/behat-chrome-extension": "^1.3",
         "dmore/chrome-mink-driver": "^2.7",
         "flow/jsonpath": "^0.5.0",
@@ -37,16 +37,19 @@
         "phpstan/phpstan-doctrine": "1.3.16",
         "phpstan/phpstan-strict-rules": "^1.3.0",
         "phpstan/phpstan-webmozart-assert": "^1.2.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.6 || ^10.5",
         "polishsymfonycommunity/symfony-mocker-container": "^1.0",
+        "rector/rector": "^0.15.0",
+        "robertfausk/behat-panther-extension": "^1.1",
         "sylius-labs/coding-standard": "^4.2",
+        "sylius-labs/suite-tags-extension": "^0.2",
         "symfony/browser-kit": "^5.4 || ^6.0",
         "symfony/debug-bundle": "^5.4 || ^6.0",
         "symfony/dotenv": "^5.4 || ^6.0",
         "symfony/flex": "^2.2.2",
         "symfony/intl": "^5.4 || ^6.0",
         "symfony/web-profiler-bundle": "^5.4 || ^6.0",
-        "vimeo/psalm": "4.27.0"
+        "vimeo/psalm": "^4.27"
     },
     "config": {
         "sort-packages": true,
