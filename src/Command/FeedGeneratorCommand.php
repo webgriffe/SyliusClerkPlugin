@@ -34,7 +34,7 @@ final class FeedGeneratorCommand extends Command
         private readonly LoggerInterface $logger,
         private readonly string $storagePath,
     ) {
-        parent::__construct(self::$defaultName);
+        parent::__construct();
     }
 
     protected function configure(): void
