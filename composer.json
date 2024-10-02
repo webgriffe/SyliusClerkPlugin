@@ -94,6 +94,7 @@
         },
         "ecs": "ecs check src/ tests/Behat/",
         "phpstan": "phpstan analyse -c phpstan.neon -l max src/",
+        "psalm": "vendor/bin/psalm",
         "phpunit": "phpunit",
         "phpspec": "phpspec run",
         "behat": "behat --strict -f progress --no-interaction || behat --strict -f progress --no-interaction --rerun",

@@ -9,9 +9,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * @psalm-suppress UnusedVariable
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('webgriffe_sylius_clerk');
@@ -22,12 +19,18 @@ final class Configuration implements ConfigurationInterface
                     ->requiresAtLeastOneElement()
                     ->arrayPrototype()
                         ->children()
-                            ->scalarNode('channel_code')->isRequired()->end()
-                            ->scalarNode('public_api_key')->isRequired()->end()
-                            ->scalarNode('private_api_key')->isRequired()->end()
+                            ->scalarNode('channel_code')
+                                ->isRequired()
+                            ->end()
+                            ->scalarNode('public_api_key')
+                                ->isRequired()
+                            ->end()
+                            ->scalarNode('private_api_key')
+                                ->isRequired()
+                            ->end()
                         ->end()
                     ->end()
-                ->end() // private_api_keys
+                ->end()
             ->end()
         ;
 
@@ -35,7 +38,7 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('storage_feed_path')
                     ->defaultValue('%kernel.project_dir%/public/media')
-                    ->end()
+                ->end()
             ->end()
         ;
 

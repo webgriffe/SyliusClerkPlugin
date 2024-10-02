@@ -12,7 +12,7 @@ final class ChannelApiKeyChecker implements ChannelApiKeyCheckerInterface
 {
     public function __construct(
         private PublicApiKeyProviderInterface $publicApiKeyProvider,
-        private PrivateApiKeyProviderInterface $privateApiKeyProvider
+        private PrivateApiKeyProviderInterface $privateApiKeyProvider,
     ) {
     }
 
