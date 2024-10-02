@@ -7,3 +7,4 @@
 - The file `@WebgriffeSyliusClerkPlugin/Resources/config/shop_routing.yml` has been removed. Use `@WebgriffeSyliusClerkPlugin/config/shop_routing.php` instead.
 - The file `@WebgriffeSyliusClerkPlugin/Resources/config/admin_routing.yml` has been removed.
 - The file `@WebgriffeSyliusClerkPlugin/Resources/config/feed_routing.yml` has been removed. Use `@WebgriffeSyliusClerkPlugin/config/feed_routing.php` instead.
+- The parameter `webgriffe_sylius_clerk.storage_feed_path` has been removed.

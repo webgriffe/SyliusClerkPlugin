@@ -12,11 +12,10 @@ return static function (ContainerConfigurator $containerConfigurator) {
 
     $services->set('webgriffe_sylius_clerk.command.generate_feed', FeedGeneratorCommand::class)
         ->args([
-            service(FeedGenerator::class),
-            service('sylius.repository.channel'),
-            service('router'),
-            service('monolog.logger'),
-            param('webgriffe_sylius_clerk.storage_feed_path'),
+            '$feedGenerator' => service(FeedGenerator::class),
+            '$channelRepository' => service('sylius.repository.channel'),
+            '$router' => service('router'),
+            '$logger' => service('monolog.logger'),
         ])
         ->tag('console.command')
     ;

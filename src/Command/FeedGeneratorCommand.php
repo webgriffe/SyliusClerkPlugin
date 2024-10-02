@@ -28,19 +28,21 @@ final class FeedGeneratorCommand extends Command
     private ?OutputInterface $output = null;
 
     public function __construct(
-        private FeedGeneratorInterface $feedGenerator,
-        private ChannelRepositoryInterface $channelRepository,
-        private RouterInterface $router,
-        private LoggerInterface $logger,
-        private string $storagePath,
+        private readonly FeedGeneratorInterface $feedGenerator,
+        private readonly ChannelRepositoryInterface $channelRepository,
+        private readonly RouterInterface $router,
+        private readonly LoggerInterface $logger,
+        private readonly string $storagePath,
     ) {
-        parent::__construct();
+        parent::__construct(self::$defaultName);
     }
 
     protected function configure(): void
     {
-        $this->setDescription('Generate JSON feed for Clerk.io')
-             ->addArgument('channelCode', InputArgument::REQUIRED, 'Channel code');
+        $this
+            ->setDescription('Generate JSON feed for Clerk.io')
+            ->addArgument('channelCode', InputArgument::REQUIRED, 'Channel code')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
