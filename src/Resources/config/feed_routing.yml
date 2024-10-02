@@ -1,5 +1,0 @@
-webgriffe_sylius_clerk_feed:
-  path: /clerk/feed/{channelId}
-  defaults:
-    _controller: Webgriffe\SyliusClerkPlugin\Controller\FeedController::feedAction
-    name: ~

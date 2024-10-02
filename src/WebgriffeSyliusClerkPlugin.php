@@ -13,6 +13,6 @@ final class WebgriffeSyliusClerkPlugin extends Bundle
 
     public function getPath(): string
     {
-        return __DIR__;
+        return dirname(__DIR__);
     }
 }

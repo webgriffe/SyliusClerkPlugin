@@ -8,7 +8,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 final class WebgriffeSyliusClerkExtension extends Extension
 {
@@ -16,13 +16,13 @@ final class WebgriffeSyliusClerkExtension extends Extension
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
+        $loader->load('services.php');
 
-        $definition = $container->getDefinition('webgriffe_sylius_clerk.provider.private_api_key');
-        $definition->replaceArgument(0, $config['stores']);
-        $definition = $container->getDefinition('webgriffe_sylius_clerk.provider.public_api_key');
-        $definition->replaceArgument(0, $config['stores']);
+        $privateApiKeyProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk.provider.private_api_key');
+        $privateApiKeyProviderServiceDefinition->setArgument('$clerkStores', $config['stores']);
+        $publicApiKeyProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk.provider.public_api_key');
+        $publicApiKeyProviderServiceDefinition->setArgument('$clerkStores', $config['stores']);
 
         $container->setParameter('webgriffe_sylius_clerk.storage_feed_path', (string) $config['storage_feed_path']);
     }
