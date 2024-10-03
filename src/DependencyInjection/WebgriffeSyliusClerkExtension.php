@@ -26,6 +26,9 @@ final class WebgriffeSyliusClerkExtension extends Extension
 
         $generateFeedCommand = $container->getDefinition('webgriffe_sylius_clerk.command.generate_feed');
         $generateFeedCommand->setArgument('$storagePath', $config['storage_feed_path']);
+
+        $newGenerateFeedCommand = $container->getDefinition('webgriffe_sylius_clerk_plugin.command.feed_generator');
+        $newGenerateFeedCommand->setArgument('$feedsStorageDirectory', $config['storage_feed_path']);
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
