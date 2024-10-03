@@ -17,6 +17,9 @@ use Symfony\Component\Routing\RouterInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGeneratorInterface;
 use Webmozart\Assert\Assert;
 
+/**
+ * @deprecated
+ */
 final class FeedGeneratorCommand extends Command
 {
     use LockableTrait;
