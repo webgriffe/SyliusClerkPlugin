@@ -35,6 +35,7 @@ class V2FeedGeneratorCommand extends Command
         private readonly FeedGeneratorInterface $categoriesFeedGenerator,
         private readonly FeedGeneratorInterface $customersFeedGenerator,
         private readonly FeedGeneratorInterface $ordersFeedGenerator,
+        private readonly FeedGeneratorInterface $pagesFeedGenerator,
         private readonly Filesystem $filesystem,
         private readonly string $feedsStorageDirectory,
     ) {
@@ -87,6 +88,12 @@ class V2FeedGeneratorCommand extends Command
 
                 $this->io->writeln(sprintf('Writing feed to file: %s', $ordersFeedFilePath));
                 $this->filesystem->dumpFile($ordersFeedFilePath, $ordersFeed->getContent());
+
+                $pagesFeed = $this->pagesFeedGenerator->generate($channel, (string) $locale->getCode());
+                $pagesFeedFilePath = $this->getFeedFilePath($pagesFeed);
+
+                $this->io->writeln(sprintf('Writing feed to file: %s', $pagesFeedFilePath));
+                $this->filesystem->dumpFile($pagesFeedFilePath, $pagesFeed->getContent());
             }
         }
 

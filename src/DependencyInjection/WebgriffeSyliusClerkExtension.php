@@ -33,6 +33,9 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $productNormalizer = $container->getDefinition('webgriffe_sylius_clerk_plugin.normalizer.product');
         $productNormalizer->setArgument('$imageType', $config['image_type']);
         $productNormalizer->setArgument('$imageFilterToApply', $config['image_filter_to_apply']);
+
+        $pagesProvider = $container->getDefinition('webgriffe_sylius_clerk_plugin.provider.pages');
+        $pagesProvider->setArgument('$pages', $config['pages']);
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface

@@ -28,6 +28,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
             '$categoriesFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.categories'),
             '$customersFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.customers'),
             '$ordersFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.orders'),
+            '$pagesFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.pages'),
             '$filesystem' => service('filesystem'),
         ])
         ->tag('console.command')
