@@ -19,7 +19,7 @@ return static function (RoutingConfigurator $routes): void {
         ->requirements([
             'channelId' => '\d+',
             'localeCode' => '^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$',
-            'resource' => new EnumRequirement(Resource::class),
+            'resource' => class_exists(EnumRequirement::class) ? new EnumRequirement(Resource::class) : 'products|categories|orders|customers|pages',
         ])
     ;
 };
