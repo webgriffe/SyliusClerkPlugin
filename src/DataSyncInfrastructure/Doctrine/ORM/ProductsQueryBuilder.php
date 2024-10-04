@@ -39,6 +39,7 @@ final readonly class ProductsQueryBuilder implements QueryBuilderInterface
 
         $queryBuilder
             ->andWhere(':channel MEMBER OF p.channels')
+            ->andWhere('p.enabled = true')
             ->setParameter('channel', $channel)
         ;
         $queryBuilder
