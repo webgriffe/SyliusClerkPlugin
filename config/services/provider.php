@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Provider\PagesProvider;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Provider\QueryBuilderResourceProvider;
 use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider;
 use Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider;
@@ -39,9 +40,9 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ])
     ;
 
-    $services->set('webgriffe_sylius_clerk_plugin.provider.pages', QueryBuilderResourceProvider::class)
+    $services->set('webgriffe_sylius_clerk_plugin.provider.pages', PagesProvider::class)
         ->args([
-            service('webgriffe_sylius_clerk_plugin.query_builder.pages'),
+            '$urlGenerator' => service('router'),
         ])
     ;
 };

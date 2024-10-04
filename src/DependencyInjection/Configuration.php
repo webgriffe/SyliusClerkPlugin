@@ -64,6 +64,38 @@ final class Configuration implements ConfigurationInterface
             ->end()
         ;
 
+        $rootNode
+            ->children()
+                ->arrayNode('pages')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('id')
+                                ->isRequired()
+                            ->end()
+                            ->scalarNode('type')
+                                ->isRequired()
+                            ->end()
+                            ->scalarNode('routeName')
+                                ->isRequired()
+                            ->end()
+                            ->arrayNode('routeParameters')
+                                ->isRequired()
+                            ->end()
+                            ->scalarNode('title')
+                                ->isRequired()
+                            ->end()
+                            ->scalarNode('text')
+                                ->isRequired()
+                            ->end()
+                            ->scalarNode('image')
+                                ->defaultNull()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
         return $treeBuilder;
     }
 }

@@ -6,3 +6,12 @@ webgriffe_sylius_clerk:
         -   channel_code: WEB-US
             public_api_key: public-key
             private_api_key: 123abc
+    pages:
+        -
+            id: 'Homepage'
+            type: 'home'
+            routeName: 'sylius_shop_homepage'
+            routeParameters: []
+            title: 'Homepage'
+            text: 'Welcome to our store!'
+            image: null
