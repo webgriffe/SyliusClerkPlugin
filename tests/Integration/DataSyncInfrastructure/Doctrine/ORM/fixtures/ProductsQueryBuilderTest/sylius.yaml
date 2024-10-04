@@ -1,0 +1,66 @@
+Sylius\Component\Currency\Model\Currency:
+    USD:
+        code: 'USD'
+    EUR:
+        code: 'EUR'
+        
+Sylius\Component\Locale\Model\Locale:
+    en_US:
+        code: "en_US"
+    it_IT:
+        code: "it_IT"
+
+Sylius\Component\Core\Model\Channel:
+    usa:
+        code: 'USA'
+        name: 'United States'
+        enabled: true
+        description: 'United States'
+        defaultLocale: '@en_US'
+        locales: [ '@en_US' ]
+        baseCurrency: '@USD'
+        currencies: [ '@USD' ]
+        taxCalculationStrategy: 'order_items_based'
+    europe:
+        code: 'EUROPE'
+        name: 'Europe'
+        enabled: true
+        description: 'Europe'
+        defaultLocale: '@it_IT'
+        locales: [ '@it_IT' ]
+        baseCurrency: '@EUR'
+        currencies: [ '@EUR' ]
+        taxCalculationStrategy: 'order_items_based'
+
+Sylius\Component\Core\Model\ProductTranslation:
+    tshirt-product-translation:
+        translatable: '@tshirt-product'
+        locale: 'en_US'
+        name: 'Star Wars T-Shirt M'
+        slug: 'star-wars-t-shirt-m'
+    cap-product-translation:
+        translatable: '@cap-product'
+        locale: 'en_US'
+        name: 'Star Wars Cap'
+        slug: 'star-wars-cap'
+
+Sylius\Component\Core\Model\Product:
+    tshirt-product:
+        fallbackLocale: "en_US"
+        currentLocale: "en_US"
+        code: "STAR_WARS_TSHIRT_M"
+        translations:
+            - '@tshirt-product-translation'
+        channels:
+            - '@usa'
+            - '@europe'
+        updatedAt: <(new DateTime("2024-10-01"))>
+    cap-product:
+        fallbackLocale: "en_US"
+        currentLocale: "en_US"
+        code: "STAR_WARS_CAP"
+        translations:
+            - '@cap-product-translation'
+        channels:
+            - '@europe'
+        updatedAt: <(new DateTime("2024-10-04"))>
