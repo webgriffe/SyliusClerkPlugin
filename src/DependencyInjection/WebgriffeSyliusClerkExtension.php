@@ -29,6 +29,10 @@ final class WebgriffeSyliusClerkExtension extends Extension
 
         $newGenerateFeedCommand = $container->getDefinition('webgriffe_sylius_clerk_plugin.command.feed_generator');
         $newGenerateFeedCommand->setArgument('$feedsStorageDirectory', $config['storage_feed_path']);
+
+        $productNormalizer = $container->getDefinition('webgriffe_sylius_clerk_plugin.normalizer.product');
+        $productNormalizer->setArgument('$imageType', $config['image_type']);
+        $productNormalizer->setArgument('$imageFilterToApply', $config['image_filter_to_apply']);
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface

@@ -6,6 +6,7 @@
 !/public/media/image/
 /public/media/image/*
 !/public/media/image/.gitignore
+/public/feed/*
 
 /node_modules
 
