@@ -36,8 +36,6 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $productNormalizer->setArgument('$imageFilterToApply', $config['image_filter_to_apply']);
         if ($container->hasDefinition(ProductVariantResolverInterface::class)) {
             $productNormalizer->setArgument('$productVariantResolver', $container->getDefinition(ProductVariantResolverInterface::class));
-        } else {
-            $productNormalizer->setArgument('$productVariantResolver', $container->getDefinition('sylius.product_variant_resolver.default'));
         }
 
         $pagesProvider = $container->getDefinition('webgriffe_sylius_clerk_plugin.provider.pages');

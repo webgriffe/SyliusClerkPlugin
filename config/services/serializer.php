@@ -48,6 +48,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
 
     $services->set('webgriffe_sylius_clerk_plugin.normalizer.product', V2ProductNormalizer::class)
         ->args([
+            '$productVariantResolver' => service('sylius.product_variant_resolver.default'),
             '$eventDispatcher' => service('event_dispatcher'),
             '$productVariantPricesCalculator' => service('sylius.calculator.product_variant_price'),
             '$urlGenerator' => service('router'),
