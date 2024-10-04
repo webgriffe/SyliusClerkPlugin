@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webgriffe\SyliusClerkPlugin\Command;
+namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Command;
 
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;

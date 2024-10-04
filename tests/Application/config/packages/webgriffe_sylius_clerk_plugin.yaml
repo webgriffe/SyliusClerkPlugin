@@ -1,5 +1,7 @@
 webgriffe_sylius_clerk:
-    storage_feed_path: '%kernel.project_dir%/public/feed'
+    storage_feed_path: '%kernel.project_dir%/public/feed/clerk.io'
+    image_type: 'main'
+    image_filter_to_apply: 'sylius_medium'
     stores:
         -   channel_code: WEB-US
             public_api_key: public-key

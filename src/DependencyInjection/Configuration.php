@@ -40,7 +40,25 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('storage_feed_path')
-                    ->defaultValue('%kernel.project_dir%/public/media')
+                    ->defaultValue('%kernel.project_dir%/public/feed/clerk.io')
+                ->end()
+            ->end()
+        ;
+
+        $rootNode
+            ->children()
+                ->scalarNode('image_type')
+                    ->info('The type of the image to use for the product. If none is specified or the type does not exists on current product then the first image will be used.')
+                    ->defaultValue('main')
+                ->end()
+            ->end()
+        ;
+
+        $rootNode
+            ->children()
+                ->scalarNode('image_filter_to_apply')
+                    ->info('Liip filter to apply to the image. If none is specified then the original image will be used.')
+                    ->defaultValue('sylius_medium')
                 ->end()
             ->end()
         ;

@@ -35,8 +35,9 @@ final readonly class ResourceFeedGenerator implements FeedGeneratorInterface
         foreach ($resources as $resource) {
             $payload[] = $this->serializer->normalize(
                 $resource,
-                FeedGenerator::NORMALIZATION_FORMAT,
+                'array',
                 [
+                    'type' => 'webgriffe_sylius_clerk_plugin',
                     'channel' => $channel,
                     'localeCode' => $localeCode,
                 ],
