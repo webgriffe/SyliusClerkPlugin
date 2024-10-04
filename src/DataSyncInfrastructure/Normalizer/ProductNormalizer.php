@@ -37,10 +37,10 @@ final readonly class ProductNormalizer implements NormalizerInterface
      * @return array{
      *     id: string|int,
      *     name: string,
-     *     description: string,
+     *     description?: string,
      *     price: float,
      *     list_price: float,
-     *     image: string,
+     *     image?: string,
      *     url: string,
      *     categories: array<int|string>,
      *     created_at: string,
@@ -72,9 +72,6 @@ final readonly class ProductNormalizer implements NormalizerInterface
             throw new \InvalidArgumentException('Product name must not be null for the product "' . $productId . '".');
         }
         $productDescription = $productTranslation->getDescription();
-        if ($productDescription === null) {
-            throw new \InvalidArgumentException('Product description must not be null for the product "' . $productId . '".');
-        }
         $productVariant = $this->productVariantResolver->getVariant($product);
         if (!$productVariant instanceof ProductVariantInterface) {
             throw new \InvalidArgumentException('At least one product variant should exists for the product "' . $productId . '".');
@@ -83,7 +80,10 @@ final readonly class ProductNormalizer implements NormalizerInterface
         $originalPrice = $this->productVariantPricesCalculator->calculateOriginal($productVariant, ['channel' => $channel]);
 
         $productMainImage = $this->getMainImage($product);
-        $productMainImageUrl = $this->getUrlOfImage($productMainImage, $channel);
+        $productMainImageUrl = null;
+        if ($productMainImage !== null) {
+            $productMainImageUrl = $this->getUrlOfImage($productMainImage, $channel);
+        }
         $productUrl = $this->getUrlOfProduct($productTranslation, $channel);
         $createdAt = $product->getCreatedAt();
         if ($createdAt === null) {
@@ -93,14 +93,18 @@ final readonly class ProductNormalizer implements NormalizerInterface
         $productData = [
             'id' => $productId,
             'name' => $productName,
-            'description' => $productDescription,
             'price' => $price / 100,
             'list_price' => $originalPrice / 100,
-            'image' => $productMainImageUrl,
             'url' => $productUrl,
             'categories' => $this->getCategoryIds($product),
             'created_at' => $createdAt->format('c'),
         ];
+        if ($productDescription !== null) {
+            $productData['description'] = $productDescription;
+        }
+        if ($productMainImageUrl !== null) {
+            $productData['image'] = $productMainImageUrl;
+        }
 
         $productNormalizerEvent = new ProductNormalizerEvent(
             $productData,
@@ -123,19 +127,18 @@ final readonly class ProductNormalizer implements NormalizerInterface
         ;
     }
 
-    public function getMainImage(ProductInterface $product): ProductImageInterface
+    public function getMainImage(ProductInterface $product): ?ProductImageInterface
     {
         $imageByType = $product->getImagesByType($this->imageType)->first();
         if ($imageByType instanceof ProductImageInterface) {
             return $imageByType;
         }
-
         $image = $product->getImages()->first();
         if ($image instanceof ProductImageInterface) {
             return $image;
         }
 
-        throw new \InvalidArgumentException('Product "' . (string) $product->getId() . '" has no images.');
+        return null;
     }
 
     public function getUrlOfImage(ProductImageInterface $productMainImage, ChannelInterface $channel): string
@@ -146,8 +149,11 @@ final readonly class ProductNormalizer implements NormalizerInterface
         Assert::stringNotEmpty($channelHost);
         $channelRequestContext->setHost($channelHost);
 
+        $imagePath = $productMainImage->getPath();
+        Assert::stringNotEmpty($imagePath, 'Product image path must not be empty.');
+
         $imageUrl = $this->cacheManager->getBrowserPath(
-            (string) $productMainImage->getPath(),
+            $imagePath,
             $this->imageFilterToApply,
         );
 

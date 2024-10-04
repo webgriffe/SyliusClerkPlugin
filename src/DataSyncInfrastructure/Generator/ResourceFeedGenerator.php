@@ -39,15 +39,19 @@ final readonly class ResourceFeedGenerator implements FeedGeneratorInterface
 
         $payload = [];
         foreach ($resources as $resource) {
-            $payload[] = $this->serializer->normalize(
-                $resource,
-                'array',
-                [
-                    'type' => 'webgriffe_sylius_clerk_plugin',
-                    'channel' => $channel,
-                    'localeCode' => $localeCode,
-                ],
-            );
+            try {
+                $payload[] = $this->serializer->normalize(
+                    $resource,
+                    'array',
+                    [
+                        'type' => 'webgriffe_sylius_clerk_plugin',
+                        'channel' => $channel,
+                        'localeCode' => $localeCode,
+                    ],
+                );
+            } catch (\Throwable $e) {
+                continue;
+            }
         }
 
         return new Feed(
