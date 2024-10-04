@@ -32,6 +32,7 @@ class V2FeedGeneratorCommand extends Command
     public function __construct(
         private readonly ChannelRepositoryInterface $channelRepository,
         private readonly FeedGeneratorInterface $productsFeedGenerator,
+        private readonly FeedGeneratorInterface $categoriesFeedGenerator,
         private readonly Filesystem $filesystem,
         private readonly string $feedsStorageDirectory,
     ) {
@@ -62,10 +63,16 @@ class V2FeedGeneratorCommand extends Command
         foreach ($channels as $channel) {
             foreach ($channel->getLocales() as $locale) {
                 $productsFeed = $this->productsFeedGenerator->generate($channel, (string) $locale->getCode());
-                $feedFilePath = $this->getFeedFilePath($productsFeed);
+                $productsFeedFilePath = $this->getFeedFilePath($productsFeed);
 
-                $this->io->writeln(sprintf('Writing feed to file: %s', $feedFilePath));
-                $this->filesystem->dumpFile($feedFilePath, $productsFeed->getContent());
+                $this->io->writeln(sprintf('Writing feed to file: %s', $productsFeedFilePath));
+                $this->filesystem->dumpFile($productsFeedFilePath, $productsFeed->getContent());
+
+                $categoriesFeed = $this->categoriesFeedGenerator->generate($channel, (string) $locale->getCode());
+                $categoriesFeedFilePath = $this->getFeedFilePath($categoriesFeed);
+
+                $this->io->writeln(sprintf('Writing feed to file: %s', $categoriesFeedFilePath));
+                $this->filesystem->dumpFile($categoriesFeedFilePath, $categoriesFeed->getContent());
             }
         }
 

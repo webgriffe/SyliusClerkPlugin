@@ -10,7 +10,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum\Resource;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Provider\ResourceProviderInterface;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\ValueObject\Feed;
-use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 
 final readonly class ResourceFeedGenerator implements FeedGeneratorInterface
 {

@@ -11,6 +11,7 @@ final class Configuration implements ConfigurationInterface
 {
     /**
      * @psalm-suppress UndefinedMethod
+     * @psalm-suppress MixedMethodCall
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
