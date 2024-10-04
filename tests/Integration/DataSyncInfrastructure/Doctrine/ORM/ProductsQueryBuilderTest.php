@@ -8,7 +8,6 @@ use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Sylius\Bundle\ChannelBundle\Doctrine\ORM\ChannelRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Tests\Webgriffe\SyliusAkeneoPlugin\DataFixtures\DataFixture;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\ProductsQueryBuilder;
 
 final class ProductsQueryBuilderTest extends KernelTestCase
@@ -24,7 +23,7 @@ final class ProductsQueryBuilderTest extends KernelTestCase
         $this->channelRepository = self::getContainer()->get('sylius.repository.channel');
         /** @var PurgerLoader $fixtureLoader */
         $fixtureLoader = self::getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
-        $ORMResourceFixturePath = __DIR__ . '/fixtures/ProductsQueryBuilderTest/' . $this->getName() . '.yaml';
+        $ORMResourceFixturePath = __DIR__ . '/fixtures/ProductsQueryBuilderTest/sylius.yaml';
         $fixtureLoader->load(
             [$ORMResourceFixturePath],
             [],
@@ -33,14 +32,58 @@ final class ProductsQueryBuilderTest extends KernelTestCase
         );
     }
 
-    public function testItQueriesProducts(): void
+    public function testItQueriesProductsFromChannel(): void
     {
-        $channel = $this->channelRepository->findOneByCode('DEFAULT');
+        $channel = $this->channelRepository->findOneByCode('USA');
         $products = $this->queryBuilder->getResult($channel, 'en_US');
 
         $this->assertIsArray($products);
         $this->assertCount(1, $products);
         $product = $products[0];
         $this->assertEquals('STAR_WARS_TSHIRT_M', $product->getCode());
+    }
+
+    public function testItQueriesProductsUpdatedFromGivenDateAndFromChannel(): void
+    {
+        $channel = $this->channelRepository->findOneByCode('EUROPE');
+        $products = $this->queryBuilder->getResult($channel, 'en_US', new \DateTimeImmutable('2024-10-02'));
+
+        $this->assertIsArray($products);
+        $this->assertCount(1, $products);
+        $product = $products[0];
+        $this->assertEquals('STAR_WARS_CAP', $product->getCode());
+    }
+
+    public function testItQueriesProductsFromChannelWithLimit(): void
+    {
+        $channel = $this->channelRepository->findOneByCode('EUROPE');
+        $products = $this->queryBuilder->getResult($channel, 'en_US', null, 1);
+
+        $this->assertIsArray($products);
+        $this->assertCount(1, $products);
+        $product = $products[0];
+        $this->assertEquals('STAR_WARS_TSHIRT_M', $product->getCode());
+    }
+
+    public function testItQueriesProductsFromChannelWithOffset(): void
+    {
+        $channel = $this->channelRepository->findOneByCode('EUROPE');
+        $products = $this->queryBuilder->getResult($channel, 'en_US', null, null, 1);
+
+        $this->assertIsArray($products);
+        $this->assertCount(1, $products);
+        $product = $products[0];
+        $this->assertEquals('STAR_WARS_CAP', $product->getCode());
+    }
+
+    public function testItQueriesProductsFromChannelWithLimitAndOffset(): void
+    {
+        $channel = $this->channelRepository->findOneByCode('EUROPE');
+        $products = $this->queryBuilder->getResult($channel, 'en_US', null, 1, 1);
+
+        $this->assertIsArray($products);
+        $this->assertCount(1, $products);
+        $product = $products[0];
+        $this->assertEquals('STAR_WARS_CAP', $product->getCode());
     }
 }
