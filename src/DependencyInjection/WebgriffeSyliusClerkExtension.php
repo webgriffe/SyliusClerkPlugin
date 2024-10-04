@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusClerkPlugin\DependencyInjection;
 
+use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -33,6 +34,11 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $productNormalizer = $container->getDefinition('webgriffe_sylius_clerk_plugin.normalizer.product');
         $productNormalizer->setArgument('$imageType', $config['image_type']);
         $productNormalizer->setArgument('$imageFilterToApply', $config['image_filter_to_apply']);
+        if ($container->hasDefinition(ProductVariantResolverInterface::class)) {
+            $productNormalizer->setArgument('$productVariantResolver', $container->getDefinition(ProductVariantResolverInterface::class));
+        } else {
+            $productNormalizer->setArgument('$productVariantResolver', $container->getDefinition('sylius.product_variant_resolver.default'));
+        }
 
         $pagesProvider = $container->getDefinition('webgriffe_sylius_clerk_plugin.provider.pages');
         $pagesProvider->setArgument('$pages', $config['pages']);
