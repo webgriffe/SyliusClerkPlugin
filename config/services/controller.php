@@ -7,9 +7,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Webgriffe\SyliusClerkPlugin\Controller\FeedController;
 use Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController;
 use Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Controller\FeedController as V2FeedController;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
-use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider;
-use Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
@@ -47,4 +46,20 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->tag('controller.service_arguments')
         ->call('setContainer', [service('service_container')])
     ;
+
+    $services->set('webgriffe_sylius_clerk_plugin.controller.feed', V2FeedController::class)
+        ->args([
+            service('sylius.repository.channel'),
+            service('sylius.repository.locale'),
+            service('webgriffe_sylius_clerk_plugin.feed_generator.products'),
+            service('webgriffe_sylius_clerk_plugin.feed_generator.categories'),
+            service('webgriffe_sylius_clerk_plugin.feed_generator.orders'),
+            service('webgriffe_sylius_clerk_plugin.feed_generator.customers'),
+            service('webgriffe_sylius_clerk_plugin.feed_generator.pages'),
+        ])
+        ->call('setContainer', [service('service_container')])
+        ->tag('controller.service_arguments')
+        ->tag('container.service_subscriber')
+    ;
+    $services->alias(V2FeedController::class, 'webgriffe_sylius_clerk_plugin.controller.feed');
 };

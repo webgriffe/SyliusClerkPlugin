@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum;
 
-enum Resource
+enum Resource: string
 {
-    case PRODUCTS;
-    case CATEGORIES;
-    case ORDERS;
-    case CUSTOMERS;
-    case PAGES;
+    case PRODUCTS = 'products';
+    case CATEGORIES = 'categories';
+    case ORDERS = 'orders';
+    case CUSTOMERS = 'customers';
+    case PAGES = 'pages';
 }
