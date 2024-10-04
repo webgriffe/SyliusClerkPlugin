@@ -26,6 +26,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
             '$channelRepository' => service('sylius.repository.channel'),
             '$productsFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.products'),
             '$categoriesFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.categories'),
+            '$customersFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.customers'),
             '$filesystem' => service('filesystem'),
         ])
         ->tag('console.command')

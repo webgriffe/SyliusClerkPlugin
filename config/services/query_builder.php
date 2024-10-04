@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\CategoriesQueryBuilder;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\CustomersQueryBuilder;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\ProductsQueryBuilder;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\CustomersQueryBuilderFactory;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory;
@@ -48,6 +49,13 @@ return static function (ContainerConfigurator $containerConfigurator) {
     $services->set('webgriffe_sylius_clerk_plugin.query_builder.categories', CategoriesQueryBuilder::class)
         ->args([
             service('sylius.repository.taxon'),
+            service('event_dispatcher'),
+        ])
+    ;
+
+    $services->set('webgriffe_sylius_clerk_plugin.query_builder.customers', CustomersQueryBuilder::class)
+        ->args([
+            service('sylius.repository.customer'),
             service('event_dispatcher'),
         ])
     ;

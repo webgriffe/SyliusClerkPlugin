@@ -6,6 +6,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\CategoryNormalizer;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\CustomerNormalizer as V2CustomerNormalizer;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\ProductNormalizer as V2ProductNormalizer;
 use Webgriffe\SyliusClerkPlugin\Normalizer\CustomerNormalizer;
 use Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer;
@@ -59,6 +60,13 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->args([
             '$eventDispatcher' => service('event_dispatcher'),
             '$urlGenerator' => service('router'),
+        ])
+        ->tag('serializer.normalizer', ['priority' => 100])
+    ;
+
+    $services->set('webgriffe_sylius_clerk_plugin.normalizer.customer', V2CustomerNormalizer::class)
+        ->args([
+            '$eventDispatcher' => service('event_dispatcher'),
         ])
         ->tag('serializer.normalizer', ['priority' => 100])
     ;

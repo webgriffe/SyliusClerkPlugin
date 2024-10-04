@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer;
 
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Taxonomy\Model\TaxonTranslationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -23,7 +22,7 @@ final readonly class CategoryNormalizer implements NormalizerInterface
     }
 
     /**
-     * @param ProductInterface|mixed $object
+     * @param TaxonInterface|mixed $object
      *
      * @return array{
      *     id: string|int,
