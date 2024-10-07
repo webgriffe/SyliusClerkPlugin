@@ -8,7 +8,7 @@ final readonly class Verify
 {
     public function __construct(
         public string $status,
-        public string $tokenPayload,
+        public array $data,
     ) {
     }
 
@@ -17,9 +17,9 @@ final readonly class Verify
         return $this->status;
     }
 
-    public function getTokenPayload(): string
+    public function getData(): array
     {
-        return $this->tokenPayload;
+        return $this->data;
     }
 
     public function isValid(): bool
