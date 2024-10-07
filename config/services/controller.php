@@ -57,7 +57,6 @@ return static function (ContainerConfigurator $containerConfigurator) {
             service('webgriffe_sylius_clerk_plugin.feed_generator.customers'),
             service('webgriffe_sylius_clerk_plugin.feed_generator.pages'),
             service('webgriffe_sylius_clerk_plugin.validator.request'),
-            false,
         ])
         ->call('setContainer', [service('service_container')])
         ->tag('controller.service_arguments')
