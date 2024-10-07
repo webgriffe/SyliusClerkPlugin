@@ -43,6 +43,14 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->booleanNode('token_authentication_enabled')
+                    ->defaultTrue()
+                ->end()
+            ->end()
+        ;
+
+        $rootNode
+            ->children()
                 ->scalarNode('storage_feed_path')
                     ->defaultValue('%kernel.project_dir%/public/feed/clerk.io')
                 ->end()
