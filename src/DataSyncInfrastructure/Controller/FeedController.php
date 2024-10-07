@@ -58,8 +58,12 @@ final class FeedController extends AbstractController implements FeedControllerI
             throw $this->createNotFoundException();
         }
         if ($this->isTokenAuthenticationEnabled) {
-            $headerAccessTokenExtractor = new HeaderAccessTokenExtractor(self::AUTHORIZATION_HEADER);
-            $authToken = $headerAccessTokenExtractor->extractAccessToken($request);
+            if (class_exists(HeaderAccessTokenExtractor::class)) {
+                $headerAccessTokenExtractor = new HeaderAccessTokenExtractor(self::AUTHORIZATION_HEADER);
+                $authToken = $headerAccessTokenExtractor->extractAccessToken($request);
+            } else {
+                $authToken = str_replace('Bearer ', '', $request->headers->get(self::AUTHORIZATION_HEADER));
+            }
             if ($authToken === null || !$this->requestValidator->isValid($channel, $localeCode, $authToken)) {
                 throw $this->createAccessDeniedException();
             }
