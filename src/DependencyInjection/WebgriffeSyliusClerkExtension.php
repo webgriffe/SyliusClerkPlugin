@@ -24,6 +24,8 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $privateApiKeyProviderServiceDefinition->setArgument('$clerkStores', $config['stores']);
         $publicApiKeyProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk.provider.public_api_key');
         $publicApiKeyProviderServiceDefinition->setArgument('$clerkStores', $config['stores']);
+        $apiKeysProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk_plugin.provider.api_keys');
+        $apiKeysProviderServiceDefinition->setArgument('$storesConfiguration', $config['stores']);
 
         $generateFeedCommand = $container->getDefinition('webgriffe_sylius_clerk.command.generate_feed');
         $generateFeedCommand->setArgument('$storagePath', $config['storage_feed_path']);

@@ -6,6 +6,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Provider\PagesProvider;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Provider\QueryBuilderResourceProvider;
+use Webgriffe\SyliusClerkPlugin\Provider\ApiKeysProvider;
 use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProvider;
 use Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider;
 
@@ -45,4 +46,6 @@ return static function (ContainerConfigurator $containerConfigurator) {
             '$urlGenerator' => service('router'),
         ])
     ;
+
+    $services->set('webgriffe_sylius_clerk_plugin.provider.api_keys', ApiKeysProvider::class);
 };

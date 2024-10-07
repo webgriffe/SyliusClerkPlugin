@@ -16,9 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum\Resource;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Generator\FeedGeneratorInterface;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Validator\RequestValidatorInterface;
 
 final class FeedController extends AbstractController implements FeedControllerInterface
 {
+    private const AUTHORIZATION_HEADER = 'X-Clerk-Authorization';
+
     public function __construct(
         private readonly ChannelRepositoryInterface $channelRepository,
         private readonly RepositoryInterface $localeRepository,
@@ -27,6 +30,8 @@ final class FeedController extends AbstractController implements FeedControllerI
         private readonly FeedGeneratorInterface $ordersFeedGenerator,
         private readonly FeedGeneratorInterface $customersFeedGenerator,
         private readonly FeedGeneratorInterface $pagesFeedGenerator,
+        private readonly RequestValidatorInterface $requestValidator,
+        private readonly bool $isTokenAuthenticationEnabled = true,
     ) {
     }
 
@@ -50,6 +55,12 @@ final class FeedController extends AbstractController implements FeedControllerI
         $resource = Resource::tryFrom($resourceValue);
         if ($resource === null) {
             throw $this->createNotFoundException();
+        }
+        if ($this->isTokenAuthenticationEnabled) {
+            $authToken = $request->headers->get(self::AUTHORIZATION_HEADER);
+            if ($authToken === null || !$this->requestValidator->isValid($channel, $localeCode, $authToken)) {
+                throw $this->createAccessDeniedException();
+            }
         }
 
         $feedGenerator = match ($resource) {
