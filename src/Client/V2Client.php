@@ -38,21 +38,21 @@ final readonly class V2Client implements ClientInterface
 
             throw new ClientException($e->getMessage(), $e->getCode(), $e);
         }
-        /** @var array{status: string, token_payload: string} $responseBody */
+        /** @var array{status: 'ok'|'error', token_payload?: string, type?: string, message?: string} $responseBody */
         $responseBody = json_decode($response->getBody()->getContents(), true);
 
         return new Verify(
             $responseBody['status'],
-            $responseBody['token_payload'],
+            $responseBody,
         );
     }
 
     private function getVerifyUrl(string $storePublicKey, string $token): string
     {
         return 'https://api.clerk.io/v2/verify?' .
-        http_build_query([
-            'key' => $storePublicKey,
-            'token' => $token,
-        ]);
+            http_build_query([
+                'key' => $storePublicKey,
+                'token' => $token,
+            ]);
     }
 }

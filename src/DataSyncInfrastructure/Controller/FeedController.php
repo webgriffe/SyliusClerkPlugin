@@ -14,6 +14,7 @@ use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\AccessToken\HeaderAccessTokenExtractor;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum\Resource;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Generator\FeedGeneratorInterface;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Validator\RequestValidatorInterface;
@@ -57,7 +58,8 @@ final class FeedController extends AbstractController implements FeedControllerI
             throw $this->createNotFoundException();
         }
         if ($this->isTokenAuthenticationEnabled) {
-            $authToken = $request->headers->get(self::AUTHORIZATION_HEADER);
+            $headerAccessTokenExtractor = new HeaderAccessTokenExtractor(self::AUTHORIZATION_HEADER);
+            $authToken = $headerAccessTokenExtractor->extractAccessToken($request);
             if ($authToken === null || !$this->requestValidator->isValid($channel, $localeCode, $authToken)) {
                 throw $this->createAccessDeniedException();
             }
