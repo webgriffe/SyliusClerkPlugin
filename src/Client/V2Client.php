@@ -41,7 +41,7 @@ final readonly class V2Client implements ClientInterface
         /** @var array{status: 'ok'|'error', token_payload?: string, type?: string, message?: string} $responseBody */
         $responseBody = json_decode($response->getBody()->getContents(), true);
 
-        $this->logger->error($responseBody['status'], ['response' => $responseBody]);
+        $this->logger->debug($responseBody['status'], ['response' => $responseBody]);
 
         return new Verify(
             $responseBody['status'],
