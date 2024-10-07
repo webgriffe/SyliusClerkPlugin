@@ -6,6 +6,7 @@ webgriffe_sylius_clerk:
         -   channel_code: WEB-US
             public_api_key: public-key
             private_api_key: 123abc
+            locale_code: en_US
     pages:
         -
             id: 'Homepage'
