@@ -51,7 +51,7 @@ final readonly class V2Client implements ClientInterface
 
     private function getVerifyUrl(string $storePublicKey, string $token): string
     {
-        return 'https://api.clerk.io/v2/verify?' .
+        return 'https://api.clerk.io/v2/token/verify?' .
             http_build_query([
                 'key' => $storePublicKey,
                 'token' => $token,
