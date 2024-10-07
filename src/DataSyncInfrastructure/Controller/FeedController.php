@@ -61,8 +61,8 @@ final class FeedController extends AbstractController implements FeedControllerI
         };
         $modifiedAfter = null;
         if ($request->query->has('modified_after')) {
-            $modifiedAfterDate = $request->query->getAlpha('modified_after');
-            $modifiedAfter = new \DateTimeImmutable($modifiedAfterDate);
+            $modifiedAfterHours = $request->query->getInt('modified_after');
+            $modifiedAfter = new \DateTimeImmutable("-{$modifiedAfterHours} hours");
         }
         $limit = null;
         if ($request->query->has('limit')) {
