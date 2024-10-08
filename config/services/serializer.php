@@ -23,6 +23,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
             service('router'),
             service('liip_imagine.service.filter'),
         ])
+        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
         ->tag('serializer.normalizer', ['priority' => 120])
     ;
 
@@ -32,17 +33,20 @@ return static function (ContainerConfigurator $containerConfigurator) {
             service('router'),
             service('sylius.repository.taxon'),
         ])
+        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
         ->tag('serializer.normalizer', ['priority' => 120])
     ;
 
     $services->set(OrderNormalizer::class)
         ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'Service "%service_id%" is deprecated and will be removed in the next major version.')
         ->tag('serializer.normalizer', ['priority' => 120])
+        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
     ;
 
     $services->set(CustomerNormalizer::class)
         ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'Service "%service_id%" is deprecated and will be removed in the next major version.')
         ->tag('serializer.normalizer', ['priority' => 120])
+        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
     ;
 
     $services->set('webgriffe_sylius_clerk_plugin.normalizer.product', V2ProductNormalizer::class)

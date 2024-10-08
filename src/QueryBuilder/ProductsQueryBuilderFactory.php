@@ -10,6 +10,9 @@ use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Webmozart\Assert\Assert;
 
+/**
+ * @deprecated This class is deprecated and will be removed in the next major version. Use query builder event on v2 feed generation instead.
+ */
 final class ProductsQueryBuilderFactory implements QueryBuilderFactoryInterface
 {
     public function __construct(private ProductRepositoryInterface $productRepository)

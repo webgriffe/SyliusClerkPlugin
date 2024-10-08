@@ -10,6 +10,9 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Webmozart\Assert\Assert;
 
+/**
+ * @deprecated This class is deprecated and will be removed in the next major version. Use query builder event on v2 feed generation instead.
+ */
 final class CustomersQueryBuilderFactory implements QueryBuilderFactoryInterface
 {
     public function __construct(

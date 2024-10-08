@@ -15,6 +15,9 @@ use Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface;
 use Webgriffe\SyliusClerkPlugin\Resolver\OrderResolverInterface;
 use Webgriffe\SyliusClerkPlugin\Resolver\PageResolverInterface;
 
+/**
+ * @deprecated This class is deprecated and will be removed in the next major version.
+ */
 final class FeedGenerator implements FeedGeneratorInterface
 {
     public const NORMALIZATION_FORMAT = 'clerk_array';

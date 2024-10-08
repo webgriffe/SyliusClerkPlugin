@@ -9,6 +9,9 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 
+/**
+ * @deprecated This class is deprecated and will be removed in the next major version. Use the new Clerk feed v2 normalizer instead.
+ */
 final class CustomerNormalizer implements NormalizerInterface
 {
     public function normalize($object, string $format = null, array $context = [])

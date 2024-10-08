@@ -16,6 +16,9 @@ use Webgriffe\SyliusClerkPlugin\Service\ChannelApiKeyCheckerInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGeneratorInterface;
 use Webgriffe\SyliusClerkPlugin\Service\PrivateApiKeyProviderInterface;
 
+/**
+ * @deprecated This controller is deprecated and will be removed in the next major version.
+ */
 final class FeedController extends AbstractController
 {
     private ?ChannelApiKeyCheckerInterface $channelApiKeyChecker;

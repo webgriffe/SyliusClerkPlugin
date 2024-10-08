@@ -14,6 +14,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 use Webmozart\Assert\Assert;
 
+/**
+ * @deprecated This class is deprecated and will be removed in the next major version. Use the new Clerk feed v2 normalizer instead.
+ */
 final class TaxonNormalizer implements NormalizerInterface
 {
     public function __construct(
