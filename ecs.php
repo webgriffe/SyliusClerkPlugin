@@ -7,8 +7,11 @@ use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->paths([
+        __DIR__ . '/config',
         __DIR__ . '/src',
         __DIR__ . '/tests/Behat',
+        __DIR__ . '/tests/Integration',
+        __DIR__ . '/tests/Unit',
         __DIR__ . '/ecs.php',
     ]);
 
@@ -18,4 +21,3 @@ return static function (ECSConfig $ecsConfig): void {
         VisibilityRequiredFixer::class => ['*Spec.php'],
     ]);
 };
-

@@ -18,7 +18,6 @@ return static function (ContainerConfigurator $containerConfigurator) {
             service('webgriffe_sylius_clerk_plugin.http_client'),
             service('webgriffe_sylius_clerk_plugin.logger'),
         ]);
-    ;
 
     $services->alias('webgriffe_sylius_clerk_plugin.client', 'webgriffe_sylius_clerk_plugin.v2client');
     $services->alias(ClientInterface::class, 'webgriffe_sylius_clerk_plugin.client');

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\CategoryNormalizer;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\CustomerNormalizer as V2CustomerNormalizer;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\OrderNormalizer as V2OrderNormalizer;

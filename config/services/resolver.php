@@ -15,7 +15,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
 
     $services->set(OrderResolver::class)
         ->args([
-            service(OrdersQueryBuilderFactory::class)
+            service(OrdersQueryBuilderFactory::class),
         ])
     ;
 };
