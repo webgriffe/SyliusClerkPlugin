@@ -37,7 +37,7 @@ final class TestQueryBuilder implements QueryBuilderInterface
         string $localeCode,
         ?\DateTimeInterface $modifiedAfter = null,
         ?int $limit = null,
-        ?int $offset = null
+        ?int $offset = null,
     ): array {
         return [
             'test1',

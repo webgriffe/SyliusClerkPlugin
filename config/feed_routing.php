@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\Requirement\EnumRequirement;
 use Webgriffe\SyliusClerkPlugin\Controller\FeedController;
-use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Controller\FeedController as V2FeedController;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum\Resource;
 
 return static function (RoutingConfigurator $routes): void {
