@@ -36,6 +36,11 @@ final class FeedController extends AbstractController implements FeedControllerI
     ) {
     }
 
+    /**
+     * @psalm-suppress MixedAssignment
+     * @psalm-suppress MixedMethodCall
+     * @psalm-suppress MixedArgument
+     */
     public function __invoke(
         string $channelCode,
         string $localeCode,
@@ -62,7 +67,7 @@ final class FeedController extends AbstractController implements FeedControllerI
                 $headerAccessTokenExtractor = new HeaderAccessTokenExtractor(self::AUTHORIZATION_HEADER);
                 $authToken = $headerAccessTokenExtractor->extractAccessToken($request);
             } else {
-                $authToken = str_replace('Bearer ', '', $request->headers->get(self::AUTHORIZATION_HEADER));
+                $authToken = str_replace('Bearer ', '', (string) $request->headers->get(self::AUTHORIZATION_HEADER));
             }
             if ($authToken === null || !$this->requestValidator->isValid($channel, $localeCode, $authToken)) {
                 throw $this->createAccessDeniedException();
