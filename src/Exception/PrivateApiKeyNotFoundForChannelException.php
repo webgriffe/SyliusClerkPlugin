@@ -6,6 +6,9 @@ namespace Webgriffe\SyliusClerkPlugin\Exception;
 
 use Sylius\Component\Core\Model\ChannelInterface;
 
+/**
+ * @deprecated Use \Webgriffe\SyliusClerkPlugin\Provider\Exception\ChannelApiKeysNotProvidedException instead
+ */
 final class PrivateApiKeyNotFoundForChannelException extends \RuntimeException
 {
     public function __construct(ChannelInterface $channel)

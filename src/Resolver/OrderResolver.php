@@ -8,6 +8,9 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\QueryBuilderFactoryInterface;
 use Webmozart\Assert\Assert;
 
+/**
+ * @deprecated This class is deprecated and will be removed in the next major version. Use resource provider on v2 feed generation instead.
+ */
 final class OrderResolver implements OrderResolverInterface
 {
     public function __construct(

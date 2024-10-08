@@ -14,5 +14,6 @@ return static function (ContainerConfigurator $containerConfigurator) {
             service('webgriffe_sylius_clerk.provider.public_api_key'),
             service('webgriffe_sylius_clerk.provider.private_api_key'),
         ])
+        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
     ;
 };

@@ -18,7 +18,7 @@ use Webgriffe\SyliusClerkPlugin\Service\FeedGeneratorInterface;
 use Webmozart\Assert\Assert;
 
 /**
- * @deprecated
+ * @deprecated This command is deprecated and will be removed in the next major version.
  */
 final class FeedGeneratorCommand extends Command
 {

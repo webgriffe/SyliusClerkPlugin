@@ -18,6 +18,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
             '$router' => service('router'),
             '$logger' => service('monolog.logger'),
         ])
+        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
         ->tag('console.command')
     ;
 

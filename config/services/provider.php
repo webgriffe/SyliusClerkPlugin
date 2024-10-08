@@ -13,9 +13,13 @@ use Webgriffe\SyliusClerkPlugin\Service\PublicApiKeyProvider;
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
 
-    $services->set('webgriffe_sylius_clerk.provider.private_api_key', PrivateApiKeyProvider::class);
+    $services->set('webgriffe_sylius_clerk.provider.private_api_key', PrivateApiKeyProvider::class)
+        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
+    ;
 
-    $services->set('webgriffe_sylius_clerk.provider.public_api_key', PublicApiKeyProvider::class);
+    $services->set('webgriffe_sylius_clerk.provider.public_api_key', PublicApiKeyProvider::class)
+        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
+    ;
 
     $services->set('webgriffe_sylius_clerk_plugin.provider.products', QueryBuilderResourceProvider::class)
         ->args([
