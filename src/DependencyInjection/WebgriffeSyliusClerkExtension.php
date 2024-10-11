@@ -28,7 +28,7 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $apiKeysProviderServiceDefinition->setArgument('$storesConfiguration', $config['stores']);
 
         $feedController = $container->getDefinition('webgriffe_sylius_clerk_plugin.controller.feed');
-        $feedController->setArgument('$isTokenAuthenticationEnabled', $config['storage_feed_path']);
+        $feedController->setArgument('$isTokenAuthenticationEnabled', $config['token_authentication_enabled']);
 
         $generateFeedCommand = $container->getDefinition('webgriffe_sylius_clerk.command.generate_feed');
         $generateFeedCommand->setArgument('$storagePath', $config['storage_feed_path']);

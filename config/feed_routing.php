@@ -16,7 +16,6 @@ return static function (RoutingConfigurator $routes): void {
         ->controller(['webgriffe_sylius_clerk_plugin.controller.feed', '__invoke'])
         ->methods(['GET'])
         ->requirements([
-            'channelCode' => '\d+',
             'localeCode' => '^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$',
             'resourceValue' => class_exists(EnumRequirement::class) ? new EnumRequirement(Resource::class) : 'products|categories|orders|customers|pages',
         ])

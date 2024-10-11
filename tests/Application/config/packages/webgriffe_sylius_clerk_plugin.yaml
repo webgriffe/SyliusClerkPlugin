@@ -5,7 +5,7 @@ webgriffe_sylius_clerk:
     storage_feed_path: '%kernel.project_dir%/public/feed/clerk.io'
     image_type: 'main'
     image_filter_to_apply: 'sylius_medium'
-    token_authentication_enabled: true
+    token_authentication_enabled: '%env(bool:WEBGRIFFE_SYLIUS_CLERK_PLUGIN_TOKEN_AUTHENTICATION_ENABLED)%'
     stores:
         -   channel_code: WEB-US
             public_api_key: public-key
@@ -19,4 +19,4 @@ webgriffe_sylius_clerk:
             routeParameters: []
             title: 'Homepage'
             text: 'Welcome to our store!'
-            image: null
+    

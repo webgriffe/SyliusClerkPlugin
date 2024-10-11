@@ -15,8 +15,7 @@ use Webmozart\Assert\Assert;
  *     url: string,
  *     title: string,
  *     text: string,
- *     image?: string,
- * }>
+ * }&array<string, mixed>>
  */
 final readonly class PagesProvider implements ResourceProviderInterface
 {
@@ -28,8 +27,7 @@ final readonly class PagesProvider implements ResourceProviderInterface
      *     routeParameters: array,
      *     title: string,
      *     text: string,
-     *     image?: string,
-     * }> $pages
+     * }&array<string, mixed>> $pages
      */
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
@@ -47,16 +45,10 @@ final readonly class PagesProvider implements ResourceProviderInterface
         $pagesData = [];
         foreach ($this->pages as $page) {
             $pageData = [
-                'id' => $page['id'],
-                'type' => $page['type'],
                 'url' => $this->getPageUrl($page, $channel, $localeCode),
-                'title' => $page['title'],
-                'text' => $page['text'],
             ];
-            if (array_key_exists('image', $page)) {
-                $pageData['image'] = $page['image'];
-            }
-            $pagesData[] = $pageData;
+            unset($page['routeName'], $page['routeParameters']);
+            $pagesData[] = array_merge($page, $pageData);
         }
 
         return $pagesData;
@@ -70,8 +62,7 @@ final readonly class PagesProvider implements ResourceProviderInterface
      *      routeParameters: array,
      *      title: string,
      *      text: string,
-     *      image?: string,
-     *  } $page
+     *  }&array<string, mixed> $page
      */
     public function getPageUrl(array $page, ChannelInterface $channel, string $localeCode): string
     {

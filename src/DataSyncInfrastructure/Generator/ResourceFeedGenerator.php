@@ -39,6 +39,14 @@ final readonly class ResourceFeedGenerator implements FeedGeneratorInterface
         /** @var object[] $feedObjects */
         $feedObjects = $this->resourceProvider->provide($channel, $localeCode, $modifiedAfter, $limit, $offset);
 
+        $this->logger->debug(
+            sprintf(
+                'Found %d objects for the %s feed',
+                count($feedObjects),
+                $this->resource->value,
+            ),
+        );
+
         $payload = [];
         foreach ($feedObjects as $feedObject) {
             try {

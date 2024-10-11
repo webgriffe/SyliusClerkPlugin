@@ -31,6 +31,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->args([
             service('webgriffe_sylius_clerk_plugin.provider.products'),
             service('serializer'),
+            service('webgriffe_sylius_clerk_plugin.logger'),
             'products',
         ])
     ;
@@ -39,6 +40,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->args([
             service('webgriffe_sylius_clerk_plugin.provider.categories'),
             service('serializer'),
+            service('webgriffe_sylius_clerk_plugin.logger'),
             'categories',
         ])
     ;
@@ -47,6 +49,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->args([
             service('webgriffe_sylius_clerk_plugin.provider.orders'),
             service('serializer'),
+            service('webgriffe_sylius_clerk_plugin.logger'),
             'orders',
         ])
     ;
@@ -55,6 +58,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->args([
             service('webgriffe_sylius_clerk_plugin.provider.customers'),
             service('serializer'),
+            service('webgriffe_sylius_clerk_plugin.logger'),
             'customers',
         ])
     ;
@@ -63,6 +67,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->args([
             service('webgriffe_sylius_clerk_plugin.provider.pages'),
             service('serializer'),
+            service('webgriffe_sylius_clerk_plugin.logger'),
             'pages',
         ])
     ;
