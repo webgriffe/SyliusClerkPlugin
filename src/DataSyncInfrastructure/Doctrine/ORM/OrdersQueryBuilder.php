@@ -41,6 +41,8 @@ final readonly class OrdersQueryBuilder implements QueryBuilderInterface
             ->andWhere('o.channel = :channel')
             ->setParameter('channel', $channel)
             ->andWhere('o.checkoutCompletedAt IS NOT NULL')
+            ->andWhere('o.localeCode = :localeCode')
+            ->setParameter('localeCode', $localeCode)
         ;
 
         if ($modifiedAfter !== null) {

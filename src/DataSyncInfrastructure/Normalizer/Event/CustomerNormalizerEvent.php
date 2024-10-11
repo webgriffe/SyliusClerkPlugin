@@ -15,11 +15,7 @@ final class CustomerNormalizerEvent
      *      name: string,
      *      email: string,
      *      subscribed: bool,
-     *      zip?: string,
-     *      gender?: string,
-     *      age?: int,
-     *      is_b2b?: bool,
-     *  } $customerData
+     *  }&array<string, mixed> $customerData
      */
     public function __construct(
         private array $customerData,
@@ -36,11 +32,7 @@ final class CustomerNormalizerEvent
      *      name: string,
      *      email: string,
      *      subscribed: bool,
-     *      zip?: string,
-     *      gender?: string,
-     *      age?: int,
-     *      is_b2b?: bool,
-     *  }
+     *  }&array<string, mixed>
      */
     public function getCustomerData(): array
     {
@@ -53,11 +45,7 @@ final class CustomerNormalizerEvent
      *      name: string,
      *      email: string,
      *      subscribed: bool,
-     *      zip?: string,
-     *      gender?: string,
-     *      age?: int,
-     *      is_b2b?: bool,
-     *  } $customerData
+     *  }&array<string, mixed> $customerData
      */
     public function setCustomerData(array $customerData): void
     {

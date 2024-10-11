@@ -29,7 +29,7 @@ final readonly class OrderNormalizer implements NormalizerInterface
      *     email?: string,
      *     products: array<array-key, array{id: string|int, quantity: int, price: float}>,
      *     time: int,
-     * }
+     * }&array<string, mixed>
      */
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {

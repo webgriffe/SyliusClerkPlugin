@@ -16,7 +16,7 @@ final class OrderNormalizerEvent
      *      email?: string,
      *      products: array<array-key, array{id: string|int, quantity: int, price: float}>,
      *      time: int,
-     * } $orderData
+     * }&array<string, mixed> $orderData
      */
     public function __construct(
         private array $orderData,
@@ -34,7 +34,7 @@ final class OrderNormalizerEvent
      *      email?: string,
      *      products: array<array-key, array{id: string|int, quantity: int, price: float}>,
      *      time: int,
-     *  }
+     *  }&array<string, mixed>
      */
     public function getOrderData(): array
     {
@@ -48,7 +48,7 @@ final class OrderNormalizerEvent
      *      email?: string,
      *      products: array<array-key, array{id: string|int, quantity: int, price: float}>,
      *      time: int,
-     *  } $orderData
+     *  }&array<string, mixed> $orderData
      */
     public function setOrderData(array $orderData): void
     {

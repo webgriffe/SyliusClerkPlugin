@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer;
 
-use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -27,11 +26,7 @@ final readonly class CustomerNormalizer implements NormalizerInterface
      *     name: string,
      *     email: string,
      *     subscribed: bool,
-     *     zip?: string,
-     *     gender?: string,
-     *     age?: int,
-     *     is_b2b?: bool,
-     * }
+     * }&array<string, mixed>
      */
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
@@ -55,33 +50,13 @@ final readonly class CustomerNormalizer implements NormalizerInterface
         if ($customerEmail === null) {
             throw new \InvalidArgumentException('Customer email must not be null for customer with ID "' . $customerId . '".');
         }
-        $customerZip = null;
-        $customerIsB2B = false;
-        $customerDefaultAddress = $customer->getDefaultAddress();
-        if ($customerDefaultAddress instanceof AddressInterface) {
-            $customerZip = $customerDefaultAddress->getPostcode();
-            $customerIsB2B = $customerDefaultAddress->getCompany() !== null;
-        }
-        $customerGender = $customer->isMale() ? 'male' : ($customer->isFemale() ? 'female' : null);
-        $customerBirthday = $customer->getBirthday();
-        $customerAge = $customerBirthday !== null ? (new \DateTime())->diff($customerBirthday)->y : null;
 
         $customerData = [
             'id' => $customerId,
             'name' => $customerName,
             'email' => $customerEmail,
             'subscribed' => $customer->isSubscribedToNewsletter(),
-            'is_b2b' => $customerIsB2B,
         ];
-        if ($customerGender !== null) {
-            $customerData['gender'] = $customerGender;
-        }
-        if ($customerZip !== null) {
-            $customerData['zip'] = $customerZip;
-        }
-        if ($customerAge !== null) {
-            $customerData['age'] = $customerAge;
-        }
 
         $customerNormalizerEvent = new CustomerNormalizerEvent(
             $customerData,

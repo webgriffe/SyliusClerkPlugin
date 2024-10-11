@@ -20,12 +20,7 @@ final class ProductNormalizerEvent
      *      url: string,
      *      categories: array<int|string>,
      *      created_at: string,
-     *      brand?: string,
-     *      color_names?: array<string>,
-     *      color_codes?: array<string>,
-     *      reviews_amount?: int,
-     *      reviews_avg?: float,
-     *  } $productData
+     *  }&array<string, mixed> $productData
      */
     public function __construct(
         private array $productData,
@@ -47,12 +42,7 @@ final class ProductNormalizerEvent
      *      url: string,
      *      categories: array<int|string>,
      *      created_at: string,
-     *      brand?: string,
-     *      color_names?: array<string>,
-     *      color_codes?: array<string>,
-     *      reviews_amount?: int,
-     *      reviews_avg?: float,
-     *  }
+     *  }&array<string, mixed>
      */
     public function getProductData(): array
     {
@@ -70,12 +60,7 @@ final class ProductNormalizerEvent
      *      url: string,
      *      categories: array<int|string>,
      *      created_at: string,
-     *      brand?: string,
-     *      color_names?: array<string>,
-     *      color_codes?: array<string>,
-     *      reviews_amount?: int,
-     *      reviews_avg?: float,
-     *  } $productData
+     *  }&array<string, mixed> $productData
      */
     public function setProductData(array $productData): void
     {

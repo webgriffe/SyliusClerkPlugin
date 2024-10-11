@@ -44,12 +44,7 @@ final readonly class ProductNormalizer implements NormalizerInterface
      *     url: string,
      *     categories: array<int|string>,
      *     created_at: string,
-     *     brand?: string,
-     *     color_names?: array<string>,
-     *     color_codes?: array<string>,
-     *     reviews_amount?: int,
-     *     reviews_avg?: float,
-     * }
+     * }&array<string, mixed>
      */
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {

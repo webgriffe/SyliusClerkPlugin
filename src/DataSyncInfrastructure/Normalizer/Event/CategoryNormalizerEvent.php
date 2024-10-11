@@ -15,9 +15,7 @@ final class CategoryNormalizerEvent
      *      name: string,
      *      url: string,
      *      subcategories: array<int|string>,
-     *      image?: string,
-     *      description?: string,
-     *  } $categoryData
+     *  }&array<string, mixed> $categoryData
      */
     public function __construct(
         private array $categoryData,
@@ -34,9 +32,7 @@ final class CategoryNormalizerEvent
      *      name: string,
      *      url: string,
      *      subcategories: array<int|string>,
-     *      image?: string,
-     *      description?: string,
-     *  }
+     *  }&array<string, mixed>
      */
     public function getCategoryData(): array
     {
@@ -49,9 +45,7 @@ final class CategoryNormalizerEvent
      *      name: string,
      *      url: string,
      *      subcategories: array<int|string>,
-     *      image?: string,
-     *      description?: string,
-     *  } $categoryData
+     *  }&array<string, mixed> $categoryData
      */
     public function setCategoryData(array $categoryData): void
     {

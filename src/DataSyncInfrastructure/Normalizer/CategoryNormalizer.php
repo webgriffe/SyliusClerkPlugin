@@ -29,9 +29,7 @@ final readonly class CategoryNormalizer implements NormalizerInterface
      *     name: string,
      *     url: string,
      *     subcategories: array<int|string>,
-     *     image?: string,
-     *     description?: string,
-     * }
+     * }&array<string, mixed>
      */
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
@@ -104,6 +102,7 @@ final readonly class CategoryNormalizer implements NormalizerInterface
             ],
             UrlGeneratorInterface::ABSOLUTE_URL,
         );
+        Assert::stringNotEmpty($url);
 
         $channelRequestContext->setHost($previousHost);
 

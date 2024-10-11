@@ -40,6 +40,7 @@ final readonly class CategoriesQueryBuilder implements QueryBuilderInterface
         $queryBuilder
             ->leftJoin('t.translations', 'tt', 'WITH', 'tt.locale = :localeCode')
             ->setParameter('localeCode', $localeCode)
+            ->andWhere('t.enabled = true')
         ;
 
         if ($modifiedAfter !== null) {
