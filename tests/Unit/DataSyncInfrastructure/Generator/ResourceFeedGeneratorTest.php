@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusClerkPlugin\Unit\DataSyncInfrastructure\Generator;
 
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -28,6 +29,7 @@ final class ResourceFeedGeneratorTest extends TestCase
         $this->generator = new ResourceFeedGenerator(
             $resourceProvider,
             new Serializer([new TestProductNormalizer()], [new JsonEncoder()]),
+            new Logger('test'),
             Resource::PRODUCTS,
         );
     }
