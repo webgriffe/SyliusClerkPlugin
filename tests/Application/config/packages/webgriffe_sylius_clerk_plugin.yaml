@@ -1,3 +1,6 @@
+imports:
+    - { resource: "@WebgriffeSyliusClerkPlugin/config/config.yaml" }
+
 webgriffe_sylius_clerk:
     storage_feed_path: '%kernel.project_dir%/public/feed/clerk.io'
     image_type: 'main'

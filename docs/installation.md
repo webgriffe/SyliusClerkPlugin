@@ -8,7 +8,14 @@
    Webgriffe\SyliusClerkPlugin\WebgriffeSyliusClerkPlugin::class => ['all' => true],
    ```
 
-3. Add the plugin's routing by creating the file `config/routes.yaml` with the following content:
+3. Add the plugin's configuration by creating the file `config/packages/webgriffe_sylius_clerk_plugin.yaml.yaml` with the following content:
+
+   ```yaml
+    imports:
+        - { resource: "@WebgriffeSyliusClerkPlugin/config/config.yaml" }
+   ```
+
+4. Add the plugin's routing by creating the file `config/routes.yaml` with the following content:
 
    ```yaml
     webgriffe_sylius_clerk_shop:
@@ -21,7 +28,7 @@
         resource: "@WebgriffeSyliusClerkPlugin/config/feed_routing.php"
    ```
 
-4. Finish the installation by installing assets:
+5. Finish the installation by installing assets:
 
    ```bash
    bin/console assets:install
