@@ -36,6 +36,9 @@ final readonly class CustomersQueryBuilder implements QueryBuilderInterface
         ?int $offset = null,
     ): array {
         $queryBuilder = $this->customerRepository->createQueryBuilder('c');
+        $queryBuilder
+            ->andWhere('(c.firstName IS NOT NULL OR c.lastName IS NOT NULL)')
+        ;
 
         if ($modifiedAfter !== null) {
             $queryBuilder
