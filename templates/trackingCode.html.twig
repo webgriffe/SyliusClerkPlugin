@@ -1,14 +1,20 @@
-<!-- Start of Clerk.io E-commerce Personalisation tool - www.clerk.io -->
+{# Start of Clerk.io E-commerce Personalisation tool - www.clerk.io #}
 <script type="text/javascript">
-    (function(w,d){
-        var e=d.createElement('script');e.type='text/javascript';e.async=true;
-        e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
-        var s=d.getElementsByTagName('script')[0];s.parentNode.insertBefore(e,s);
-        w.__clerk_q=w.__clerk_q||[];w.Clerk=w.Clerk||function(){w.__clerk_q.push(arguments)};
-    })(window,document);
+    (function (w, d) {
+        var e = d.createElement('script');
+        e.type = 'text/javascript';
+        e.async = true;
+        e.src = (d.location.protocol == 'https:' ? 'https' : 'http') + '://cdn.clerk.io/clerk.js';
+        var s = d.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(e, s);
+        w.__clerk_q = w.__clerk_q || [];
+        w.Clerk = w.Clerk || function () {
+            w.__clerk_q.push(arguments)
+        };
+    })(window, document);
 
     Clerk('config', {
         key: '{{ publicApiKey }}'
     });
 </script>
-<!-- End of Clerk.io E-commerce Personalisation tool - www.clerk.io -->
+{# End of Clerk.io E-commerce Personalisation tool - www.clerk.io #}

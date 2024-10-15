@@ -30,8 +30,8 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->public()
         ->args([
             service('sylius.context.channel'),
-            service('webgriffe_sylius_clerk.provider.public_api_key'),
-            service('webgriffe_sylius_clerk.checker.channel_enabled'),
+            service('sylius.context.locale'),
+            service('webgriffe_sylius_clerk_plugin.provider.api_keys'),
         ])
         ->tag('controller.service_arguments')
         ->call('setContainer', [service('service_container')])
@@ -42,7 +42,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->args([
             service('sylius.repository.order'),
             service('serializer'),
-            service('webgriffe_sylius_clerk.checker.channel_enabled'),
+            service('webgriffe_sylius_clerk_plugin.provider.api_keys'),
         ])
         ->tag('controller.service_arguments')
         ->call('setContainer', [service('service_container')])

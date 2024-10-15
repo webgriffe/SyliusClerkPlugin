@@ -4,6 +4,8 @@
 
         data-sale="{{ order.id }}"
         data-email="{{ order.email }}"
-        data-customer="{{ order.customer }}"
+        {% if order.customer %}
+            data-customer="{{ order.customer }}"
+        {% endif %}
         data-products='{{ order.products|json_encode }}'>
 </span>
