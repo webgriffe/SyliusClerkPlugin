@@ -25,6 +25,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
     $services->set('webgriffe_sylius_clerk_plugin.command.feed_generator', V2FeedGeneratorCommand::class)
         ->args([
             '$channelRepository' => service('sylius.repository.channel'),
+            '$localeRepository' => service('sylius.repository.locale'),
             '$productsFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.products'),
             '$categoriesFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.categories'),
             '$customersFeedGenerator' => service('webgriffe_sylius_clerk_plugin.feed_generator.customers'),
