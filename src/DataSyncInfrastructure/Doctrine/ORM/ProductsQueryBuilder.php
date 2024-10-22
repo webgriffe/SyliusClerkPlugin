@@ -63,6 +63,7 @@ final readonly class ProductsQueryBuilder implements QueryBuilderInterface
         }
 
         $this->eventDispatcher->dispatch(new QueryBuilderEvent(
+            $this->getResource(),
             $queryBuilder,
             $channel,
             $localeCode,

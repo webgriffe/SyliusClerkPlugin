@@ -42,9 +42,21 @@ final class WebgriffeSyliusClerkExtension extends Extension
         if ($container->hasDefinition(ProductVariantResolverInterface::class)) {
             $productNormalizer->setArgument('$productVariantResolver', $container->getDefinition(ProductVariantResolverInterface::class));
         }
+        $productVariantNormalizer = $container->getDefinition('webgriffe_sylius_clerk_plugin.normalizer.product_variant');
+        $productVariantNormalizer->setArgument('$imageType', $config['image_type']);
+        $productVariantNormalizer->setArgument('$imageFilterToApply', $config['image_filter_to_apply']);
 
         $pagesProvider = $container->getDefinition('webgriffe_sylius_clerk_plugin.provider.pages');
         $pagesProvider->setArgument('$pages', $config['pages']);
+
+        /** @var bool $useProductVariants */
+        $useProductVariants = $config['use_product_variants'];
+        $productsProvider = $container->getDefinition('webgriffe_sylius_clerk_plugin.provider.products');
+        $productsQueryBuilder = $container->getDefinition('webgriffe_sylius_clerk_plugin.query_builder.products');
+        $productVariantsQueryBuilder = $container->getDefinition('webgriffe_sylius_clerk_plugin.query_builder.product_variants');
+        $productsProvider->setArgument('$queryBuilder', $useProductVariants ? $productVariantsQueryBuilder : $productsQueryBuilder);
+        $orderNormalizer = $container->getDefinition('webgriffe_sylius_clerk_plugin.normalizer.order');
+        $orderNormalizer->setArgument('$useProductVariants', $useProductVariants);
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface

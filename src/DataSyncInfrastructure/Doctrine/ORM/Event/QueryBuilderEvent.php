@@ -6,10 +6,12 @@ namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\Event;
 
 use Doctrine\ORM\QueryBuilder;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum\Resource;
 
 final readonly class QueryBuilderEvent
 {
     public function __construct(
+        private Resource $resource,
         private QueryBuilder $queryBuilder,
         private ChannelInterface $channel,
         private string $localeCode,
@@ -17,6 +19,11 @@ final readonly class QueryBuilderEvent
         private ?int $limit = null,
         private ?int $offset = null,
     ) {
+    }
+
+    public function getResource(): Resource
+    {
+        return $this->resource;
     }
 
     public function getQueryBuilder(): QueryBuilder

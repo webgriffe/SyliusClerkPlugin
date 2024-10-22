@@ -8,6 +8,7 @@ use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\CategoriesQu
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\CustomersQueryBuilder;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\OrdersQueryBuilder;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\ProductsQueryBuilder;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\ProductVariantsQueryBuilder;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\CustomersQueryBuilderFactory;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\OrdersQueryBuilderFactory;
 use Webgriffe\SyliusClerkPlugin\QueryBuilder\ProductsQueryBuilderFactory;
@@ -47,6 +48,13 @@ return static function (ContainerConfigurator $containerConfigurator) {
     $services->set('webgriffe_sylius_clerk_plugin.query_builder.products', ProductsQueryBuilder::class)
         ->args([
             service('sylius.repository.product'),
+            service('event_dispatcher'),
+        ])
+    ;
+
+    $services->set('webgriffe_sylius_clerk_plugin.query_builder.product_variants', ProductVariantsQueryBuilder::class)
+        ->args([
+            service('sylius.repository.product_variant'),
             service('event_dispatcher'),
         ])
     ;

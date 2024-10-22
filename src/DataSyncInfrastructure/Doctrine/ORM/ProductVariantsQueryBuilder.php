@@ -5,27 +5,27 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Sylius\Bundle\CoreBundle\Doctrine\ORM\OrderRepository;
+use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\Event\QueryBuilderEvent;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum\Resource;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Model\QueryBuilderInterface;
 
 /**
- * @implements QueryBuilderInterface<OrderInterface>
+ * @implements QueryBuilderInterface<ProductVariantInterface>
  */
-final readonly class OrdersQueryBuilder implements QueryBuilderInterface
+final readonly class ProductVariantsQueryBuilder implements QueryBuilderInterface
 {
     public function __construct(
-        private OrderRepository $orderRepository,
+        private ProductVariantRepository $productVariantRepository,
         private EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
     public function getResource(): Resource
     {
-        return Resource::ORDERS;
+        return Resource::PRODUCTS;
     }
 
     public function getResult(
@@ -35,19 +35,24 @@ final readonly class OrdersQueryBuilder implements QueryBuilderInterface
         ?int $limit = null,
         ?int $offset = null,
     ): array {
-        $queryBuilder = $this->orderRepository->createQueryBuilder('o');
+        $queryBuilder = $this->productVariantRepository->createQueryBuilder('pv');
 
         $queryBuilder
-            ->andWhere('o.channel = :channel')
-            ->setParameter('channel', $channel)
-            ->andWhere('o.checkoutCompletedAt IS NOT NULL')
-            ->andWhere('o.localeCode = :localeCode')
+            ->join('pv.product', 'p')
+            ->andWhere('pv.enabled = true')
+            ->leftJoin('pv.translations', 'pvt', 'WITH', 'pvt.locale = :localeCode')
             ->setParameter('localeCode', $localeCode)
+        ;
+        $queryBuilder
+            ->andWhere(':channel MEMBER OF p.channels')
+            ->andWhere('p.enabled = true')
+            ->setParameter('channel', $channel)
+            ->leftJoin('p.translations', 'pt', 'WITH', 'pt.locale = :localeCode')
         ;
 
         if ($modifiedAfter !== null) {
             $queryBuilder
-                ->andWhere('o.updatedAt > :modifiedAfter')
+                ->andWhere('pv.updatedAt > :modifiedAfter')
                 ->setParameter('modifiedAfter', $modifiedAfter)
             ;
         }
@@ -70,7 +75,7 @@ final readonly class OrdersQueryBuilder implements QueryBuilderInterface
             $offset,
         ));
 
-        /** @var OrderInterface[] $result */
+        /** @var ProductVariantInterface[] $result */
         $result = $queryBuilder->getQuery()->getResult();
 
         return $result;

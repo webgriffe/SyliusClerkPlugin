@@ -59,6 +59,7 @@ final readonly class CategoriesQueryBuilder implements QueryBuilderInterface
         }
 
         $this->eventDispatcher->dispatch(new QueryBuilderEvent(
+            $this->getResource(),
             $queryBuilder,
             $channel,
             $localeCode,

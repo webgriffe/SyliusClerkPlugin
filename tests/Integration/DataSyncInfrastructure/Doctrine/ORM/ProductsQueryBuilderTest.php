@@ -8,11 +8,11 @@ use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Sylius\Bundle\ChannelBundle\Doctrine\ORM\ChannelRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\ProductsQueryBuilder;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Doctrine\ORM\ProductVariantsQueryBuilder;
 
 final class ProductsQueryBuilderTest extends KernelTestCase
 {
-    private ProductsQueryBuilder $queryBuilder;
+    private ProductVariantsQueryBuilder $queryBuilder;
 
     private ChannelRepository $channelRepository;
 

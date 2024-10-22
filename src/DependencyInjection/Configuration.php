@@ -43,6 +43,15 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->booleanNode('use_product_variants')
+                    ->info('If false the plugin will export product entities to Clerk.io, otherwise it will export product variant entities.')
+                    ->defaultFalse()
+                ->end()
+            ->end()
+        ;
+
+        $rootNode
+            ->children()
                 ->booleanNode('token_authentication_enabled')
                     ->defaultTrue()
                 ->end()

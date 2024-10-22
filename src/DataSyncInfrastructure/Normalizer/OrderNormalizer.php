@@ -8,6 +8,8 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\Event\OrderNormalizerEvent;
@@ -17,6 +19,7 @@ final readonly class OrderNormalizer implements NormalizerInterface
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
+        private bool $useProductVariants = false,
     ) {
     }
 
@@ -112,13 +115,25 @@ final readonly class OrderNormalizer implements NormalizerInterface
      */
     private function normalizeOrderItem(OrderItemInterface $item): array
     {
-        $product = $item->getProduct();
-        if ($product === null) {
-            throw new \InvalidArgumentException('Order item product cannot be null.');
-        }
-        $productId = $product->getId();
-        if (!is_string($productId) && !is_int($productId)) {
-            throw new \InvalidArgumentException('Product ID must be a string or an integer, "' . gettype($productId) . '" given.');
+        if ($this->useProductVariants === true) {
+            $productVariant = $item->getVariant();
+            if (!$productVariant instanceof ProductVariantInterface) {
+                throw new \InvalidArgumentException('Order item product variant cannot be null.');
+            }
+            $productId = $productVariant->getId();
+            if (!is_string($productId) && !is_int($productId)) {
+                throw new \InvalidArgumentException('Product variant ID must be a string or an integer, "' . gettype($productId) . '" given.');
+            }
+        } else {
+            $product = $item->getProduct();
+            if (!$product instanceof ProductInterface) {
+                throw new \InvalidArgumentException('Order item product cannot be null.');
+            }
+            /** @var mixed $productId */
+            $productId = $product->getId();
+            if (!is_string($productId) && !is_int($productId)) {
+                throw new \InvalidArgumentException('Product ID must be a string or an integer, "' . gettype($productId) . '" given.');
+            }
         }
 
         return [

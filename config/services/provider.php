@@ -21,11 +21,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
     ;
 
-    $services->set('webgriffe_sylius_clerk_plugin.provider.products', QueryBuilderResourceProvider::class)
-        ->args([
-            service('webgriffe_sylius_clerk_plugin.query_builder.products'),
-        ])
-    ;
+    $services->set('webgriffe_sylius_clerk_plugin.provider.products', QueryBuilderResourceProvider::class);
 
     $services->set('webgriffe_sylius_clerk_plugin.provider.categories', QueryBuilderResourceProvider::class)
         ->args([
