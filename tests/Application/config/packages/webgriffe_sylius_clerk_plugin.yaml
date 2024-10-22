@@ -6,7 +6,7 @@ webgriffe_sylius_clerk:
     image_type: 'main'
     image_filter_to_apply: 'sylius_medium'
     token_authentication_enabled: '%env(bool:WEBGRIFFE_SYLIUS_CLERK_PLUGIN_TOKEN_AUTHENTICATION_ENABLED)%'
-    use_product_variants: true
+    use_product_variants: false
     stores:
         -   channel_code: WEB-US
             public_api_key: public-key
