@@ -46,6 +46,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
     ;
 
     $services->set('webgriffe_sylius_clerk_plugin.query_builder.products', ProductsQueryBuilder::class)
+        ->public()
         ->args([
             service('sylius.repository.product'),
             service('event_dispatcher'),
@@ -53,6 +54,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
     ;
 
     $services->set('webgriffe_sylius_clerk_plugin.query_builder.product_variants', ProductVariantsQueryBuilder::class)
+        ->public()
         ->args([
             service('sylius.repository.product_variant'),
             service('event_dispatcher'),
