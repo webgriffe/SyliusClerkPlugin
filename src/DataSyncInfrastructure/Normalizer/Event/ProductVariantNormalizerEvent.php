@@ -21,7 +21,7 @@ final class ProductVariantNormalizerEvent
      *      url: string,
      *      categories: array<int|string>,
      *      created_at: string,
-     *  }&array<string, mixed> $productData
+     *  }&array<string, string|int|float|array<array-key, string|int|float>> $productData
      */
     public function __construct(
         private array $productData,
@@ -44,7 +44,7 @@ final class ProductVariantNormalizerEvent
      *      url: string,
      *      categories: array<int|string>,
      *      created_at: string,
-     *  }&array<string, mixed>
+     *  }&array<string, string|int|float|array<array-key, string|int|float>>
      */
     public function getProductData(): array
     {
@@ -62,7 +62,7 @@ final class ProductVariantNormalizerEvent
      *      url: string,
      *      categories: array<int|string>,
      *      created_at: string,
-     *  }&array<string, mixed> $productData
+     *  }&array<string, string|int|float|array<array-key, string|int|float>> $productData
      */
     public function setProductData(array $productData): void
     {

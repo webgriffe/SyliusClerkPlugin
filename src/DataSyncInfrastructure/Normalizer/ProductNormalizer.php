@@ -7,19 +7,19 @@ namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\ProductImageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Core\Model\ProductTranslationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\Event\ProductNormalizerEvent;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\Event\ProductVariantNormalizerEvent;
 use Webmozart\Assert\Assert;
 
 final readonly class ProductNormalizer implements NormalizerInterface
 {
+    use CommonProductNormalizerTrait;
+
     public function __construct(
         private ProductVariantResolverInterface $productVariantResolver,
         private EventDispatcherInterface $eventDispatcher,
@@ -101,8 +101,9 @@ final readonly class ProductNormalizer implements NormalizerInterface
             $productData['image'] = $productMainImageUrl;
         }
 
-        $productNormalizerEvent = new ProductNormalizerEvent(
+        $productNormalizerEvent = new ProductVariantNormalizerEvent(
             $productData,
+            $productVariant,
             $product,
             $channel,
             $localeCode,
@@ -122,77 +123,18 @@ final readonly class ProductNormalizer implements NormalizerInterface
         ;
     }
 
-    public function getMainImage(ProductInterface $product): ?ProductImageInterface
+    public function getImageType(): string
     {
-        $imageByType = $product->getImagesByType($this->imageType)->first();
-        if ($imageByType instanceof ProductImageInterface) {
-            return $imageByType;
-        }
-        $image = $product->getImages()->first();
-        if ($image instanceof ProductImageInterface) {
-            return $image;
-        }
-
-        return null;
+        return $this->imageType;
     }
 
-    public function getUrlOfImage(ProductImageInterface $productMainImage, ChannelInterface $channel): string
+    private function getUrlGenerator(): UrlGeneratorInterface
     {
-        $channelRequestContext = $this->urlGenerator->getContext();
-        $previousHost = $channelRequestContext->getHost();
-        $channelHost = $channel->getHostname();
-        Assert::stringNotEmpty($channelHost);
-        $channelRequestContext->setHost($channelHost);
-
-        $imagePath = $productMainImage->getPath();
-        Assert::stringNotEmpty($imagePath, 'Product image path must not be empty.');
-
-        $imageUrl = $this->cacheManager->getBrowserPath(
-            $imagePath,
-            $this->imageFilterToApply,
-        );
-
-        $channelRequestContext->setHost($previousHost);
-
-        return $imageUrl;
+        return $this->urlGenerator;
     }
 
-    private function getUrlOfProduct(ProductTranslationInterface $productTranslation, ChannelInterface $channel): string
+    private function getCacheManager(): CacheManager
     {
-        $channelRequestContext = $this->urlGenerator->getContext();
-        $previousHost = $channelRequestContext->getHost();
-        $channelHost = $channel->getHostname();
-        Assert::string($channelHost);
-        $channelRequestContext->setHost($channelHost);
-
-        $url = $this->urlGenerator->generate(
-            'sylius_shop_product_show',
-            [
-                'slug' => $productTranslation->getSlug(),
-                '_locale' => $productTranslation->getLocale(),
-            ],
-            UrlGeneratorInterface::ABSOLUTE_URL,
-        );
-
-        $channelRequestContext->setHost($previousHost);
-
-        return $url;
-    }
-
-    /**
-     * @return array<int|string>
-     */
-    private function getCategoryIds(ProductInterface $product): array
-    {
-        $categoryIds = [];
-        foreach ($product->getTaxons() as $taxon) {
-            $taxonId = $taxon->getId();
-            if (!is_string($taxonId) && !is_int($taxonId)) {
-                throw new \InvalidArgumentException('Taxon ID must be a string or an integer, "' . gettype($taxonId) . '" given.');
-            }
-            $categoryIds[] = $taxonId;
-        }
-
-        return $categoryIds;
+        return $this->cacheManager;
     }
 }
