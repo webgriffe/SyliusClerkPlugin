@@ -5,16 +5,25 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer;
 
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Sylius\Component\Core\Model\CatalogPromotionInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductImageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTranslationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\Event\ProductVariantNormalizerEvent;
 use Webmozart\Assert\Assert;
 
+/**
+ * @psalm-import-type clerkIoProductData from ProductVariantNormalizerEvent
+ */
 trait CommonProductNormalizerTrait
 {
+    abstract private function getImageFilterToApply(): string;
+
+    abstract private function getFallbackLocale(): string;
+
     abstract private function getUrlGenerator(): UrlGeneratorInterface;
 
     abstract private function getCacheManager(): CacheManager;
@@ -45,7 +54,7 @@ trait CommonProductNormalizerTrait
         return null;
     }
 
-    public function getUrlOfImage(ProductImageInterface $productMainImage, ChannelInterface $channel): string
+    private function getUrlOfImage(ProductImageInterface $productMainImage, ChannelInterface $channel): string
     {
         $channelRequestContext = $this->getUrlGenerator()->getContext();
         $previousHost = $channelRequestContext->getHost();
@@ -58,7 +67,7 @@ trait CommonProductNormalizerTrait
 
         $imageUrl = $this->getCacheManager()->getBrowserPath(
             $imagePath,
-            $this->imageFilterToApply,
+            $this->getImageFilterToApply(),
         );
 
         $channelRequestContext->setHost($previousHost);
@@ -103,5 +112,88 @@ trait CommonProductNormalizerTrait
         }
 
         return $categoryIds;
+    }
+
+    /**
+     * @psalm-suppress InvalidReturnType
+     *
+     * @param clerkIoProductData $productData
+     *
+     * @return clerkIoProductData
+     */
+    private function enrichProductDataFromProduct(array $productData, ProductInterface $product, ChannelInterface $channel, string $localeCode): array
+    {
+        foreach ($product->getAttributesByLocale($localeCode, $this->getFallbackLocale()) as $attribute) {
+            /** @var bool|string|int|float|\DateTimeInterface|array|null $value */
+            $value = $attribute->getValue();
+            if ($value instanceof \DateTimeInterface) {
+                $value = $value->format('Y-m-d H:i:s');
+            }
+            $productData['attribute_' . (string) $attribute->getCode()] = $value;
+        }
+        /** @var array<string, string[]> $optionWithValues */
+        $optionWithValues = [];
+        foreach ($product->getEnabledVariants() as $productVariant) {
+            foreach ($productVariant->getOptionValues() as $optionValue) {
+                $productOption = $optionValue->getOption();
+                if (null === $productOption) {
+                    continue;
+                }
+                $optionWithValues[(string) $productOption->getCode()][] = (string) $optionValue->getValue();
+            }
+        }
+        foreach ($optionWithValues as $optionCode => $optionValues) {
+            $productData['product_option_' . $optionCode] = $optionValues;
+        }
+        $productData['product_code'] = $product->getCode();
+        $productData['is_simple'] = $product->isSimple();
+        $productData['variant_selection_method'] = $product->getVariantSelectionMethod();
+
+        return $productData; //@phpstan-ignore-line
+    }
+
+    /**
+     * @param clerkIoProductData $productData
+     *
+     * @return clerkIoProductData
+     */
+    private function enrichProductDataFromProductTranslation(array $productData, ProductTranslationInterface $productTranslation): array
+    {
+        $productData['slug'] = $productTranslation->getSlug();
+        $productData['short_description'] = $productTranslation->getShortDescription();
+        $productData['meta_keywords'] = $productTranslation->getMetaKeywords();
+        $productData['meta_description'] = $productTranslation->getMetaDescription();
+
+        return $productData; //@phpstan-ignore-line
+    }
+
+    /**
+     * @param clerkIoProductData $productData
+     *
+     * @return clerkIoProductData
+     */
+    private function enrichProductDataFromProductVariant(array $productData, ProductVariantInterface $productVariant, ChannelInterface $channel): array
+    {
+        $productData['variant_code'] = $productVariant->getCode();
+        $productData['depth'] = $productVariant->getDepth();
+        $productData['weight'] = $productVariant->getWeight();
+        $productData['height'] = $productVariant->getHeight();
+        $productData['width'] = $productVariant->getWidth();
+        $productData['on_hand'] = $productVariant->getOnHand();
+        $productData['on_hold'] = $productVariant->getOnHold();
+        $productData['version'] = $productVariant->getVersion();
+        foreach ($productVariant->getOptionValues() as $optionValue) {
+            $productOption = $optionValue->getOption();
+            if (null === $productOption) {
+                continue;
+            }
+            $productData['variant_option_' . (string) $productOption->getCode()] = $optionValue->getValue();
+        }
+        /** @var CatalogPromotionInterface $promotion */
+        foreach ($productVariant->getAppliedPromotionsForChannel($channel) as $promotion) {
+            $productData['variant_promotion_' . (string) $promotion->getCode()] = $promotion->getName();
+        }
+
+        return $productData; //@phpstan-ignore-line
     }
 }

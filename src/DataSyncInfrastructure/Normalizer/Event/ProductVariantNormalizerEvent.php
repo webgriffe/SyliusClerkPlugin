@@ -8,20 +8,23 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
+/**
+ * @psalm-type clerkIoProductData=array{
+ *     id: string|int,
+ *     name: string,
+ *     description?: string,
+ *     price: float,
+ *     list_price: float,
+ *     image?: string,
+ *     url: string,
+ *     categories: array<int|string>,
+ *     created_at: string,
+ * }&array<string, bool|string|int|float|array|null>
+ */
 final class ProductVariantNormalizerEvent
 {
     /**
-     * @param array{
-     *      id: string|int,
-     *      name: string,
-     *      description?: string,
-     *      price: float,
-     *      list_price: float,
-     *      image?: string,
-     *      url: string,
-     *      categories: array<int|string>,
-     *      created_at: string,
-     *  }&array<string, string|int|float|array<array-key, string|int|float>> $productData
+     * @param clerkIoProductData $productData
      */
     public function __construct(
         private array $productData,
@@ -34,17 +37,7 @@ final class ProductVariantNormalizerEvent
     }
 
     /**
-     * @return array{
-     *      id: string|int,
-     *      name: string,
-     *      description?: string,
-     *      price: float,
-     *      list_price: float,
-     *      image?: string,
-     *      url: string,
-     *      categories: array<int|string>,
-     *      created_at: string,
-     *  }&array<string, string|int|float|array<array-key, string|int|float>>
+     * @return clerkIoProductData
      */
     public function getProductData(): array
     {
@@ -52,17 +45,7 @@ final class ProductVariantNormalizerEvent
     }
 
     /**
-     * @param array{
-     *      id: string|int,
-     *      name: string,
-     *      description?: string,
-     *      price: float,
-     *      list_price: float,
-     *      image?: string,
-     *      url: string,
-     *      categories: array<int|string>,
-     *      created_at: string,
-     *  }&array<string, string|int|float|array<array-key, string|int|float>> $productData
+     * @param clerkIoProductData $productData
      */
     public function setProductData(array $productData): void
     {

@@ -16,7 +16,7 @@ use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\Event\ProductV
 use Webmozart\Assert\Assert;
 
 /**
- * @method array getSupportedTypes(?string $format)
+ * @psalm-import-type clerkIoProductData from ProductVariantNormalizerEvent
  */
 final readonly class ProductVariantNormalizer implements NormalizerInterface
 {
@@ -29,23 +29,14 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
         private CacheManager $cacheManager,
         private string $imageType,
         private string $imageFilterToApply,
+        private string $fallbackLocale,
     ) {
     }
 
     /**
      * @param ProductVariantInterface|mixed $object
      *
-     * @return array{
-     *     id: string|int,
-     *     name: string,
-     *     description?: string,
-     *     price: float,
-     *     list_price: float,
-     *     image?: string,
-     *     url: string,
-     *     categories: array<int|string>,
-     *     created_at: string,
-     * }&array<string, mixed>
+     * @return clerkIoProductData
      */
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
@@ -100,6 +91,9 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
         if ($productMainImageUrl !== null) {
             $productData['image'] = $productMainImageUrl;
         }
+        $productData = $this->enrichProductDataFromProduct($productData, $product, $channel, $localeCode);
+        $productData = $this->enrichProductDataFromProductTranslation($productData, $productTranslation);
+        $productData = $this->enrichProductDataFromProductVariant($productData, $productVariant, $channel);
 
         $productNormalizerEvent = new ProductVariantNormalizerEvent(
             $productData,
@@ -136,5 +130,15 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
     private function getCacheManager(): CacheManager
     {
         return $this->cacheManager;
+    }
+
+    public function getImageFilterToApply(): string
+    {
+        return $this->imageFilterToApply;
+    }
+
+    public function getFallbackLocale(): string
+    {
+        return $this->fallbackLocale;
     }
 }

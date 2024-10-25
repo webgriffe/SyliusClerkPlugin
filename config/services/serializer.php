@@ -57,6 +57,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
             '$productVariantPricesCalculator' => service('sylius.calculator.product_variant_price'),
             '$urlGenerator' => service('router'),
             '$cacheManager' => service('liip_imagine.cache.manager'),
+            '$fallbackLocale' => param('kernel.default_locale'),
         ])
         ->tag('serializer.normalizer', ['priority' => 100])
     ;
@@ -67,6 +68,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
             '$productVariantPricesCalculator' => service('sylius.calculator.product_variant_price'),
             '$urlGenerator' => service('router'),
             '$cacheManager' => service('liip_imagine.cache.manager'),
+            '$fallbackLocale' => param('kernel.default_locale'),
         ])
         ->tag('serializer.normalizer', ['priority' => 100])
     ;
