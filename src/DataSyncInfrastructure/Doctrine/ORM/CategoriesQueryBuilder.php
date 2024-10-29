@@ -37,11 +37,19 @@ final readonly class CategoriesQueryBuilder implements QueryBuilderInterface
     ): array {
         $queryBuilder = $this->taxonRepository->createQueryBuilder('t');
 
+        $treeRoot = $channel->getMenuTaxon();
+
         $queryBuilder
             ->leftJoin('t.translations', 'tt', 'WITH', 'tt.locale = :localeCode')
             ->setParameter('localeCode', $localeCode)
             ->andWhere('t.enabled = true')
         ;
+        if ($treeRoot !== null) {
+            $queryBuilder
+                ->andWhere('t.root = :treeRoot')
+                ->setParameter('treeRoot', $treeRoot)
+            ;
+        }
 
         if ($modifiedAfter !== null) {
             $queryBuilder

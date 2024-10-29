@@ -100,13 +100,17 @@ trait CommonProductNormalizerTrait
     /**
      * @return array<int|string>
      */
-    private function getCategoryIds(ProductInterface $product): array
+    private function getCategoryIds(ProductInterface $product, ChannelInterface $channel): array
     {
+        $treeRoot = $channel->getMenuTaxon();
         $categoryIds = [];
         foreach ($product->getTaxons() as $taxon) {
             $taxonId = $taxon->getId();
             if (!is_string($taxonId) && !is_int($taxonId)) {
                 throw new \InvalidArgumentException('Taxon ID must be a string or an integer, "' . gettype($taxonId) . '" given.');
+            }
+            if ($treeRoot !== null && $taxon->getRoot() !== $treeRoot) {
+                continue;
             }
             $categoryIds[] = $taxonId;
         }

@@ -85,7 +85,7 @@ final readonly class ProductNormalizer implements NormalizerInterface
             'price' => $price / 100,
             'list_price' => $originalPrice / 100,
             'url' => $productUrl,
-            'categories' => $this->getCategoryIds($product),
+            'categories' => $this->getCategoryIds($product, $channel),
             'created_at' => $createdAt->format('c'),
         ];
         if ($productDescription !== null) {
