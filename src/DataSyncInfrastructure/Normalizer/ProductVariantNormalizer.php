@@ -6,6 +6,7 @@ namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer;
 
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
+use Sylius\Component\Core\Exception\MissingChannelConfigurationException;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
@@ -62,8 +63,14 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
             throw new \InvalidArgumentException('Product variant name must not be null for the product variant "' . $productVariantId . '".');
         }
         $productDescription = $productTranslation->getDescription();
-        $price = $this->productVariantPricesCalculator->calculate($productVariant, ['channel' => $channel]);
-        $originalPrice = $this->productVariantPricesCalculator->calculateOriginal($productVariant, ['channel' => $channel]);
+        $price = null;
+        $originalPrice = null;
+
+        try {
+            $price = $this->productVariantPricesCalculator->calculate($productVariant, ['channel' => $channel]);
+            $originalPrice = $this->productVariantPricesCalculator->calculateOriginal($productVariant, ['channel' => $channel]);
+        } catch (MissingChannelConfigurationException) {
+        }
 
         $productMainImage = $this->getMainImage($product, $productVariant);
         $productMainImageUrl = null;
@@ -79,8 +86,8 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
         $productData = [
             'id' => $productVariantId,
             'name' => $productVariantName,
-            'price' => $price / 100,
-            'list_price' => $originalPrice / 100,
+            'price' => $price !== null ? $price / 100 : null,
+            'list_price' => $originalPrice !== null ? $originalPrice / 100 : null,
             'url' => $productUrl,
             'categories' => $this->getCategoryIds($product, $channel),
             'created_at' => $createdAt->format('c'),
