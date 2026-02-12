@@ -86,6 +86,13 @@ final readonly class CategoryNormalizer implements NormalizerInterface
         ;
     }
 
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            TaxonInterface::class => true,
+        ];
+    }
+
     private function getUrlOfTaxon(TaxonTranslationInterface $taxonTranslation, ChannelInterface $channel): string
     {
         $channelRequestContext = $this->urlGenerator->getContext();

@@ -78,4 +78,11 @@ final readonly class CustomerNormalizer implements NormalizerInterface
             $context['type'] === 'webgriffe_sylius_clerk_plugin'
         ;
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            CustomerInterface::class => true,
+        ];
+    }
 }

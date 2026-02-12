@@ -20,8 +20,6 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $loader->load('services.php');
 
-        $privateApiKeyProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk.provider.private_api_key');
-        $privateApiKeyProviderServiceDefinition->setArgument('$clerkStores', $config['stores']);
         $publicApiKeyProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk.provider.public_api_key');
         $publicApiKeyProviderServiceDefinition->setArgument('$clerkStores', $config['stores']);
         $apiKeysProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk_plugin.provider.api_keys');
@@ -29,9 +27,6 @@ final class WebgriffeSyliusClerkExtension extends Extension
 
         $feedController = $container->getDefinition('webgriffe_sylius_clerk_plugin.controller.feed');
         $feedController->setArgument('$isTokenAuthenticationEnabled', $config['token_authentication_enabled']);
-
-        $generateFeedCommand = $container->getDefinition('webgriffe_sylius_clerk.command.generate_feed');
-        $generateFeedCommand->setArgument('$storagePath', $config['storage_feed_path']);
 
         $newGenerateFeedCommand = $container->getDefinition('webgriffe_sylius_clerk_plugin.command.feed_generator');
         $newGenerateFeedCommand->setArgument('$feedsStorageDirectory', $config['storage_feed_path']);

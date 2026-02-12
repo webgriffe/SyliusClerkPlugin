@@ -9,46 +9,9 @@ use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\CustomerNormal
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\OrderNormalizer as V2OrderNormalizer;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\ProductNormalizer as V2ProductNormalizer;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Normalizer\ProductVariantNormalizer;
-use Webgriffe\SyliusClerkPlugin\Normalizer\CustomerNormalizer;
-use Webgriffe\SyliusClerkPlugin\Normalizer\OrderNormalizer;
-use Webgriffe\SyliusClerkPlugin\Normalizer\ProductNormalizer;
-use Webgriffe\SyliusClerkPlugin\Normalizer\TaxonNormalizer;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
-
-    $services->set(ProductNormalizer::class)
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'Service "%service_id%" is deprecated and will be removed in the next major version.')
-        ->args([
-            service('sylius.product_variant_resolver.default'),
-            service('router'),
-            service('liip_imagine.service.filter'),
-        ])
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
-        ->tag('serializer.normalizer', ['priority' => 120])
-    ;
-
-    $services->set(TaxonNormalizer::class)
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'Service "%service_id%" is deprecated and will be removed in the next major version.')
-        ->args([
-            service('router'),
-            service('sylius.repository.taxon'),
-        ])
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
-        ->tag('serializer.normalizer', ['priority' => 120])
-    ;
-
-    $services->set(OrderNormalizer::class)
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'Service "%service_id%" is deprecated and will be removed in the next major version.')
-        ->tag('serializer.normalizer', ['priority' => 120])
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
-    ;
-
-    $services->set(CustomerNormalizer::class)
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'Service "%service_id%" is deprecated and will be removed in the next major version.')
-        ->tag('serializer.normalizer', ['priority' => 120])
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
-    ;
 
     $services->set('webgriffe_sylius_clerk_plugin.normalizer.product', V2ProductNormalizer::class)
         ->args([

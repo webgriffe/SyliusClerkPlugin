@@ -124,6 +124,13 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
         ;
     }
 
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            ProductVariantInterface::class => true,
+        ];
+    }
+
     private function getImageType(): string
     {
         return $this->imageType;

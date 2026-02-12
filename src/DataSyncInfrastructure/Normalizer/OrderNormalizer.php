@@ -97,6 +97,13 @@ final readonly class OrderNormalizer implements NormalizerInterface
         ;
     }
 
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            OrderInterface::class => true,
+        ];
+    }
+
     /**
      * @return array<array-key, array{id: string|int, quantity: int, price: float}>
      */

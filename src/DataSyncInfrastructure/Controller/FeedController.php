@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Controller;
 
-if (!interface_exists(\Sylius\Resource\Doctrine\Persistence\RepositoryInterface::class)) {
-    class_alias(\Sylius\Component\Resource\Repository\RepositoryInterface::class, \Sylius\Resource\Doctrine\Persistence\RepositoryInterface::class);
-}
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;

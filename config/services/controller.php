@@ -4,27 +4,12 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Webgriffe\SyliusClerkPlugin\Controller\FeedController;
 use Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController;
 use Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController;
-use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Controller\FeedController as V2FeedController;
-use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Controller\FeedController;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
-
-    $services->set(FeedController::class)
-        ->public()
-        ->args([
-            service(FeedGenerator::class),
-            service('sylius.repository.channel'),
-            service('webgriffe_sylius_clerk.provider.private_api_key'),
-            service('webgriffe_sylius_clerk.checker.channel_enabled'),
-        ])
-        ->deprecate('webgriffe/sylius-clerk-plugin', '3.0', 'The "%service_id%" service is deprecated and will be removed in 4.0.')
-        ->tag('controller.service_arguments')
-        ->call('setContainer', [service('service_container')])
-    ;
 
     $services->set(TrackingCodeController::class)
         ->public()
@@ -48,7 +33,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->call('setContainer', [service('service_container')])
     ;
 
-    $services->set('webgriffe_sylius_clerk_plugin.controller.feed', V2FeedController::class)
+    $services->set('webgriffe_sylius_clerk_plugin.controller.feed', FeedController::class)
         ->args([
             service('sylius.repository.channel'),
             service('sylius.repository.locale'),
@@ -63,5 +48,6 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->tag('controller.service_arguments')
         ->tag('container.service_subscriber')
     ;
-    $services->alias(V2FeedController::class, 'webgriffe_sylius_clerk_plugin.controller.feed');
+
+    $services->alias(FeedController::class, 'webgriffe_sylius_clerk_plugin.controller.feed');
 };

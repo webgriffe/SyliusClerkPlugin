@@ -1,7 +1,0 @@
-monolog:
-    handlers:
-        webgriffe_sylius_clerk_plugin:
-            type: stream
-            path: "%kernel.logs_dir%/clerk_io_%kernel.environment%.log"
-            level: debug
-            channels: ['webgriffe_sylius_clerk_plugin']

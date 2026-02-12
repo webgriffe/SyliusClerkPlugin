@@ -3,7 +3,6 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     paths:
         - src
-        - tests/Behat
 
     excludePaths:
         # Makes PHPStan crash

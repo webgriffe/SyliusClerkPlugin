@@ -127,6 +127,13 @@ final readonly class ProductNormalizer implements NormalizerInterface
         ;
     }
 
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            ProductInterface::class => true,
+        ];
+    }
+
     public function getImageType(): string
     {
         return $this->imageType;
