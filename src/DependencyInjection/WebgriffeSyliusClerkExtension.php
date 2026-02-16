@@ -21,8 +21,6 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $loader->load('services.php');
 
-        $publicApiKeyProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk.provider.public_api_key');
-        $publicApiKeyProviderServiceDefinition->setArgument('$clerkStores', $config['stores']);
         $apiKeysProviderServiceDefinition = $container->getDefinition('webgriffe_sylius_clerk_plugin.provider.api_keys');
         $apiKeysProviderServiceDefinition->setArgument('$storesConfiguration', $config['stores']);
 

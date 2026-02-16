@@ -23,7 +23,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
     $services->set(ProductContext::class)
         ->args([
             service('doctrine.orm.entity_manager'),
-            service('sylius.product_variant_resolver.default'),
+            service('sylius.resolver.product_variant'),
         ])
     ;
 
