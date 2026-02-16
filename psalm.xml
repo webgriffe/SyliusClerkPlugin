@@ -19,11 +19,6 @@
                 <directory name="src/"/>
             </errorLevel>
         </DeprecatedInterface>
-        <DeprecatedClass>
-            <errorLevel type="suppress">
-                <directory name="src/"/>
-            </errorLevel>
-        </DeprecatedClass>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <referencedProperty name="Symfony\Bundle\FrameworkBundle\Controller\AbstractController::$container"/>

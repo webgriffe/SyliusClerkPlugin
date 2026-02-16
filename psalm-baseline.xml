@@ -1,106 +1,244 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.27.0@faf106e717c37b8c81721845dba9de3d8deed8ff">
+<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
+  <file src="src/Client/Response/Verify.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getData]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Client/V2Client.php">
+    <UnusedClass>
+      <code><![CDATA[V2Client]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Controller/SalesTrackingController.php">
+    <UnusedClass>
+      <code><![CDATA[SalesTrackingController]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Controller/TrackingCodeController.php">
+    <UnusedClass>
+      <code><![CDATA[TrackingCodeController]]></code>
+    </UnusedClass>
+    <UnusedParam>
+      <code><![CDATA[$request]]></code>
+    </UnusedParam>
+  </file>
+  <file src="src/DataSyncInfrastructure/Command/V2FeedGeneratorCommand.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[V2FeedGeneratorCommand]]></code>
+    </ClassMustBeFinal>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+    <UnnecessaryVarAnnotation>
+      <code><![CDATA[ChannelInterface[]]]></code>
+    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/DataSyncInfrastructure/Controller/FeedController.php">
+    <UnusedClass>
+      <code><![CDATA[FeedController]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Doctrine/ORM/CategoriesQueryBuilder.php">
+    <UnusedClass>
+      <code><![CDATA[CategoriesQueryBuilder]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Doctrine/ORM/CustomersQueryBuilder.php">
+    <UnusedClass>
+      <code><![CDATA[CustomersQueryBuilder]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Doctrine/ORM/Event/QueryBuilderEvent.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getChannel]]></code>
+      <code><![CDATA[getLimit]]></code>
+      <code><![CDATA[getLocaleCode]]></code>
+      <code><![CDATA[getModifiedAfter]]></code>
+      <code><![CDATA[getOffset]]></code>
+      <code><![CDATA[getQueryBuilder]]></code>
+      <code><![CDATA[getResource]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/DataSyncInfrastructure/Doctrine/ORM/OrdersQueryBuilder.php">
+    <UnusedClass>
+      <code><![CDATA[OrdersQueryBuilder]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Doctrine/ORM/ProductVariantsQueryBuilder.php">
+    <UnusedClass>
+      <code><![CDATA[ProductVariantsQueryBuilder]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Doctrine/ORM/ProductsQueryBuilder.php">
+    <UnusedClass>
+      <code><![CDATA[ProductsQueryBuilder]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Generator/ResourceFeedGenerator.php">
+    <UnusedClass>
+      <code><![CDATA[ResourceFeedGenerator]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/CategoryNormalizer.php">
+    <ParamNameMismatch>
+      <code><![CDATA[$object]]></code>
+    </ParamNameMismatch>
+    <UnusedClass>
+      <code><![CDATA[CategoryNormalizer]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/CustomerNormalizer.php">
+    <ParamNameMismatch>
+      <code><![CDATA[$object]]></code>
+    </ParamNameMismatch>
+    <UnusedClass>
+      <code><![CDATA[CustomerNormalizer]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/Event/CategoryNormalizerEvent.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getChannel]]></code>
+      <code><![CDATA[getContext]]></code>
+      <code><![CDATA[getLocaleCode]]></code>
+      <code><![CDATA[getTaxon]]></code>
+      <code><![CDATA[setCategoryData]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/Event/CustomerNormalizerEvent.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getChannel]]></code>
+      <code><![CDATA[getContext]]></code>
+      <code><![CDATA[getCustomer]]></code>
+      <code><![CDATA[getLocaleCode]]></code>
+      <code><![CDATA[setCustomerData]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/Event/OrderNormalizerEvent.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getChannel]]></code>
+      <code><![CDATA[getContext]]></code>
+      <code><![CDATA[getLocaleCode]]></code>
+      <code><![CDATA[getOrder]]></code>
+      <code><![CDATA[setOrderData]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/Event/ProductVariantNormalizerEvent.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getChannel]]></code>
+      <code><![CDATA[getContext]]></code>
+      <code><![CDATA[getLocaleCode]]></code>
+      <code><![CDATA[getProduct]]></code>
+      <code><![CDATA[getProductVariant]]></code>
+      <code><![CDATA[setProductData]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/OrderNormalizer.php">
+    <ParamNameMismatch>
+      <code><![CDATA[$object]]></code>
+    </ParamNameMismatch>
+    <UnusedClass>
+      <code><![CDATA[OrderNormalizer]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/ProductNormalizer.php">
+    <ParamNameMismatch>
+      <code><![CDATA[$object]]></code>
+    </ParamNameMismatch>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/DataSyncInfrastructure/Normalizer/ProductVariantNormalizer.php">
+    <ParamNameMismatch>
+      <code><![CDATA[$object]]></code>
+    </ParamNameMismatch>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/DataSyncInfrastructure/Provider/PagesProvider.php">
+    <UnusedClass>
+      <code><![CDATA[PagesProvider]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Provider/QueryBuilderResourceProvider.php">
+    <UnusedClass>
+      <code><![CDATA[QueryBuilderResourceProvider]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/DataSyncInfrastructure/Validator/RequestValidator.php">
+    <UnusedClass>
+      <code><![CDATA[RequestValidator]]></code>
+    </UnusedClass>
+  </file>
   <file src="src/DependencyInjection/Configuration.php">
-    <MixedMethodCall occurrences="21">
-      <code>arrayNode</code>
-      <code>arrayPrototype</code>
-      <code>children</code>
-      <code>defaultValue</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>isRequired</code>
-      <code>isRequired</code>
-      <code>isRequired</code>
-      <code>requiresAtLeastOneElement</code>
-      <code>scalarNode</code>
-      <code>scalarNode</code>
-      <code>scalarNode</code>
-      <code>scalarNode</code>
-    </MixedMethodCall>
-    <PossiblyUndefinedMethod occurrences="2">
-      <code>children</code>
-      <code>children</code>
-    </PossiblyUndefinedMethod>
+    <UnusedMethodCall>
+      <code><![CDATA[end]]></code>
+      <code><![CDATA[end]]></code>
+      <code><![CDATA[end]]></code>
+      <code><![CDATA[end]]></code>
+      <code><![CDATA[end]]></code>
+      <code><![CDATA[end]]></code>
+      <code><![CDATA[end]]></code>
+    </UnusedMethodCall>
   </file>
-  <file src="src/Exception/PrivateApiKeyNotFoundForChannelException.php">
-    <PossiblyNullArgument occurrences="1">
-      <code>$channel-&gt;getCode()</code>
-    </PossiblyNullArgument>
+  <file src="src/DependencyInjection/WebgriffeSyliusClerkExtension.php">
+    <UnusedClass>
+      <code><![CDATA[WebgriffeSyliusClerkExtension]]></code>
+    </UnusedClass>
   </file>
-  <file src="src/Exception/PublicApiKeyNotFoundForChannelException.php">
-    <PossiblyNullArgument occurrences="1">
-      <code>$channel-&gt;getCode()</code>
-    </PossiblyNullArgument>
+  <file src="src/Provider/ApiKeysProvider.php">
+    <UnusedClass>
+      <code><![CDATA[ApiKeysProvider]]></code>
+    </UnusedClass>
   </file>
-  <file src="src/Normalizer/ProductNormalizer.php">
-    <MixedAssignment occurrences="2">
-      <code>$productData[$attribute-&gt;getCode()]</code>
-      <code>$taxonsIds[]</code>
-    </MixedAssignment>
-    <PossiblyNullArgument occurrences="1">
-      <code>$mainImage-&gt;getPath()</code>
-    </PossiblyNullArgument>
-    <PossiblyNullArrayOffset occurrences="1">
-      <code>$productData</code>
-    </PossiblyNullArrayOffset>
-    <PossiblyNullOperand occurrences="2">
-      <code>$channelPricing-&gt;getOriginalPrice()</code>
-      <code>$channelPricing-&gt;getPrice()</code>
-    </PossiblyNullOperand>
-  </file>
-  <file src="src/Normalizer/TaxonNormalizer.php">
-    <MissingClosureReturnType occurrences="1">
-      <code>function (TaxonInterface $taxon) {</code>
-    </MissingClosureReturnType>
-    <PossiblyNullArgument occurrences="1">
-      <code>$taxon-&gt;getCode()</code>
-    </PossiblyNullArgument>
+  <file src="src/QueryBuilder/CustomersQueryBuilderFactory.php">
+    <UnusedClass>
+      <code><![CDATA[CustomersQueryBuilderFactory]]></code>
+    </UnusedClass>
   </file>
   <file src="src/QueryBuilder/OrdersQueryBuilderFactory.php">
-    <TooManyArguments occurrences="1">
-      <code>where</code>
-    </TooManyArguments>
+    <UnusedClass>
+      <code><![CDATA[OrdersQueryBuilderFactory]]></code>
+    </UnusedClass>
   </file>
   <file src="src/QueryBuilder/ProductsQueryBuilderFactory.php">
-    <PossiblyNullReference occurrences="1">
-      <code>getCode</code>
+    <PossiblyNullReference>
+      <code><![CDATA[getCode]]></code>
     </PossiblyNullReference>
+    <UnusedClass>
+      <code><![CDATA[ProductsQueryBuilderFactory]]></code>
+    </UnusedClass>
   </file>
-  <file src="src/Service/PrivateApiKeyProvider.php">
-    <MixedArrayAccess occurrences="2">
-      <code>$clerkStore['channel_code']</code>
-      <code>$clerkStore['private_api_key']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="1">
-      <code>$clerkStore</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$clerkStore['private_api_key']</code>
-    </MixedReturnStatement>
+  <file src="src/QueryBuilder/TaxonsQueryBuilderFactory.php">
+    <UnusedClass>
+      <code><![CDATA[TaxonsQueryBuilderFactory]]></code>
+    </UnusedClass>
   </file>
-  <file src="src/Service/PublicApiKeyProvider.php">
-    <MixedArrayAccess occurrences="2">
-      <code>$clerkStore['channel_code']</code>
-      <code>$clerkStore['public_api_key']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="1">
-      <code>$clerkStore</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$clerkStore['public_api_key']</code>
-    </MixedReturnStatement>
+  <file src="src/Resolver/OrderResolver.php">
+    <UnusedClass>
+      <code><![CDATA[OrderResolver]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Resolver/OrderResolverInterface.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[createOrdersList]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Resolver/PageResolver.php">
+    <UnusedClass>
+      <code><![CDATA[PageResolver]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/Resolver/PageResolverInterface.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[createPageList]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/WebgriffeSyliusClerkPlugin.php">
+    <UnusedClass>
+      <code><![CDATA[WebgriffeSyliusClerkPlugin]]></code>
+    </UnusedClass>
   </file>
 </files>
