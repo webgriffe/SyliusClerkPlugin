@@ -23,11 +23,13 @@ final readonly class ProductsQueryBuilder implements QueryBuilderInterface
     ) {
     }
 
+    #[\Override]
     public function getResource(): Resource
     {
         return Resource::PRODUCTS;
     }
 
+    #[\Override]
     public function getResult(
         ChannelInterface $channel,
         string $localeCode,

@@ -16,6 +16,7 @@ final readonly class RequestValidator implements RequestValidatorInterface
     ) {
     }
 
+    #[\Override]
     public function isValid(
         ChannelInterface $channel,
         string $localeCode,

@@ -23,11 +23,13 @@ final readonly class CategoriesQueryBuilder implements QueryBuilderInterface
     ) {
     }
 
+    #[\Override]
     public function getResource(): Resource
     {
         return Resource::CATEGORIES;
     }
 
+    #[\Override]
     public function getResult(
         ChannelInterface $channel,
         string $localeCode,

@@ -38,6 +38,7 @@ final class FeedController extends AbstractController implements FeedControllerI
      * @psalm-suppress MixedMethodCall
      * @psalm-suppress MixedArgument
      */
+    #[\Override]
     public function __invoke(
         string $channelCode,
         string $localeCode,

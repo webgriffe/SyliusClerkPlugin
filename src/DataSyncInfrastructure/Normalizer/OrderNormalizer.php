@@ -34,6 +34,7 @@ final readonly class OrderNormalizer implements NormalizerInterface
      *     time: int,
      * }&array<string, mixed>
      */
+    #[\Override]
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
         $order = $object;
@@ -88,6 +89,7 @@ final readonly class OrderNormalizer implements NormalizerInterface
         return $orderNormalizerEvent->getOrderData();
     }
 
+    #[\Override]
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof OrderInterface &&
@@ -97,6 +99,7 @@ final readonly class OrderNormalizer implements NormalizerInterface
         ;
     }
 
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return [

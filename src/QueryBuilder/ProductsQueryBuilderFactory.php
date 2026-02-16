@@ -19,6 +19,7 @@ final class ProductsQueryBuilderFactory implements QueryBuilderFactoryInterface
     {
     }
 
+    #[\Override]
     public function createQueryBuilder(ChannelInterface $channel): QueryBuilder
     {
         Assert::isInstanceOf($channel->getDefaultLocale(), LocaleInterface::class);

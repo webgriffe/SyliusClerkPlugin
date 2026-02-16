@@ -48,6 +48,7 @@ class V2FeedGeneratorCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this->setDescription('Generate feeds for Clerk.io data sync.');
@@ -64,11 +65,13 @@ This command will only generate feeds for the web and mobile channels, for the e
         $this->addOption('resource', 'r', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'If specified, only feeds for the given resources will be generated.', []);
     }
 
+    #[\Override]
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->io = new SymfonyStyle($input, $output);
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io->writeln('Starting Clerk.io feed generation...');

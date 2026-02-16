@@ -19,6 +19,7 @@ final class OrdersQueryBuilderFactory implements QueryBuilderFactoryInterface
     {
     }
 
+    #[\Override]
     public function createQueryBuilder(ChannelInterface $channel): QueryBuilder
     {
         Assert::isInstanceOf($this->orderRepository, EntityRepository::class);

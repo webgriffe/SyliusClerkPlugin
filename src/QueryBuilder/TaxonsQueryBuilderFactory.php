@@ -17,6 +17,7 @@ final class TaxonsQueryBuilderFactory implements QueryBuilderFactoryInterface
     {
     }
 
+    #[\Override]
     public function createQueryBuilder(ChannelInterface $channel): QueryBuilder
     {
         return $this->taxonRepository->createListQueryBuilder();

@@ -29,6 +29,7 @@ final readonly class ResourceFeedGenerator implements FeedGeneratorInterface
         $this->resource = $resource;
     }
 
+    #[\Override]
     public function generate(
         ChannelInterface $channel,
         string $localeCode,

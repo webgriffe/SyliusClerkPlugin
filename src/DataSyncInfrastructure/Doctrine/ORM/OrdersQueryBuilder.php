@@ -23,11 +23,13 @@ final readonly class OrdersQueryBuilder implements QueryBuilderInterface
     ) {
     }
 
+    #[\Override]
     public function getResource(): Resource
     {
         return Resource::ORDERS;
     }
 
+    #[\Override]
     public function getResult(
         ChannelInterface $channel,
         string $localeCode,

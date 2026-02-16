@@ -19,6 +19,7 @@ final readonly class V2Client implements ClientInterface
     ) {
     }
 
+    #[\Override]
     public function verify(
         string $storePublicKey,
         string $token,

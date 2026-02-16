@@ -31,6 +31,7 @@ final readonly class CategoryNormalizer implements NormalizerInterface
      *     subcategories: array<int|string>,
      * }&array<string, mixed>
      */
+    #[\Override]
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
         $taxon = $object;
@@ -77,6 +78,7 @@ final readonly class CategoryNormalizer implements NormalizerInterface
         return $categoryNormalizerEvent->getCategoryData();
     }
 
+    #[\Override]
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof TaxonInterface &&
@@ -86,6 +88,7 @@ final readonly class CategoryNormalizer implements NormalizerInterface
         ;
     }
 
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return [

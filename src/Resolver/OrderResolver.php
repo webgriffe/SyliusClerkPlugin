@@ -18,6 +18,7 @@ final class OrderResolver implements OrderResolverInterface
     ) {
     }
 
+    #[\Override]
     public function createOrdersList(ChannelInterface $channel): array
     {
         $ordersQueryBuilder = $this->ordersQueryBuilderFactory->createQueryBuilder($channel);

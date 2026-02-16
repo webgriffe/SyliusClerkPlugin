@@ -22,6 +22,7 @@ final readonly class ApiKeysProvider implements ApiKeysProviderInterface
     ) {
     }
 
+    #[\Override]
     public function getPublicApiKey(
         ChannelInterface $channel,
         string $localeCode,

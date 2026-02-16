@@ -28,6 +28,7 @@ final readonly class CustomerNormalizer implements NormalizerInterface
      *     subscribed: bool,
      * }&array<string, mixed>
      */
+    #[\Override]
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
         $customer = $object;
@@ -70,6 +71,7 @@ final readonly class CustomerNormalizer implements NormalizerInterface
         return $customerNormalizerEvent->getCustomerData();
     }
 
+    #[\Override]
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof CustomerInterface &&
@@ -79,6 +81,7 @@ final readonly class CustomerNormalizer implements NormalizerInterface
         ;
     }
 
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return [

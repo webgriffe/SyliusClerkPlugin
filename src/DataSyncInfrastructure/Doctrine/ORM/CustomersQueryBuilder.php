@@ -23,11 +23,13 @@ final readonly class CustomersQueryBuilder implements QueryBuilderInterface
     ) {
     }
 
+    #[\Override]
     public function getResource(): Resource
     {
         return Resource::CUSTOMERS;
     }
 
+    #[\Override]
     public function getResult(
         ChannelInterface $channel,
         string $localeCode,

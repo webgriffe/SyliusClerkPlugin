@@ -39,6 +39,7 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
      *
      * @return clerkIoProductData
      */
+    #[\Override]
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
         $productVariant = $object;
@@ -115,6 +116,7 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
         return $productNormalizerEvent->getProductData();
     }
 
+    #[\Override]
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof ProductVariantInterface &&
@@ -124,6 +126,7 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
         ;
     }
 
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return [
@@ -131,26 +134,31 @@ final readonly class ProductVariantNormalizer implements NormalizerInterface
         ];
     }
 
+    #[\Override]
     private function getImageType(): string
     {
         return $this->imageType;
     }
 
+    #[\Override]
     private function getUrlGenerator(): UrlGeneratorInterface
     {
         return $this->urlGenerator;
     }
 
+    #[\Override]
     private function getCacheManager(): CacheManager
     {
         return $this->cacheManager;
     }
 
+    #[\Override]
     public function getImageFilterToApply(): string
     {
         return $this->imageFilterToApply;
     }
 
+    #[\Override]
     public function getFallbackLocale(): string
     {
         return $this->fallbackLocale;

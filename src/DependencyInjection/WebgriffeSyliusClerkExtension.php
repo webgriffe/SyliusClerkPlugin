@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 final class WebgriffeSyliusClerkExtension extends Extension
 {
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $configs);
@@ -54,6 +55,7 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $orderNormalizer->setArgument('$useProductVariants', $useProductVariants);
     }
 
+    #[\Override]
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
     {
         return new Configuration();

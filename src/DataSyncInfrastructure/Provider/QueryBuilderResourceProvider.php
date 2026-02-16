@@ -18,6 +18,7 @@ final readonly class QueryBuilderResourceProvider implements ResourceProviderInt
     ) {
     }
 
+    #[\Override]
     public function provide(
         ChannelInterface $channel,
         string $localeCode,

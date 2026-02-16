@@ -35,6 +35,7 @@ final readonly class PagesProvider implements ResourceProviderInterface
     ) {
     }
 
+    #[\Override]
     public function provide(
         ChannelInterface $channel,
         string $localeCode,

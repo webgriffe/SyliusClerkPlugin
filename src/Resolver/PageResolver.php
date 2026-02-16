@@ -9,6 +9,7 @@ namespace Webgriffe\SyliusClerkPlugin\Resolver;
  */
 final class PageResolver implements PageResolverInterface
 {
+    #[\Override]
     public function createPageList(): array
     {
         // Create your own resolver here
