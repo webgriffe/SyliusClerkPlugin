@@ -13,6 +13,8 @@ use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum\Resource;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Model\QueryBuilderInterface;
 
 /**
+ * @psalm-suppress UnusedClass
+ *
  * @implements QueryBuilderInterface<ProductInterface>
  */
 final readonly class ProductsQueryBuilder implements QueryBuilderInterface

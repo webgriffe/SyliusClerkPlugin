@@ -12,6 +12,9 @@ use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Enum\Resource;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Provider\ResourceProviderInterface;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\ValueObject\Feed;
 
+/**
+ * @psalm-suppress UnusedClass
+ */
 final readonly class ResourceFeedGenerator implements FeedGeneratorInterface
 {
     public function __construct(

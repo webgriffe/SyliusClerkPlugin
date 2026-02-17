@@ -15,11 +15,9 @@ webgriffe_sylius_clerk:
     stores:
         -   channel_code: FASHION_WEB
             public_api_key: public-key
-            private_api_key: 123abc
             locale_code: en_US
         -   channel_code: WEB-US
             public_api_key: public-key
-            private_api_key: 123abc
             locale_code: en_US
     pages:
         -

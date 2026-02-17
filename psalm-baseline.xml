@@ -25,16 +25,6 @@
       <code><![CDATA[ProductVariantsQueryBuilder]]></code>
     </UnusedClass>
   </file>
-  <file src="src/DataSyncInfrastructure/Doctrine/ORM/ProductsQueryBuilder.php">
-    <UnusedClass>
-      <code><![CDATA[ProductsQueryBuilder]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/DataSyncInfrastructure/Generator/ResourceFeedGenerator.php">
-    <UnusedClass>
-      <code><![CDATA[ResourceFeedGenerator]]></code>
-    </UnusedClass>
-  </file>
   <file src="src/DataSyncInfrastructure/Normalizer/CategoryNormalizer.php">
     <UnusedClass>
       <code><![CDATA[CategoryNormalizer]]></code>
