@@ -13,6 +13,7 @@ final readonly class ApiKeysProvider implements ApiKeysProviderInterface
      * @param array<array-key, array{
      *     channel_code: string,
      *     public_api_key: string,
+     *     private_api_key: string,
      *     locale_code?: string,
      * }> $storesConfiguration
      */
@@ -36,13 +37,13 @@ final readonly class ApiKeysProvider implements ApiKeysProviderInterface
         }
         $atLeastOneConfigurationHasLocaleCode = array_reduce(
             $channelsConfiguration,
-            fn (bool $carry, array $storeConfiguration) => $carry || array_key_exists('locale_code', $storeConfiguration),
+            static fn (bool $carry, array $storeConfiguration) => $carry || array_key_exists('locale_code', $storeConfiguration),
             false,
         );
         if ($atLeastOneConfigurationHasLocaleCode) {
             $channelLocalesConfiguration = array_filter(
                 $channelsConfiguration,
-                fn (array $storeConfiguration) => array_key_exists('locale_code', $storeConfiguration) && $storeConfiguration['locale_code'] === $localeCode,
+                static fn (array $storeConfiguration) => array_key_exists('locale_code', $storeConfiguration) && $storeConfiguration['locale_code'] === $localeCode,
             );
             if (count($channelLocalesConfiguration) === 0) {
                 throw new ChannelApiKeysNotProvidedException('Configuration not found for channel ' . $channelCode . ' and locale ' . $localeCode);
@@ -58,5 +59,44 @@ final readonly class ApiKeysProvider implements ApiKeysProviderInterface
         }
 
         return reset($channelsConfiguration)['public_api_key'];
+    }
+
+    #[\Override]
+    public function getPrivateApiKey(
+        ChannelInterface $channel,
+        string $localeCode,
+    ): string {
+        $channelsConfiguration = array_filter(
+            $this->storesConfiguration,
+            static fn (array $storeConfiguration) => $storeConfiguration['channel_code'] === (string) $channel->getCode(),
+        );
+        $channelCode = (string) $channel->getCode();
+        if (count($channelsConfiguration) === 0) {
+            throw new ChannelApiKeysNotProvidedException('Configuration not found for channel ' . $channelCode);
+        }
+        $atLeastOneConfigurationHasLocaleCode = array_reduce(
+            $channelsConfiguration,
+            static fn (bool $carry, array $storeConfiguration) => $carry || array_key_exists('locale_code', $storeConfiguration),
+            false,
+        );
+        if ($atLeastOneConfigurationHasLocaleCode) {
+            $channelLocalesConfiguration = array_filter(
+                $channelsConfiguration,
+                static fn (array $storeConfiguration) => array_key_exists('locale_code', $storeConfiguration) && $storeConfiguration['locale_code'] === $localeCode,
+            );
+            if (count($channelLocalesConfiguration) === 0) {
+                throw new ChannelApiKeysNotProvidedException('Configuration not found for channel ' . $channelCode . ' and locale ' . $localeCode);
+            }
+            if (count($channelLocalesConfiguration) > 1) {
+                throw new ChannelApiKeysNotProvidedException('Multiple configurations found for channel ' . $channelCode . ' and locale ' . $localeCode);
+            }
+
+            return reset($channelLocalesConfiguration)['private_api_key'];
+        }
+        if (count($channelsConfiguration) > 1) {
+            throw new ChannelApiKeysNotProvidedException('Multiple configurations found for channel ' . $channelCode);
+        }
+
+        return reset($channelsConfiguration)['private_api_key'];
     }
 }

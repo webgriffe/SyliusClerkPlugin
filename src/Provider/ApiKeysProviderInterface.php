@@ -16,4 +16,12 @@ interface ApiKeysProviderInterface
         ChannelInterface $channel,
         string $localeCode,
     ): string;
+
+    /**
+     * @throws ChannelApiKeysNotProvidedException If the configuration for the given channel is not found.
+     */
+    public function getPrivateApiKey(
+        ChannelInterface $channel,
+        string $localeCode,
+    ): string;
 }
