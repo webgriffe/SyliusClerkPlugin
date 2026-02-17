@@ -22,9 +22,10 @@ use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\ValueObject\Feed;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ * @psalm-suppress UnusedClass
  */
 #[AsCommand(name: 'webgriffe:clerk:feed:generate', description: 'Generate feeds for Clerk.io data sync')]
-class V2FeedGeneratorCommand extends Command
+final class FeedGeneratorCommand extends Command
 {
     use LockableTrait;
 
@@ -96,7 +97,6 @@ This command will only generate feeds for the web and mobile channels, for the e
                 $channels[] = $channel;
             }
         } else {
-            /** @var ChannelInterface[] $channels */
             $channels = $this->channelRepository->findAll();
         }
         /** @var iterable<string> $localeCodes */

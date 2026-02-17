@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Command\V2FeedGeneratorCommand;
+use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Command\FeedGeneratorCommand;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
 
-    $services->set('webgriffe_sylius_clerk_plugin.command.feed_generator', V2FeedGeneratorCommand::class)
+    $services->set('webgriffe_sylius_clerk_plugin.command.feed_generator', FeedGeneratorCommand::class)
         ->args([
             '$channelRepository' => service('sylius.repository.channel'),
             '$localeRepository' => service('sylius.repository.locale'),

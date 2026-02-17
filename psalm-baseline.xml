@@ -23,17 +23,6 @@
       <code><![CDATA[$request]]></code>
     </UnusedParam>
   </file>
-  <file src="src/DataSyncInfrastructure/Command/V2FeedGeneratorCommand.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[V2FeedGeneratorCommand]]></code>
-    </ClassMustBeFinal>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
-    <UnnecessaryVarAnnotation>
-      <code><![CDATA[ChannelInterface[]]]></code>
-    </UnnecessaryVarAnnotation>
-  </file>
   <file src="src/DataSyncInfrastructure/Controller/FeedController.php">
     <UnusedClass>
       <code><![CDATA[FeedController]]></code>
