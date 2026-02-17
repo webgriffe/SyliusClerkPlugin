@@ -34,12 +34,10 @@ Sylius\Component\Core\Model\Channel:
 
 Sylius\Component\Core\Model\ProductTranslation:
     tshirt-product-translation:
-        translatable: '@tshirt-product'
         locale: 'en_US'
         name: 'Star Wars T-Shirt M'
         slug: 'star-wars-t-shirt-m'
     cap-product-translation:
-        translatable: '@cap-product'
         locale: 'en_US'
         name: 'Star Wars Cap'
         slug: 'star-wars-cap'

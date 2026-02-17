@@ -68,15 +68,25 @@ final readonly class InMemoryResourceProvider implements ResourceProviderInterfa
 
 final readonly class TestProductNormalizer implements NormalizerInterface
 {
-    public function normalize($object, string $format = null, array $context = []): array
+    #[\Override]
+    public function normalize($data, string $format = null, array $context = []): array
     {
         return [
-            'code' => $object->getCode(),
+            'code' => $data->getCode(),
         ];
     }
 
-    public function supportsNormalization($data, string $format = null): bool
+    #[\Override]
+    public function supportsNormalization($data, string $format = null, array $context = []): bool
     {
         return $data instanceof Product;
+    }
+
+    #[\Override]
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            Product::class => true,
+        ];
     }
 }
