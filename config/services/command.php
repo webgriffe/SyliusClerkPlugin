@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Webgriffe\SyliusClerkPlugin\Command\FeedGeneratorCommand;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Command\V2FeedGeneratorCommand;
-use Webgriffe\SyliusClerkPlugin\Service\FeedGenerator;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
