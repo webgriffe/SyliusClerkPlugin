@@ -19,7 +19,7 @@ final readonly class CustomerNormalizer implements NormalizerInterface
     }
 
     /**
-     * @param CustomerInterface|mixed $object
+     * @param CustomerInterface|mixed $data
      *
      * @return array{
      *     id: string|int,
@@ -29,9 +29,9 @@ final readonly class CustomerNormalizer implements NormalizerInterface
      * }&array<string, mixed>
      */
     #[\Override]
-    public function normalize(mixed $object, ?string $format = null, array $context = []): array
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array
     {
-        $customer = $object;
+        $customer = $data;
         Assert::isInstanceOf($customer, CustomerInterface::class);
         $channel = $context['channel'];
         Assert::isInstanceOf($channel, ChannelInterface::class, 'The given context should contain a ChannelInterface instance.');

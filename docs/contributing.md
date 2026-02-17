@@ -1,88 +1,112 @@
 # Contributing
 
-To contribute you need to:
+For a comprehensive guide on Sylius Plugins development please go to Sylius documentation,
+there you will find the <a href="https://docs.sylius.com/en/latest/plugin-development-guide/index.html">Plugin Development Guide</a>, that is full of examples.
 
-1. Clone this repository into your development environment
+## Quickstart Installation
 
-2. [OPTIONAL] Copy the `.env` file inside the test application directory to the `.env.local` file:
+### Traditional
 
-   ```bash
-   cp tests/Application/.env tests/Application/.env.local
-   ```
+1. Run `composer install`.
 
-   Then edit the `tests/Application/.env.local` file by setting configuration specific for you development environment.
+2. From the plugin root directory, run the following commands:
+    
+    ```bash
+    $ (cd tests/Application && yarn install)
+    $ (cd tests/Application && yarn build)
+    $ (cd tests/Application && APP_ENV=test bin/console assets:install public)
+    
+    $ (cd tests/Application && APP_ENV=test bin/console doctrine:database:create)
+    $ (cd tests/Application && APP_ENV=test bin/console doctrine:schema:create)
+    ```
 
-3. Then, from the plugin's root directory, run the following commands:
+To be able to set up a plugin's database, remember to configure you database credentials in `tests/Application/.env` and `tests/Application/.env.test`.
 
-   ```bash
-   (cd tests/Application && yarn install)
-   (cd tests/Application && yarn build)
-   (cd tests/Application && APP_ENV=test bin/console assets:install public)
-   (cd tests/Application && APP_ENV=test bin/console doctrine:database:create)
-   (cd tests/Application && APP_ENV=test bin/console doctrine:schema:create)
-   ```
-4. Run test application's webserver on `127.0.0.1:8080`:
+#### Docker
 
-      ```bash
-      symfony server:ca:install
-      APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
-      ```
+1. Execute `docker compose up -d`
 
-4. Now at https://127.0.0.1:8080/ you have a full Sylius testing application which runs the plugin
+2. Initialize plugin `docker compose exec app make init`
 
-### Testing
+3. See your browser `open localhost`
 
-After your changes you must ensure that the tests are still passing. The current CI suite runs the following tests:
+## Usage
 
-* Easy Coding Standard
+#### Running plugin tests
 
-  ```bash
-  vendor/bin/ecs check src/ tests/Behat/
-  ```
-
-* PHPStan
-
-  ```bash
-  vendor/bin/phpstan analyse -c phpstan.neon -l max src/
-  ```
-
-* PHPUnit
-
+- PHPUnit
+  
   ```bash
   vendor/bin/phpunit
   ```
 
-* PHPSpec
-
+- PHPSpec
+  
   ```bash
   vendor/bin/phpspec run
   ```
 
-* Behat
-
+- Behat (non-JS scenarios)
+  
   ```bash
-  vendor/bin/behat --strict -vvv --no-interaction || vendor/bin/behat --strict -vvv --no-interaction --rerun
+  vendor/bin/behat --strict --tags="~@javascript"
   ```
 
-To run them all with a single command run:
+- Behat (JS scenarios)
+    
+    1. [Install Symfony CLI command](https://symfony.com/download).
+    
+    2. Start Headless Chrome:
+  
+    ```bash
+    google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1
+    ```
+    
+    3. Install SSL certificates (only once needed) and run test application's webserver on `127.0.0.1:8080`:
+  
+    ```bash
+    symfony server:ca:install
+    APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
+    ```
+    
+    4. Run Behat:
+  
+    ```bash
+    vendor/bin/behat --strict --tags="@javascript"
+    ```
 
-```bash
-composer suite
-```
-
-To run Behat's JS scenarios you need to setup Selenium and Chromedriver. Do the following:
-
-1. [Install Symfony CLI command](https://symfony.com/download).
-
-2. Start Headless Chrome:
-
+- Static Analysis
+    
+    - Psalm
+      
       ```bash
-      google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1
+      vendor/bin/psalm
+      ```
+    
+    - PHPStan
+      
+      ```bash
+      vendor/bin/phpstan analyse -c phpstan.neon -l max src/  
       ```
 
-4. Remember that the test application webserver must be up and running as described above:
+- Coding Standard
+  
+  ```bash
+  vendor/bin/ecs check
+  ```
 
-      ```bash
-      symfony server:ca:install
-      APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
-      ```
+#### Opening Sylius with your plugin
+
+- Using `test` environment:
+  
+    ```bash
+    (cd tests/Application && APP_ENV=test bin/console sylius:fixtures:load)
+    (cd tests/Application && APP_ENV=test bin/console server:run -d public)
+    ```
+
+- Using `dev` environment:
+  
+    ```bash
+    (cd tests/Application && APP_ENV=dev bin/console sylius:fixtures:load)
+    (cd tests/Application && APP_ENV=dev bin/console server:run -d public)
+    ```

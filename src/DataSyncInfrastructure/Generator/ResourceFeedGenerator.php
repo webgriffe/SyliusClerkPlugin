@@ -14,19 +14,12 @@ use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\ValueObject\Feed;
 
 final readonly class ResourceFeedGenerator implements FeedGeneratorInterface
 {
-    private Resource $resource;
-
     public function __construct(
         private ResourceProviderInterface $resourceProvider,
         private NormalizerInterface&EncoderInterface $serializer,
         private LoggerInterface $logger,
-        Resource|string $resource,
+        private Resource $resource,
     ) {
-        // This is needed for Sf 5 compatibility
-        if (is_string($resource)) {
-            $resource = Resource::from($resource);
-        }
-        $this->resource = $resource;
     }
 
     #[\Override]

@@ -13,7 +13,6 @@ final readonly class ApiKeysProvider implements ApiKeysProviderInterface
      * @param array<array-key, array{
      *     channel_code: string,
      *     public_api_key: string,
-     *     private_api_key: string,
      *     locale_code?: string,
      * }> $storesConfiguration
      */

@@ -37,14 +37,14 @@ final readonly class ProductNormalizer implements NormalizerInterface
     }
 
     /**
-     * @param ProductInterface|mixed $object
+     * @param ProductInterface|mixed $data
      *
      * @return clerkIoProductData
      */
     #[\Override]
-    public function normalize(mixed $object, ?string $format = null, array $context = []): array
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array
     {
-        $product = $object;
+        $product = $data;
         Assert::isInstanceOf($product, ProductInterface::class);
         $channel = $context['channel'];
         Assert::isInstanceOf($channel, ChannelInterface::class, 'The given context should contain a ChannelInterface instance.');

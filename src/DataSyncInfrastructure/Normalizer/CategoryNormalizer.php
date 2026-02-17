@@ -22,7 +22,7 @@ final readonly class CategoryNormalizer implements NormalizerInterface
     }
 
     /**
-     * @param TaxonInterface|mixed $object
+     * @param TaxonInterface|mixed $data
      *
      * @return array{
      *     id: string|int,
@@ -32,9 +32,9 @@ final readonly class CategoryNormalizer implements NormalizerInterface
      * }&array<string, mixed>
      */
     #[\Override]
-    public function normalize(mixed $object, ?string $format = null, array $context = []): array
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array
     {
-        $taxon = $object;
+        $taxon = $data;
         Assert::isInstanceOf($taxon, TaxonInterface::class);
         $channel = $context['channel'];
         Assert::isInstanceOf($channel, ChannelInterface::class, 'The given context should contain a ChannelInterface instance.');

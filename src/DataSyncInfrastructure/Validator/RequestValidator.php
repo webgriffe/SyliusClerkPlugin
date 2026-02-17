@@ -23,8 +23,7 @@ final readonly class RequestValidator implements RequestValidatorInterface
         string $authToken,
     ): bool {
         $publicKey = $this->apiKeysProvider->getPublicApiKey($channel, $localeCode);
-        $verify = $this->client->verify($publicKey, $authToken);
 
-        return $verify->isValid();
+        return $this->client->verify($publicKey, $authToken)->isValid();
     }
 }

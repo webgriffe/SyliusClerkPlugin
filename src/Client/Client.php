@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use Webgriffe\SyliusClerkPlugin\Client\Exception\ClientException;
 use Webgriffe\SyliusClerkPlugin\Client\Response\Verify;
 
-final readonly class V2Client implements ClientInterface
+final readonly class Client implements ClientInterface
 {
     public function __construct(
         private GuzzleClientInterface $httpClient,
