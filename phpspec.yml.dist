@@ -1,4 +1,0 @@
-suites:
-    main:
-        namespace: Webgriffe\SyliusClerkPlugin
-        psr4_prefix: Webgriffe\SyliusClerkPlugin
