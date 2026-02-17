@@ -1,7 +1,0 @@
-{% extends '@!SyliusShop/Order/thankYou.html.twig' %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {{ render(url('webgriffe_sylius_clerk_sales_tracking', {orderId: order.id})) }}
-{% endblock %}
