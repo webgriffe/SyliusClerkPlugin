@@ -11,6 +11,10 @@ use Sylius\TwigHooks\Twig\Component\HookableComponentTrait;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 
+/**
+ * @psalm-suppress UnusedClass
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
 #[AsTwigComponent]
 final class ClerkIoSalesTrackingComponent
 {
@@ -23,18 +27,27 @@ final class ClerkIoSalesTrackingComponent
     ) {
     }
 
+    /**
+     * @psalm-suppress MixedReturnStatement
+     */
     #[ExposeInTemplate('order_id')]
     public function getOrderId(): string|int
     {
         return $this->order->getId();
     }
 
+    /**
+     * @psalm-suppress MixedReturnStatement
+     */
     #[ExposeInTemplate('customer_id')]
     public function getCustomerId(): string|int|null
     {
         return $this->order->getCustomer()?->getId();
     }
 
+    /**
+     * @psalm-suppress MixedReturnStatement
+     */
     #[ExposeInTemplate('customer_email')]
     public function getCustomerEmail(): ?string
     {
@@ -57,6 +70,7 @@ final class ClerkIoSalesTrackingComponent
             if (!$product instanceof ProductInterface) {
                 continue;
             }
+            /** @var int|string $productId */
             $productId = $this->useProductVariants ? $productVariant->getId() : $product->getId();
 
             $products[] = [

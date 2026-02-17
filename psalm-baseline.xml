@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
-  <file src="src/Client/Response/Verify.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getData]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="src/Client/V2Client.php">
     <UnusedClass>
       <code><![CDATA[V2Client]]></code>
     </UnusedClass>
-  </file>
-  <file src="src/Controller/SalesTrackingController.php">
-    <UnusedClass>
-      <code><![CDATA[SalesTrackingController]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Controller/TrackingCodeController.php">
-    <UnusedClass>
-      <code><![CDATA[TrackingCodeController]]></code>
-    </UnusedClass>
-    <UnusedParam>
-      <code><![CDATA[$request]]></code>
-    </UnusedParam>
   </file>
   <file src="src/DataSyncInfrastructure/Controller/FeedController.php">
     <UnusedClass>
@@ -37,17 +19,6 @@
     <UnusedClass>
       <code><![CDATA[CustomersQueryBuilder]]></code>
     </UnusedClass>
-  </file>
-  <file src="src/DataSyncInfrastructure/Doctrine/ORM/Event/QueryBuilderEvent.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getChannel]]></code>
-      <code><![CDATA[getLimit]]></code>
-      <code><![CDATA[getLocaleCode]]></code>
-      <code><![CDATA[getModifiedAfter]]></code>
-      <code><![CDATA[getOffset]]></code>
-      <code><![CDATA[getQueryBuilder]]></code>
-      <code><![CDATA[getResource]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="src/DataSyncInfrastructure/Doctrine/ORM/OrdersQueryBuilder.php">
     <UnusedClass>
@@ -85,43 +56,6 @@
       <code><![CDATA[CustomerNormalizer]]></code>
     </UnusedClass>
   </file>
-  <file src="src/DataSyncInfrastructure/Normalizer/Event/CategoryNormalizerEvent.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getChannel]]></code>
-      <code><![CDATA[getContext]]></code>
-      <code><![CDATA[getLocaleCode]]></code>
-      <code><![CDATA[getTaxon]]></code>
-      <code><![CDATA[setCategoryData]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/DataSyncInfrastructure/Normalizer/Event/CustomerNormalizerEvent.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getChannel]]></code>
-      <code><![CDATA[getContext]]></code>
-      <code><![CDATA[getCustomer]]></code>
-      <code><![CDATA[getLocaleCode]]></code>
-      <code><![CDATA[setCustomerData]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/DataSyncInfrastructure/Normalizer/Event/OrderNormalizerEvent.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getChannel]]></code>
-      <code><![CDATA[getContext]]></code>
-      <code><![CDATA[getLocaleCode]]></code>
-      <code><![CDATA[getOrder]]></code>
-      <code><![CDATA[setOrderData]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/DataSyncInfrastructure/Normalizer/Event/ProductVariantNormalizerEvent.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getChannel]]></code>
-      <code><![CDATA[getContext]]></code>
-      <code><![CDATA[getLocaleCode]]></code>
-      <code><![CDATA[getProduct]]></code>
-      <code><![CDATA[getProductVariant]]></code>
-      <code><![CDATA[setProductData]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="src/DataSyncInfrastructure/Normalizer/OrderNormalizer.php">
     <ParamNameMismatch>
       <code><![CDATA[$object]]></code>
@@ -134,17 +68,11 @@
     <ParamNameMismatch>
       <code><![CDATA[$object]]></code>
     </ParamNameMismatch>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="src/DataSyncInfrastructure/Normalizer/ProductVariantNormalizer.php">
     <ParamNameMismatch>
       <code><![CDATA[$object]]></code>
     </ParamNameMismatch>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="src/DataSyncInfrastructure/Provider/PagesProvider.php">
     <UnusedClass>
@@ -210,20 +138,10 @@
       <code><![CDATA[OrderResolver]]></code>
     </UnusedClass>
   </file>
-  <file src="src/Resolver/OrderResolverInterface.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[createOrdersList]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="src/Resolver/PageResolver.php">
     <UnusedClass>
       <code><![CDATA[PageResolver]]></code>
     </UnusedClass>
-  </file>
-  <file src="src/Resolver/PageResolverInterface.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[createPageList]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="src/WebgriffeSyliusClerkPlugin.php">
     <UnusedClass>

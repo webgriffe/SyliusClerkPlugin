@@ -24,5 +24,10 @@
                 <referencedProperty name="Symfony\Bundle\FrameworkBundle\Controller\AbstractController::$container"/>
             </errorLevel>
         </PropertyNotSetInConstructor>
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="src/"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
     </issueHandlers>
 </psalm>

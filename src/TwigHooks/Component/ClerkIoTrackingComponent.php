@@ -15,6 +15,9 @@ use Webgriffe\SyliusClerkPlugin\Provider\ApiKeysProviderInterface;
 use Webgriffe\SyliusClerkPlugin\Provider\Exception\ChannelApiKeysNotProvidedException;
 use Webmozart\Assert\Assert;
 
+/**
+ * @psalm-suppress UnusedClass
+ */
 #[AsTwigComponent]
 final class ClerkIoTrackingComponent
 {
