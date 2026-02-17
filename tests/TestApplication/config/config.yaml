@@ -13,6 +13,10 @@ webgriffe_sylius_clerk:
     token_authentication_enabled: '%env(bool:WEBGRIFFE_SYLIUS_CLERK_PLUGIN_TOKEN_AUTHENTICATION_ENABLED)%'
     use_product_variants: false
     stores:
+        -   channel_code: FASHION_WEB
+            public_api_key: public-key
+            private_api_key: 123abc
+            locale_code: en_US
         -   channel_code: WEB-US
             public_api_key: public-key
             private_api_key: 123abc

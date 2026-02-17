@@ -29,7 +29,7 @@ final readonly class ApiKeysProvider implements ApiKeysProviderInterface
     ): string {
         $channelsConfiguration = array_filter(
             $this->storesConfiguration,
-            fn (array $storeConfiguration) => $storeConfiguration['channel_code'] === (string) $channel->getCode(),
+            static fn (array $storeConfiguration) => $storeConfiguration['channel_code'] === (string) $channel->getCode(),
         );
         $channelCode = (string) $channel->getCode();
         if (count($channelsConfiguration) === 0) {

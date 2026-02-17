@@ -8,10 +8,11 @@ use Behat\Behat\Context\Context;
 use Sylius\Component\Core\Model\OrderInterface;
 use Tests\Webgriffe\SyliusClerkPlugin\Behat\Page\Shop\ThankYouPageInterface;
 
-final class ClerkSalesTrackingContext implements Context
+final readonly class ClerkSalesTrackingContext implements Context
 {
-    public function __construct(private ThankYouPageInterface $thankYouPage)
-    {
+    public function __construct(
+        private ThankYouPageInterface $thankYouPage,
+    ) {
     }
 
     /**

@@ -17,6 +17,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
     $services->set(ClerkFeedContext::class)
         ->args([
             service('test.client'),
+            service('router'),
         ])
     ;
 

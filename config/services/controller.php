@@ -4,34 +4,10 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Webgriffe\SyliusClerkPlugin\Controller\SalesTrackingController;
-use Webgriffe\SyliusClerkPlugin\Controller\TrackingCodeController;
 use Webgriffe\SyliusClerkPlugin\DataSyncInfrastructure\Controller\FeedController;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
-
-    $services->set(TrackingCodeController::class)
-        ->public()
-        ->args([
-            service('sylius.context.channel'),
-            service('sylius.context.locale'),
-            service('webgriffe_sylius_clerk_plugin.provider.api_keys'),
-        ])
-        ->tag('controller.service_arguments')
-        ->call('setContainer', [service('service_container')])
-    ;
-
-    $services->set(SalesTrackingController::class)
-        ->public()
-        ->args([
-            service('sylius.repository.order'),
-            service('serializer'),
-            service('webgriffe_sylius_clerk_plugin.provider.api_keys'),
-        ])
-        ->tag('controller.service_arguments')
-        ->call('setContainer', [service('service_container')])
-    ;
 
     $services->set('webgriffe_sylius_clerk_plugin.controller.feed', FeedController::class)
         ->args([

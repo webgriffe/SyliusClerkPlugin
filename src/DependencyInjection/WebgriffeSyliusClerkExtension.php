@@ -51,6 +51,8 @@ final class WebgriffeSyliusClerkExtension extends Extension
         $productsProvider->setArgument('$queryBuilder', $useProductVariants ? $productVariantsQueryBuilder : $productsQueryBuilder);
         $orderNormalizer = $container->getDefinition('webgriffe_sylius_clerk_plugin.normalizer.order');
         $orderNormalizer->setArgument('$useProductVariants', $useProductVariants);
+        $twigComponent = $container->getDefinition('webgriffe_sylius_clerk_plugin.twig_hooks.component.clerk_io_sales_tracking');
+        $twigComponent->setArgument('$useProductVariants', $useProductVariants);
     }
 
     #[\Override]

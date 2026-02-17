@@ -2,20 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Webgriffe\SyliusClerkPlugin\Controller;
+namespace Webgriffe\SyliusClerkPlugin\TwigHooks\Component;
 
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Sylius\TwigHooks\Twig\Component\HookableComponentTrait;
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
+use Symfony\UX\TwigComponent\Attribute\PostMount;
 use Webgriffe\SyliusClerkPlugin\Provider\ApiKeysProviderInterface;
 use Webgriffe\SyliusClerkPlugin\Provider\Exception\ChannelApiKeysNotProvidedException;
 use Webmozart\Assert\Assert;
 
-final class TrackingCodeController extends AbstractController
+#[AsTwigComponent]
+final class ClerkIoTrackingComponent
 {
+    use HookableComponentTrait;
+
+    #[ExposeInTemplate(name: 'public_api_key')]
+    public ?string $publicApiKey = null;
+
     public function __construct(
         private readonly ChannelContextInterface $channelContext,
         private readonly LocaleContextInterface $localeContext,
@@ -23,7 +30,8 @@ final class TrackingCodeController extends AbstractController
     ) {
     }
 
-    public function trackingCodeAction(Request $request): Response
+    #[PostMount]
+    public function postMount(): void
     {
         $channel = $this->channelContext->getChannel();
         Assert::isInstanceOf($channel, ChannelInterface::class);
@@ -33,14 +41,9 @@ final class TrackingCodeController extends AbstractController
         try {
             $apiKey = $this->apiKeysProvider->getPublicApiKey($channel, $localeCode);
         } catch (ChannelApiKeysNotProvidedException) {
-            return new Response();
+            return;
         }
 
-        return $this->render(
-            '@WebgriffeSyliusClerkPlugin/trackingCode.html.twig',
-            [
-                'publicApiKey' => $apiKey,
-        ],
-        );
+        $this->publicApiKey = $apiKey;
     }
 }

@@ -1,0 +1,12 @@
+<span
+    class="clerk"
+    data-api="log/sale"
+    {% if customer_id %}
+        data-customer="{{ customer_id }}"
+    {% endif %}
+    {% if customer_email %}
+        data-email="{{ customer_email }}"
+    {% endif %}
+    data-sale="{{ order_id }}"
+    data-products='{{ products|json_encode|raw }}'>
+</span>

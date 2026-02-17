@@ -8,28 +8,39 @@ use Behat\Behat\Context\Context;
 use Flow\JSONPath\JSONPath;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Component\Routing\RouterInterface;
 use Webmozart\Assert\Assert;
 
 final class ClerkFeedContext implements Context
 {
     private array $privateApiKeysForChannels;
 
-    public function __construct(private HttpKernelBrowser $client)
-    {
+    public function __construct(
+        private readonly HttpKernelBrowser $client,
+        private readonly RouterInterface $router,
+    ) {
     }
 
     /**
-     * @When /^the Clerk crawler hits the data feed URL for the ("([^"]+)" channel)$/
+     * @When /^the Clerk crawler hits the data feed URL for the ("[^"]+" channel) in the ("[^"]+" locale) and for the "([^"]+)" resource$/
      */
-    public function theClerkCrawlerHitsTheDataFeedUrl(ChannelInterface $channel): void
-    {
-        $privateApiKey = $this->privateApiKeysForChannels[$channel->getId()];
-        $salt = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 10);
-        $hash = hash('sha512', $salt . $privateApiKey . floor(time() / 100));
+    public function theClerkCrawlerHitsTheDataFeedURLForTheChannelInTheLocaleAndForTheResource(
+        ChannelInterface $channel,
+        string $localeCode,
+        string $resourceValue,
+    ): void {
+        $url = $this->router->generate(
+            'webgriffe_sylius_clerk_plugin_feed',
+            [
+                'channelCode' => $channel->getCode(),
+                'localeCode' => $localeCode,
+                'resourceValue' => $resourceValue,
+            ],
+        );
         $this->client->request(
             'GET',
-            '/clerk/feed/' . $channel->getId(),
-            ['salt' => $salt, 'hash' => $hash],
+            $url,
+            [],
             [],
             ['ACCEPT' => 'application/json'],
         );
@@ -42,7 +53,7 @@ final class ClerkFeedContext implements Context
     {
         Assert::eq($this->client->getResponse()->getStatusCode(), 200);
         Assert::eq($this->client->getResponse()->headers->get('Content-Type'), 'application/json');
-        Assert::object(json_decode($this->client->getResponse()->getContent()));
+        Assert::isArray(json_decode($this->client->getResponse()->getContent(), true));
     }
 
     /**
@@ -189,35 +200,5 @@ final class ClerkFeedContext implements Context
         foreach ($jsonPaths as $jsonPath) {
             Assert::true(filter_var($jsonPath, \FILTER_VALIDATE_EMAIL) !== false);
         }
-    }
-
-    /**
-     * @When /^the Clerk crawler hits the data feed URL for the ("([^"]+)" channel) with an invalid security hash$/
-     */
-    public function theClerkCrawlerHitsTheDataFeedURLForTheChannelWithAnInvalidSecurityHash(ChannelInterface $channel): void
-    {
-        $this->client->request(
-            'GET',
-            '/clerk/feed/' . $channel->getId(),
-            ['salt' => 'invalid', 'hash' => 'invalid'],
-            [],
-            ['ACCEPT' => 'application/json'],
-        );
-    }
-
-    /**
-     * @Then /^the Clerk crawler should receive an access denied response$/
-     */
-    public function theClerkCrawlerShouldReceiveAnAccessDeniedResponse(): void
-    {
-        Assert::eq(403, $this->client->getResponse()->getStatusCode());
-    }
-
-    /**
-     * @Given /^the Clerk's private API key for the ("[^"]+" channel) is "([^"]*)"$/
-     */
-    public function theClerkSPrivateAPIKeyForChannelIs(ChannelInterface $channel, string $privateApiKey): void
-    {
-        $this->privateApiKeysForChannels[$channel->getId()] = $privateApiKey;
     }
 }

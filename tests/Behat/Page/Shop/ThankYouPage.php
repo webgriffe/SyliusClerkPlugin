@@ -29,6 +29,8 @@ class ThankYouPage extends BaseThankYouPage implements ThankYouPageInterface
 
     protected function getDefinedElements(): array
     {
-        return array_merge(parent::getDefinedElements(), ['clerk_sales_tracking' => 'span.clerk[data-api="log/sale"]']);
+        return array_merge(parent::getDefinedElements(), [
+            'clerk_sales_tracking' => 'span.clerk[data-api="log/sale"]',
+        ]);
     }
 }

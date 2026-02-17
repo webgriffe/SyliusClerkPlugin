@@ -9,13 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
-use Sylius\Component\Product\Resolver\DefaultProductVariantResolver;
+use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 
 final class ProductContext implements Context
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private DefaultProductVariantResolver $defaultVariantResolver,
+        private ProductVariantResolverInterface $defaultVariantResolver,
     ) {
     }
 
