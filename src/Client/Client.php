@@ -11,6 +11,9 @@ use Psr\Log\LoggerInterface;
 use Webgriffe\SyliusClerkPlugin\Client\Exception\ClientException;
 use Webgriffe\SyliusClerkPlugin\Client\Response\Verify;
 
+/**
+ * @psalm-suppress UnusedClass
+ */
 final readonly class Client implements ClientInterface
 {
     public function __construct(

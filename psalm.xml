@@ -14,11 +14,6 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <DeprecatedInterface>
-            <errorLevel type="suppress">
-                <directory name="src/"/>
-            </errorLevel>
-        </DeprecatedInterface>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <referencedProperty name="Symfony\Bundle\FrameworkBundle\Controller\AbstractController::$container"/>

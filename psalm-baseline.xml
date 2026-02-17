@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
-  <file src="src/Client/V2Client.php">
-    <UnusedClass>
-      <code><![CDATA[V2Client]]></code>
-    </UnusedClass>
-  </file>
   <file src="src/DataSyncInfrastructure/Controller/FeedController.php">
     <UnusedClass>
       <code><![CDATA[FeedController]]></code>
@@ -41,38 +36,19 @@
     </UnusedClass>
   </file>
   <file src="src/DataSyncInfrastructure/Normalizer/CategoryNormalizer.php">
-    <ParamNameMismatch>
-      <code><![CDATA[$object]]></code>
-    </ParamNameMismatch>
     <UnusedClass>
       <code><![CDATA[CategoryNormalizer]]></code>
     </UnusedClass>
   </file>
   <file src="src/DataSyncInfrastructure/Normalizer/CustomerNormalizer.php">
-    <ParamNameMismatch>
-      <code><![CDATA[$object]]></code>
-    </ParamNameMismatch>
     <UnusedClass>
       <code><![CDATA[CustomerNormalizer]]></code>
     </UnusedClass>
   </file>
   <file src="src/DataSyncInfrastructure/Normalizer/OrderNormalizer.php">
-    <ParamNameMismatch>
-      <code><![CDATA[$object]]></code>
-    </ParamNameMismatch>
     <UnusedClass>
       <code><![CDATA[OrderNormalizer]]></code>
     </UnusedClass>
-  </file>
-  <file src="src/DataSyncInfrastructure/Normalizer/ProductNormalizer.php">
-    <ParamNameMismatch>
-      <code><![CDATA[$object]]></code>
-    </ParamNameMismatch>
-  </file>
-  <file src="src/DataSyncInfrastructure/Normalizer/ProductVariantNormalizer.php">
-    <ParamNameMismatch>
-      <code><![CDATA[$object]]></code>
-    </ParamNameMismatch>
   </file>
   <file src="src/DataSyncInfrastructure/Provider/PagesProvider.php">
     <UnusedClass>
@@ -108,39 +84,6 @@
   <file src="src/Provider/ApiKeysProvider.php">
     <UnusedClass>
       <code><![CDATA[ApiKeysProvider]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/QueryBuilder/CustomersQueryBuilderFactory.php">
-    <UnusedClass>
-      <code><![CDATA[CustomersQueryBuilderFactory]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/QueryBuilder/OrdersQueryBuilderFactory.php">
-    <UnusedClass>
-      <code><![CDATA[OrdersQueryBuilderFactory]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/QueryBuilder/ProductsQueryBuilderFactory.php">
-    <PossiblyNullReference>
-      <code><![CDATA[getCode]]></code>
-    </PossiblyNullReference>
-    <UnusedClass>
-      <code><![CDATA[ProductsQueryBuilderFactory]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/QueryBuilder/TaxonsQueryBuilderFactory.php">
-    <UnusedClass>
-      <code><![CDATA[TaxonsQueryBuilderFactory]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Resolver/OrderResolver.php">
-    <UnusedClass>
-      <code><![CDATA[OrderResolver]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Resolver/PageResolver.php">
-    <UnusedClass>
-      <code><![CDATA[PageResolver]]></code>
     </UnusedClass>
   </file>
   <file src="src/WebgriffeSyliusClerkPlugin.php">
